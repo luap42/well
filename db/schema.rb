@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_28_201915) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_28_202547) do
   create_table "case_statuses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -28,6 +28,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_28_201915) do
     t.string "prefix"
     t.string "title"
     t.boolean "enabled"
+  end
+
+  create_table "cases", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "case_type_id"
+    t.integer "case_status_id"
+    t.string "case_no"
+    t.string "title"
+    t.text "summary"
+    t.index ["case_status_id"], name: "index_cases_on_case_status_id"
+    t.index ["case_type_id"], name: "index_cases_on_case_type_id"
   end
 
   create_table "users", force: :cascade do |t|
