@@ -1,0 +1,16 @@
+<h1 class="h3 fw-bold mb-3"><%= t('.forgot_your_password') %></h1>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= bootstrap_devise_error_messages! %>
+
+  <div class="form-floating mb-3">
+    <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control', placeholder: '' %>
+    <%= f.label :email %>
+  </div>
+
+  <div class="mb-3 d-flex">
+    <%= f.submit t('.send_me_reset_password_instructions'), class: 'btn btn-primary' %>
+    <%= render 'devise/shared/links' %>
+  </div>
+<% end %>
+
