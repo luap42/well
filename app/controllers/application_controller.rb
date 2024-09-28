@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   before_action :require_user_to_sign_in!
 
-  def index; end
-
   protected
 
   def require_user_to_sign_in!
