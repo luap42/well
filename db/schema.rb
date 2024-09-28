@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_28_201811) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_28_201915) do
+  create_table "case_statuses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.string "color"
+    t.integer "next_step_id"
+    t.boolean "case_ends_here"
+    t.boolean "enabled"
+    t.index ["next_step_id"], name: "index_case_statuses_on_next_step_id"
+  end
+
   create_table "case_types", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -30,4 +41,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_28_201811) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "case_statuses", "case_statuses", column: "next_step_id"
 end
