@@ -47,6 +47,10 @@ class CaseController < ApplicationController
       summary: params[:case][:summary]
     )
 
-    redirect_to :search_cases
+    redirect_to :cases
+  end
+
+  def show
+    @case = Case.find(params[:id])
   end
 end

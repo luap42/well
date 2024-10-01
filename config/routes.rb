@@ -14,8 +14,12 @@ Rails.application.routes.draw do
   root to: "case#index"
 
   scope :cases do
-    root to: "case#search", as: :search_cases
+    root to: "case#search", as: :cases
     get "new", to: "case#new", as: :new_case
     put "new", to: "case#create", as: :create_case
+  end
+
+  scope "/c/:id" do
+    root to: "case#show", as: :show_case
   end
 end

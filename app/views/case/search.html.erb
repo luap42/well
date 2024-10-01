@@ -57,7 +57,7 @@
         <% @cases.each do |c| %>
         <tr>
           <td class="font-monospace"><%= c.case_no %></td>
-          <td><%= c.title %></td>
+          <td><%= link_to c.title, show_case_url(c) %></td>
           <td><%= c.case_type.title %></td>
           <td><span style="background-color: <%= c.case_status.color %>"><%= c.case_status.title %></span></td>
         </tr>
