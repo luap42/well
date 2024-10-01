@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_01_153226) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_01_182049) do
   create_table "case_statuses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -39,8 +39,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_01_153226) do
     t.string "case_no"
     t.string "title"
     t.text "summary"
+    t.string "local_records"
+    t.integer "manager_id"
     t.index ["case_status_id"], name: "index_cases_on_case_status_id"
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
+    t.index ["manager_id"], name: "index_cases_on_manager_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -56,4 +59,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_01_153226) do
   end
 
   add_foreign_key "case_statuses", "case_statuses", column: "next_step_id"
+  add_foreign_key "cases", "users", column: "manager_id"
 end
