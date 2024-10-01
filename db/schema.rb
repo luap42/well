@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_28_202547) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_01_153226) do
   create_table "case_statuses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_28_202547) do
     t.integer "next_step_id"
     t.boolean "case_ends_here"
     t.boolean "enabled"
+    t.boolean "case_begins_here"
     t.index ["next_step_id"], name: "index_case_statuses_on_next_step_id"
   end
 
