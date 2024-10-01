@@ -15,5 +15,7 @@ Rails.application.routes.draw do
 
   scope :cases do
     root to: "case#search", as: :search_cases
+    get "new", to: "case#new", as: :new_case
+    put "new", to: "case#create", as: :create_case
   end
 end

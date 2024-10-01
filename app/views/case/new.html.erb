@@ -1,0 +1,35 @@
+<h1 class="fw-bold mb-3">Vorgang anlegen</h1>
+
+<%= form_with url: create_case_path, method: :put, model: @case do |form| %>
+
+<div class="row mb-3">
+  <div class="col-12 col-md-6">
+    <div class="form-floating">
+        <%= form.select :case_type, CaseType.all.map { |tp| [tp.title, tp.id]}, {prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+        <%= form.label :case_type, 'Kategorie' %>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-floating">
+        <%= form.select :case_status, CaseStatus.all.map { |st| [st.title, st.id]}, {prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+        <%= form.label :case_status, 'Status' %>
+    </div>
+  </div>
+</div>
+
+<div class="form-floating mb-3">
+    <%= form.text_field :title, class: 'form-control', placeholder: '' %>
+    <%= form.label :title, 'Bezeichnung' %>
+</div>
+
+<div class="form-floating mb-3">
+    <%= form.text_area :summary, class: 'form-control', placeholder: '' %>
+    <%= form.label :summary, 'Kurzbeschreibung' %>
+</div>
+
+<p>Der Vorgang erhält automatisch eine Vorgangsnummer zugewiesen.</p>
+
+<%= form.submit 'Vorgang anlegen', class: 'btn btn-primary' %>
+<%= link_to 'Zurück', root_path, class: 'btn btn-secondary' %>
+
+<% end %>

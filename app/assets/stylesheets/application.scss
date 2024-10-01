@@ -20,3 +20,11 @@
     max-width: 800px;
     margin: 2rem auto;
 }
+
+textarea.form-control,
+.form-floating textarea.form-control {
+    min-height: 75px;
+    height: 150px;
+    max-height: 350px;
+    resize: vertical;
+}

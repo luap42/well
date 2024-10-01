@@ -22,4 +22,25 @@ class CaseController < ApplicationController
       @cases = @cases.where(case_status: CaseStatus.find(params[:case_status]))
     end
   end
+
+  def new
+    @case = Case.new
+    @case.case_status = CaseStatus.where(case_begins_here: true).first
+  end
+
+  def create
+    case_type = CaseType.find(params[:case][:case_type])
+    case_status = CaseStatus.find(params[:case][:case_status])
+    case_no = case_type.new_case_no()
+
+    @case = Case.create!(
+      case_type: case_type,
+      case_status: case_status,
+      case_no: case_no,
+      title: params[:case][:title],
+      summary: params[:case][:summary]
+    )
+
+    redirect_to :root
+  end
 end
