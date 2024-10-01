@@ -1,0 +1,68 @@
+<h1 class="fw-bold mb-3">Vorgänge</h1>
+
+<%= form_with method: :get do |form| %>
+<div class="row g-1 mb-3">
+  <div class="col-12 col-md-2">
+    <div class="form-floating">
+      <%= form.text_field :case_no, value: params[:case_no], class: 'form-control', placeholder: '' %>
+      <%= form.label :case_no, 'Nummer' %>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="form-floating">
+      <%= form.text_field :title, value: params[:title], class: 'form-control', placeholder: '' %>
+      <%= form.label :title, 'Bezeichnung' %>
+    </div>
+  </div>
+  <div class="col-12 col-md-2">
+    <div class="form-floating">
+      <%= form.select :case_type, CaseType.all.map { |tp| [tp.title, tp.id]}, {include_blank: '(alle)', selected: params[:case_type]}, { class: 'form-select' } %>
+      <%= form.label :case_type, 'Kategorie' %>
+    </div>
+  </div>
+  <div class="col-12 col-md-2">
+    <div class="form-floating">
+      <%= form.select :case_status, CaseStatus.all.map { |st| [st.title, st.id]}, {include_blank: '(alle)', selected: params[:case_status]}, { class: 'form-select' } %>
+      <%= form.label :case_status, 'Status' %>
+    </div>
+  </div>
+  <div class="col-12 col-md-2 p-2 pt-1">
+    <%= form.submit 'Vorgang suchen', class: 'btn btn-secondary w-100 h-100' %>
+  </div>
+</div>
+<% end %>
+
+<% if @cases.any? %>
+<div class="card">
+  <% case_count = @cases.count %>
+  <% if case_count == 1 %>
+  <div class="card-header">1 Vorgang gefunden</div>
+  <% else %>
+  <div class="card-header"><%= case_count %> Vorgänge gefunden</div>
+  <% end %>
+  <div class="card-body">
+    <table class="table table-striped-rows table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Bezeichnung</th>
+          <th scope="col">Kategorie</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cases.each do |c| %>
+        <tr>
+          <td class="fw-bold"><%= c.case_no %></td>
+          <td><%= c.title %></td>
+          <td><%= c.case_type.title %></td>
+          <td><span style="background-color: <%= c.case_status.color %>"><%= c.case_status.title %></span></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% else %>
+<p>Keine Vorgänge mit diesen Filtern gefunden.</p>
+<% end %>

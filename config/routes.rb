@@ -12,4 +12,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to: "case#index"
+
+  scope :cases do
+    root to: "case#search", as: :search_cases
+  end
 end
