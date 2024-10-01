@@ -1,1 +1,26 @@
-<%= @case.title %>
+<%= render 'case_header', view: :info %>
+
+<div class="row">
+  <div class="col col-12 col-md-8">
+
+    <h2 class="h5 mt-3 mb-3 fw-bold">Bezeichnung des Vorgangs</h2>
+
+    <p class="mb-1"><%= @case.title %></p>
+
+    <p><%= @case.case_no %></p>
+
+    <h2 class="h5 mt-3 mb-3 fw-bold">Kurzbeschreibung</h2>
+
+    <%= simple_format(@case.summary) %>
+
+    <h2 class="h5 mt-3 mb-3 fw-bold">Akten</h2>
+
+    <a href="" class="btn btn-secondary mt-3 mb-3 btn-sm">Vorgangsinformationen bearbeiten</a>
+
+  </div>
+  <div class="col col-12 col-md-4">
+    <h2 class="h5 mt-3 mb-3 fw-bold">Verantwortliche/r</h2>
+    <h2 class="h5 mt-3 mb-3 fw-bold">Anstehende Termine</h2>
+    <h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte des Vorgangs</h2>
+  </div>
+</div>

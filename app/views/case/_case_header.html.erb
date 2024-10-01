@@ -1,0 +1,55 @@
+<% content_for(:case_header) do %>
+<div class="mb-1 h5 fw-bold"><%= @case.case_no %> &middot; <%= @case.case_type.title %></div>
+<div class="mb-1 h3 fw-normal"><%= @case.title %></div>
+
+<div class="row mt-4">
+  <div class="col">
+    <div class="nav nav-pills">
+      <div class="nav-item">
+        <a href="" class="nav-link <%= 'active' if view == :info %>">Informationen</a>
+      </div>
+      <div class="nav-item">
+        <a href="" class="nav-link <%= 'active' if view == :parties %>">Beteiligte</a>
+      </div>
+      <div class="nav-item">
+        <a href="" class="nav-link <%= 'active' if view == :docs %>">Dokumente</a>
+      </div>
+      <div class="nav-item">
+        <a href="" class="nav-link <%= 'active' if view == :calendar %>">Kalendar</a>
+      </div>
+      <div class="nav-item">
+        <a href="" class="nav-link <%= 'active' if view == :notes %>">Notizen</a>
+      </div>
+      <div class="nav-item">
+        <a href="" class="nav-link <%= 'active' if view == :log %>">Protokoll</a>
+      </div>
+    </div>
+  </div>
+  <div class="col col-auto px-1">
+    <a href="" class="btn btn-secondary">Schreiben</a>
+  </div>
+  <div class="col col-auto px-1">
+    <a href="" class="btn btn-secondary">Verfügung</a>
+  </div>
+  <div class="col col-auto px-1">
+    <div class="dropdown">
+      <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Wiedervorlage
+      </a>
+
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">WV: sofort</a></li>
+        <li><a class="dropdown-item" href="#">WV: morgen</a></li>
+        <li><a class="dropdown-item" href="#">WV: 1 Woche</a></li>
+        <li><a class="dropdown-item" href="#">WV: 2 Wochen</a></li>
+        <li><a class="dropdown-item" href="#">WV: 4 Wochen</a></li>
+        <li><a class="dropdown-item" href="#">WV: 1 Jahr</a></li>
+        <li><a class="dropdown-item" href="#">Andere WV-Frist</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Weglegen</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<% end %>

@@ -52,5 +52,6 @@ class CaseController < ApplicationController
 
   def show
     @case = Case.find(params[:id])
+    render layout: "case_view"
   end
 end
