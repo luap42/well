@@ -10,14 +10,10 @@
     <p><%= @case.case_no %></p>
 
     <h2 class="h5 mt-3 mb-3 fw-bold">Kurzbeschreibung</h2>
-
     <%= simple_format(@case.summary) %>
 
+    <% unless @case.local_records.nil? %>
     <h2 class="h5 mt-3 mb-3 fw-bold">Aktenführung</h2>
-
-    <% if @case.local_records.nil? %>
-    <p>Akten werden mit Well geführt.</p>
-    <% else %>
     <%= simple_format(@case.local_records) %>
     <% end %>
 
