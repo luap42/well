@@ -13,12 +13,24 @@
 
     <%= simple_format(@case.summary) %>
 
-    <h2 class="h5 mt-3 mb-3 fw-bold">Akten</h2>
+    <h2 class="h5 mt-3 mb-3 fw-bold">Aktenführung</h2>
+
+    <h2 class="h5 mt-3 mb-3 fw-bold">Vorgangsdaten</h2>
+
+    <p>Vorgang angelegt am: <%= @case.created_at.strftime("%d.%m.%Y") %></p>
+    <p>Status des Vorgangs: <span style="background-color: <%= @case.case_status.color %>"><%= @case.case_status.title %></span></p>
 
     <a href="" class="btn btn-secondary mt-3 mb-3 btn-sm">Vorgangsinformationen bearbeiten</a>
 
   </div>
   <div class="col col-12 col-md-4">
+    <div class="card mt-3 mb-4">
+      <div class="card-header">Wiedervorlage</div>
+      <div class="card-body pb-0">
+        <p class="mb-1">Verfügung von usw. vom 01.10.2024:</p>
+        <p>Ablauf Stellungnahmefrist</p>
+      </div>
+    </div>
     <h2 class="h5 mt-3 mb-3 fw-bold">Verantwortliche/r</h2>
     <h2 class="h5 mt-3 mb-3 fw-bold">Anstehende Termine</h2>
     <h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte des Vorgangs</h2>
