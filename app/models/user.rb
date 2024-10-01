@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def display_name
-    email
+    return email if full_name.blank?
+
+    "#{full_name} (#{email})"
   end
 end
