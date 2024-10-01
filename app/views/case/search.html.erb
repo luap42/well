@@ -26,8 +26,11 @@
       <%= form.label :case_status, 'Status' %>
     </div>
   </div>
-  <div class="col-12 col-md-2 p-2 pt-1">
-    <%= form.submit 'Vorgang suchen', class: 'btn btn-secondary w-100 h-100' %>
+  <div class="col-12 col-md-1 p-2 pe-1 pt-1 align-self-center">
+    <%= form.submit 'Suchen', class: 'btn btn-primary w-100 py-2' %>
+  </div>
+  <div class="col-12 col-md-1 p-2 ps-1 pt-1 align-self-center">
+    <%= link_to 'NEU', new_case_path, class: 'btn btn-outline-primary w-100 py-2' %>
   </div>
 </div>
 <% end %>
@@ -53,7 +56,7 @@
       <tbody>
         <% @cases.each do |c| %>
         <tr>
-          <td class="fw-bold"><%= c.case_no %></td>
+          <td class="font-monospace"><%= c.case_no %></td>
           <td><%= c.title %></td>
           <td><%= c.case_type.title %></td>
           <td><span style="background-color: <%= c.case_status.color %>"><%= c.case_status.title %></span></td>

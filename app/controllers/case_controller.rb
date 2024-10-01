@@ -41,6 +41,6 @@ class CaseController < ApplicationController
       summary: params[:case][:summary]
     )
 
-    redirect_to :root
+    redirect_to :search_cases
   end
 end
