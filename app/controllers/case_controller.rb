@@ -7,7 +7,11 @@ class CaseController < ApplicationController
     @cases = Case.all
 
     unless params[:case_no].blank?
-      @cases = @cases.where("case_no LIKE ?", Case.sanitize_sql_like(params[:case_no]) + "%")
+      @cases = @cases.where(
+        "case_no LIKE ? OR case_no LIKE ?",
+        Case.sanitize_sql_like(params[:case_no]) + "%",
+        "%" + Case.sanitize_sql_like(params[:case_no])
+      )
     end
 
     unless params[:title].blank?
@@ -21,6 +25,8 @@ class CaseController < ApplicationController
     unless params[:case_status].blank?
       @cases = @cases.where(case_status: CaseStatus.find(params[:case_status]))
     end
+
+    @cases = @cases.order(updated_at: :desc)
   end
 
   def new
