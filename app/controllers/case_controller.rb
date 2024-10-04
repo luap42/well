@@ -79,10 +79,4 @@ class CaseController < ApplicationController
 
     redirect_to show_case_path(@case.id)
   end
-
-  protected
-
-  def get_case
-    @case = Case.find(params[:id])
-  end
 end

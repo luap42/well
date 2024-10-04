@@ -1,0 +1,41 @@
+<%= render 'case/case_header', view: :parties %>
+
+<% @case.participants.group_by(&:participant_role).each do |role, participants| %>
+<% participants.each do |p| %>
+<div class="mb-2">
+  <table class="table table-bordered fix-table">
+    <thead class="table-light">
+      <tr>
+        <td colspan=4>
+          <h3 class="h5 fw-bold my-0 mb-1"><%= p.name %> (<%= role.title %>)</h3>
+          <a href="">Bearbeiten</a> &middot;
+          <a href="" class="link-danger">Löschen</a>
+        </td>
+      </tr>
+    </thead>
+    <tr>
+      <th>Anschrift</th>
+      <td><%= simple_format(p.address_field) %></td>
+      <th>Kontakt-Details</th>
+      <td><%= simple_format(p.contact_details) %></td>
+    </tr>
+    <tr>
+      <th>E-Mail</th>
+      <td><%= mail_to p.email %></td>
+      <th>Telefax</th>
+      <td><%= p.fax_no%></td>
+    </tr>
+    <tr>
+      <th>Telefon</th>
+      <td><%= p.tel_no %></td>
+      <th>Mobil</th>
+      <td><%= p.mobile_no %></td>
+    </tr>
+    <tr>
+      <th>Kommentar</th>
+      <td colspan=3><%= simple_format(p.comment) %></td>
+    </tr>
+  </table>
+</div>
+  <% end %>
+<% end %>

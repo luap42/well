@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: "case#index"
 
-  scope :cases do
+  scope "/cases" do
     root to: "case#search", as: :cases
     get "new", to: "case#new", as: :new_case
     put "new", to: "case#create", as: :create_case
@@ -23,5 +23,9 @@ Rails.application.routes.draw do
     root to: "case#show", as: :show_case
     get "edit", to: "case#edit", as: :edit_case
     post "edit", to: "case#update", as: :update_case
+
+    scope "/participants" do
+      root to: "participants#index", as: :participants
+    end
   end
 end

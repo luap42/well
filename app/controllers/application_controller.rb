@@ -4,10 +4,13 @@ class ApplicationController < ActionController::Base
   before_action :require_user_to_sign_in!
 
   protected
-
   def require_user_to_sign_in!
     return unless current_user.nil?
     return if devise_controller?
     redirect_to :new_user_session
+  end
+
+  def get_case
+    @case = Case.find(params[:id])
   end
 end
