@@ -1,41 +1,71 @@
 <%= render 'case/case_header', view: :parties %>
 
-<% @case.participants.group_by(&:participant_role).each do |role, participants| %>
-<% participants.each do |p| %>
-<div class="mb-2">
-  <table class="table table-bordered fix-table">
-    <thead class="table-light">
-      <tr>
-        <td colspan=4>
-          <h3 class="h5 fw-bold my-0 mb-1"><%= p.name %> (<%= role.title %>)</h3>
-          <a href="">Bearbeiten</a> &middot;
-          <a href="" class="link-danger">Löschen</a>
-        </td>
-      </tr>
-    </thead>
-    <tr>
-      <th>Anschrift</th>
-      <td><%= simple_format(p.address_field) %></td>
-      <th>Kontakt-Details</th>
-      <td><%= simple_format(p.contact_details) %></td>
-    </tr>
-    <tr>
-      <th>E-Mail</th>
-      <td><%= mail_to p.email %></td>
-      <th>Telefax</th>
-      <td><%= p.fax_no%></td>
-    </tr>
-    <tr>
-      <th>Telefon</th>
-      <td><%= p.tel_no %></td>
-      <th>Mobil</th>
-      <td><%= p.mobile_no %></td>
-    </tr>
-    <tr>
-      <th>Kommentar</th>
-      <td colspan=3><%= simple_format(p.comment) %></td>
-    </tr>
-  </table>
+<%= form_with method: :get do |form| %>
+<div class="row g-1 mb-3">
+  <div class="col-12 col-md-2">
+    <div class="form-floating">
+      <%= form.select :participant_role, ParticipantRole.all.map { |tp| [tp.title, tp.id]}, {include_blank: '(alle)', selected: params[:participant_role]}, { class: 'form-select' } %>
+      <%= form.label :participant_role, 'Rolle' %>
+    </div>
+  </div>
+  <div class="col-12 col-md-8">
+    <div class="form-floating">
+      <%= form.text_field :name, value: params[:name], class: 'form-control', placeholder: '' %>
+      <%= form.label :name, 'Name' %>
+    </div>
+  </div>
+  <div class="col-12 col-md-1 p-2 pe-1 pt-1 align-self-center">
+    <%= form.submit 'Suchen', class: 'btn btn-primary w-100 py-2' %>
+  </div>
+  <div class="col-12 col-md-1 p-2 ps-1 pt-1 align-self-center">
+    <%= link_to 'NEU', '', class: 'btn btn-outline-primary w-100 py-2' %>
+  </div>
 </div>
-  <% end %>
+<% end %>
+
+<% if @participants.any? %>
+<div class="card mb-3">
+  <div class="card-header"><%= @participants.count %> Beteiligte gefunden</div>
+  <div class="card-body pb-1">
+    <% @participants.each do |p| %>
+    <div class="mb-2">
+      <table class="table table-bordered border-dark-subtle fix-table">
+        <thead>
+          <tr>
+            <td colspan=4>
+              <h3 class="h5 fw-bold my-0 mb-1"><%= p.name %> (<%= p.participant_role.title %>)</h3>
+              <a href="">Bearbeiten</a> &middot;
+              <a href="" class="link-danger">Löschen</a>
+            </td>
+          </tr>
+        </thead>
+        <tr>
+          <th>Anschrift</th>
+          <td><%= simple_format(p.address_field) %></td>
+          <th>Kontakt-Details</th>
+          <td><%= simple_format(p.contact_details) %></td>
+        </tr>
+        <tr>
+          <th>E-Mail</th>
+          <td><%= mail_to p.email %></td>
+          <th>Telefax</th>
+          <td><%= p.fax_no%></td>
+        </tr>
+        <tr>
+          <th>Telefon</th>
+          <td><%= p.tel_no %></td>
+          <th>Mobil</th>
+          <td><%= p.mobile_no %></td>
+        </tr>
+        <tr>
+          <th>Kommentar</th>
+          <td colspan=3><%= simple_format(p.comment) %></td>
+        </tr>
+      </table>
+    </div>
+    <% end %>
+  </div>
+</div>
+<% else %>
+<p>Keine Beteiligten mit diesen Filtern gefunden.
 <% end %>
