@@ -24,48 +24,41 @@
 <% end %>
 
 <% if @participants.any? %>
+<% @participants.each do |p| %>
 <div class="card mb-3">
-  <div class="card-header"><%= @participants.count %> Beteiligte gefunden</div>
-  <div class="card-body pb-1">
-    <% @participants.each do |p| %>
-    <div class="mb-2">
-      <table class="table table-bordered border-dark-subtle fix-table">
-        <thead>
-          <tr>
-            <td colspan=4>
-              <h3 class="h5 fw-bold my-0 mb-1"><%= p.name %> (<%= p.participant_role.title %>)</h3>
-              <a href="">Bearbeiten</a> &middot;
-              <a href="" class="link-danger">Löschen</a>
-            </td>
-          </tr>
-        </thead>
-        <tr>
-          <th>Anschrift</th>
-          <td><%= simple_format(p.address_field) %></td>
-          <th>Kontakt-Details</th>
-          <td><%= simple_format(p.contact_details) %></td>
-        </tr>
-        <tr>
-          <th>E-Mail</th>
-          <td><%= mail_to p.email %></td>
-          <th>Telefax</th>
-          <td><%= p.fax_no%></td>
-        </tr>
-        <tr>
-          <th>Telefon</th>
-          <td><%= p.tel_no %></td>
-          <th>Mobil</th>
-          <td><%= p.mobile_no %></td>
-        </tr>
-        <tr>
-          <th>Kommentar</th>
-          <td colspan=3><%= simple_format(p.comment) %></td>
-        </tr>
-      </table>
-    </div>
-    <% end %>
+  <div class="card-header py-3">
+    <h3 class="h5 fw-bold my-0 mb-1"></span><%= p.name %><span class="fw-normal"> &ndash; <%= p.participant_role.title %></h3>
+    <a href="">Bearbeiten</a> &middot;
+    <a href="" class="link-danger">Löschen</a>
+  </div>
+  <div class="card-body p-0">
+    <table class="table m-0 data-table border-dark-subtle fix-table">
+      <tr>
+        <th>Anschrift</th>
+        <td><%= simple_format(p.address_field) %></td>
+        <th>Kontakt-Details</th>
+        <td><%= simple_format(p.contact_details) %></td>
+      </tr>
+      <tr>
+        <th>E-Mail</th>
+        <td><%= mail_to p.email %></td>
+        <th>Telefax</th>
+        <td><%= p.fax_no%></td>
+      </tr>
+      <tr>
+        <th>Telefon</th>
+        <td><%= p.tel_no %></td>
+        <th>Mobil</th>
+        <td><%= p.mobile_no %></td>
+      </tr>
+      <tr>
+        <th>Kommentar</th>
+        <td colspan="3"><%= simple_format(p.comment) %></td>
+      </tr>
+    </table>
   </div>
 </div>
+<% end %>
 <% else %>
 <p>Keine Beteiligten mit diesen Filtern gefunden.
 <% end %>

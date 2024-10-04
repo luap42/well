@@ -47,3 +47,21 @@ textarea.form-control,
 table.fix-table {
     table-layout: fixed;
 }
+
+.card-body table {    
+    border-bottom-right-radius: var(--bs-card-border-radius);
+    border-bottom-left-radius: var(--bs-card-border-radius);
+    td, th {
+        background-color: transparent;
+    }
+
+    tr:last-child td,
+    tr:last-child th {
+        border-bottom: none;
+    }
+}
+
+table.data-table tr :first-child ~ * {
+    border-left: 1px solid;
+    border-left-color: inherit;
+}
