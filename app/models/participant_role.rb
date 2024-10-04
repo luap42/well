@@ -1,0 +1,2 @@
+class ParticipantRole < ApplicationRecord
+end

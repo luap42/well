@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_01_183133) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_04_211632) do
   create_table "case_statuses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,6 +44,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_01_183133) do
     t.index ["case_status_id"], name: "index_cases_on_case_status_id"
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
     t.index ["manager_id"], name: "index_cases_on_manager_id"
+  end
+
+  create_table "participant_roles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+    t.boolean "enabled"
   end
 
   create_table "users", force: :cascade do |t|
