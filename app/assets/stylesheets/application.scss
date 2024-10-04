@@ -27,6 +27,12 @@ textarea.form-control,
     height: 150px;
     max-height: 350px;
     resize: vertical;
+
+    &.textarea-sm {
+        min-height: 80px;
+        height: 100px;
+        max-height: 175px;
+    }
 }
 
 .fs-small {

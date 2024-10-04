@@ -1,5 +1,6 @@
 class CaseController < ApplicationController
   before_action :require_user_to_sign_in!
+  before_action :get_case, only: [ :show, :edit, :update ]
 
   def index; end
 
@@ -47,11 +48,41 @@ class CaseController < ApplicationController
       summary: params[:case][:summary]
     )
 
-    redirect_to :cases
+    flash[:success] = "Vorgang erfolgreich angelegt."
+
+    redirect_to show_case_path(@case.id)
   end
 
   def show
-    @case = Case.find(params[:id])
     render layout: "case_view"
+  end
+
+  def edit
+    render layout: "case_view"
+  end
+
+  def update
+    case_type = CaseType.find(params[:case][:case_type])
+    case_status = CaseStatus.find(params[:case][:case_status])
+    manager = User.find(params[:case][:manager])
+
+    @case.update!(
+      case_type: case_type,
+      case_status: case_status,
+      manager: manager,
+      title: params[:case][:title],
+      summary: params[:case][:summary],
+      local_records: params[:case][:local_records] || nil
+    )
+
+    flash[:success] = "Vorgang erfolgreich bearbeitet."
+
+    redirect_to show_case_path(@case.id)
+  end
+
+  protected
+
+  def get_case
+    @case = Case.find(params[:id])
   end
 end

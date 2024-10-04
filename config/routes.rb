@@ -21,5 +21,7 @@ Rails.application.routes.draw do
 
   scope "/c/:id" do
     root to: "case#show", as: :show_case
+    get "edit", to: "case#edit", as: :edit_case
+    post "edit", to: "case#update", as: :update_case
   end
 end
