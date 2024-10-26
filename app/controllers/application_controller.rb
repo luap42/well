@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
   end
 
   def get_case
-    @case = Case.find(params[:id])
+    @case = Case.find(params[:case_id])
   end
 end

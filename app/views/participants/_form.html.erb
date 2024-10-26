@@ -1,0 +1,82 @@
+<%= form_with url: form_to, model: @participant, method: :post do |form| %>
+
+<h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte/n bearbeiten</h2>
+
+<div class="form-floating mb-3">
+    <%= form.select :participant_role, ParticipantRole.all.map { |r| [r.title, r.id]}, {selected: @participant.participant_role.id, prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+    <%= form.label :participant_role, 'Rolle' %>
+</div>
+
+<div class="form-floating mb-3">
+    <%= form.text_field :name, class: 'form-control', placeholder: '' %>
+    <%= form.label :name, 'Bezeichnung' %>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 col-md-6">
+        <div class="form-floating">
+            <%= form.text_area :address_field, class: 'form-control', placeholder: '' %>
+            <%= form.label :address_field, 'Anschrift' %>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-floating">
+            <%= form.text_area :contact_details, class: 'form-control', placeholder: '' %>
+            <%= form.label :contact_details, 'Kontakt-Details' %>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 col-md-6">
+        <div class="form-floating">
+            <%= form.email_field :email, class: 'form-control', placeholder: '' %>
+            <%= form.label :email, 'E-Mail-Adresse' %>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-floating">
+            <%= form.phone_field :fax_no, class: 'form-control', placeholder: '' %>
+            <%= form.label :fax_no, 'Telefax' %>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 col-md-6">
+        <div class="form-floating">
+            <%= form.phone_field :tel_no, class: 'form-control', placeholder: '' %>
+            <%= form.label :tel_no, 'Telefon' %>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-floating">
+            <%= form.phone_field :mobile_no, class: 'form-control', placeholder: '' %>
+            <%= form.label :mobile_no, 'Mobil' %>
+        </div>
+    </div>
+</div>
+
+<div class="form-floating mb-3">
+    <%= form.text_area :comment, class: 'form-control', placeholder: '' %>
+    <%= form.label :comment, 'Kommentar' %>
+</div>
+
+<div class="row mb-2">
+    <div class="col-12 col-md-6">
+        <div class="form-check py-2">
+            <%= form.check_box :outdated, class: 'form-check-input', placeholder: '' %>
+            <%= form.label :outdated, 'Eintrag ist veraltet (z. B. instanziell überholt)', class: 'form-check-label' %>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-check py-2">
+            <%= form.check_box :provide_as_template, class: 'form-check-input', placeholder: '' %>
+            <%= form.label :provide_as_template, 'Eintrag wird für andere Vorgänge als Vorlage bereitgestellt', class: 'form-check-label' %>
+        </div>
+    </div>
+</div>
+
+<%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+<%= link_to 'Abbrechen', participants_path(@case), class: 'btn btn-secondary mb-3' %>
+<% end %>

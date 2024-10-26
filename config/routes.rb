@@ -19,13 +19,18 @@ Rails.application.routes.draw do
     put "new", to: "case#create", as: :create_case
   end
 
-  scope "/c/:id" do
+  scope "/c/:case_id" do
     root to: "case#show", as: :show_case
     get "edit", to: "case#edit", as: :edit_case
     post "edit", to: "case#update", as: :update_case
 
     scope "/participants" do
       root to: "participants#index", as: :participants
+    end
+
+    scope "/participants/:participant_id" do
+      get "edit", to: "participants#edit", as: :edit_participant
+      post "edit", to: "participants#update", as: :update_participant
     end
   end
 end

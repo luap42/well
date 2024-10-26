@@ -45,7 +45,8 @@ class CaseController < ApplicationController
       case_status: case_status,
       case_no: case_no,
       title: params[:case][:title],
-      summary: params[:case][:summary]
+      summary: params[:case][:summary],
+      manager: current_user
     )
 
     flash[:success] = "Vorgang erfolgreich angelegt."

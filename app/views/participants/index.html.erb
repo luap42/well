@@ -28,7 +28,7 @@
 <div class="card mb-3">
   <div class="card-header py-3">
     <h3 class="h5 fw-bold my-0 mb-1"></span><%= p.name %><span class="fw-normal"> &ndash; <%= p.participant_role.title %></h3>
-    <a href="">Bearbeiten</a> &middot;
+    <a href="<%= edit_participant_url(@case, p) %>">Bearbeiten</a> &middot;
     <a href="" class="link-danger">Löschen</a>
   </div>
   <div class="card-body p-0">
