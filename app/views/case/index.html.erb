@@ -1,1 +1,37 @@
 <h1 class="fw-bold mb-3">Übersicht</h1>
+
+<% if current_user.representments.any? %>
+
+<h2 class="h5 mt-3 mb-3 fw-bold">Wiedervorlagen</h2>
+
+<table class="table table-striped-rows table-hover">
+  <thead>
+    <tr>
+      <th scope="col" colspan=2>Vorgang</th>
+      <th scope="col">Kommentar</th>
+      <th scope="col">Eilt?</th>
+      <th scope="col">Datum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_user.representments.each do |rp| %>
+      <tr>
+        <% if rp.priority %>
+        <td class="text-bg-danger"><%= link_to rp.case.case_no, show_case_url(rp.case), class: 'link-light fw-bold' %></td>
+        <td class="text-bg-danger"><%= link_to rp.case.title, show_case_url(rp.case), class: 'link-light text-decoration-none' %></td>
+        <td class="text-bg-danger"><%= rp.reason %></td>
+        <td class="text-bg-danger">Ja</td>
+        <td class="text-bg-danger"><%= rp.when.strftime('%d.%m.%Y') %></td>
+        <% else %>
+        <td><%= link_to rp.case.case_no, show_case_url(rp.case), class: 'link-dark fw-bold' %></td>
+        <td><%= link_to rp.case.title, show_case_url(rp.case), class: 'link-dark text-decoration-none' %></td>
+        <td><%= rp.reason %></td>
+        <td></td>
+        <td><%= rp.when.strftime('%d.%m.%Y') %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<% end %>

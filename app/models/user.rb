@@ -11,6 +11,6 @@ class User < ApplicationRecord
   end
 
   def representments
-    Representment.where(to_user: self, when: ..Date.today).order(:priority)
+    Representment.where(to_user: self, when: ..Date.today).order(priority: :desc, when: :asc)
   end
 end
