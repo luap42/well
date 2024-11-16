@@ -26,12 +26,23 @@
 <% if @participants.any? %>
 <% @participants.each do |p| %>
 <div class="card mb-3">
-  <div class="card-header py-3">
-    <h3 class="h5 fw-bold my-0 mb-1"></span><%= p.name %><span class="fw-normal"> &ndash; <%= p.participant_role.title %></h3>
-    <a href="<%= edit_participant_url(@case, p) %>">Bearbeiten</a> &middot;
-    <a href="" class="link-danger">Löschen</a>
+  <div class="card-header border-0 p-3">
+    <div class="row">
+      <div class="col">
+        <h3 class="h5 m-0">
+          <a href="#collapse-body-<%= p.id %>" data-bs-toggle="collapse" class="fw-bold link-body-emphasis text-decoration-none"><%= p.name %></a>
+          &ndash; <%= p.participant_role.title %>
+        </h3>
+      </div>
+      <div class="col-auto">
+        <a href="<%= edit_participant_url(@case, p) %>">Bearbeiten</a>
+      </div>
+      <div class="col-auto">
+        <a href="" class="link-danger">Löschen</a>
+      </div>
+    </div>
   </div>
-  <div class="card-body p-0">
+  <div class="card-body p-0 border-top collapse <%= @participants.count == 1 ? 'show' : '' %>" id="collapse-body-<%= p.id %>">
     <table class="table m-0 data-table border-dark-subtle fix-table">
       <tr>
         <th>Anschrift</th>
