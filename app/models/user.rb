@@ -9,4 +9,8 @@ class User < ApplicationRecord
 
     "#{full_name} (#{email})"
   end
+
+  def representments
+    Representment.where(to_user: self, when: ..Date.today).order(:priority)
+  end
 end

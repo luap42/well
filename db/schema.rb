@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_04_211714) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_16_205953) do
   create_table "case_statuses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -72,6 +72,20 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_211714) do
     t.index ["participant_role_id"], name: "index_participants_on_participant_role_id"
   end
 
+  create_table "representments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "case_id"
+    t.date "when"
+    t.string "reason"
+    t.integer "to_user_id"
+    t.integer "from_user_id"
+    t.boolean "priority"
+    t.index ["case_id"], name: "index_representments_on_case_id"
+    t.index ["from_user_id"], name: "index_representments_on_from_user_id"
+    t.index ["to_user_id"], name: "index_representments_on_to_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -87,4 +101,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_211714) do
 
   add_foreign_key "case_statuses", "case_statuses", column: "next_step_id"
   add_foreign_key "cases", "users", column: "manager_id"
+  add_foreign_key "representments", "users", column: "from_user_id"
+  add_foreign_key "representments", "users", column: "to_user_id"
 end
