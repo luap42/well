@@ -6,11 +6,10 @@ class User < ApplicationRecord
 
   def display_name
     return email if full_name.blank?
-
-    "#{full_name} (#{email})"
+    full_name
   end
 
   def representments
-    Representment.where(to_user: self, when: ..Date.today).order(priority: :desc, when: :asc)
+    Representment.current.where(to_user: self)
   end
 end

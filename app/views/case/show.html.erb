@@ -26,13 +26,25 @@
 
   </div>
   <div class="col col-12 col-md-4">
-    <div class="card mt-3 mb-4">
-      <div class="card-header">Wiedervorlage</div>
-      <div class="card-body pb-0">
-        <p class="mb-1">Verfügung von usw. vom 01.10.2024:</p>
-        <p>Ablauf Stellungnahmefrist</p>
+    <% if @case.representments.current.any? %>
+    <h2 class="h5 mt-3 mb-3 fw-bold">Wiedervorlagen</h2>
+
+    <% @case.representments.current.each do |rp| %>
+      <div class="card mt-3 mb-4 <%= rp.priority ? 'text-bg-danger' : '' %>">
+        <div class="card-body p-2">
+          <p class="mb-1 opacity-75 fs-small">
+            <% if rp.from_user != rp.to_user %>
+            <span title="Verfügung von <%= rp.from_user.display_name %> vom <%= rp.created_at.strftime("%d.%m.%Y") %>"><%= rp.priority ? 'WV (dringend)' : 'WV' %></span>
+            <% else %>
+            <span title="Verfügung vom <%= rp.created_at.strftime("%d.%m.%Y") %>"><%= rp.priority ? 'WV (dringend)' : 'WV' %></span>
+            <% end %>
+            an <%= rp.to_user.display_name %> am <%= rp.when.strftime("%d.%m.%Y") %>:
+          </p>
+          <p class="mb-0 fw-bold"><%= rp.reason %></p>
+        </div>
       </div>
-    </div>
+    <% end %>
+    <% end %>
     <h2 class="h5 mt-3 mb-3 fw-bold">Verantwortliche/r</h2>
 
     <p><%= @case.manager&.display_name %></p>

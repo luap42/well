@@ -4,4 +4,5 @@ class Case < ApplicationRecord
   belongs_to :manager, class_name: "User"
 
   has_many :participants
+  has_many :representments
 end
