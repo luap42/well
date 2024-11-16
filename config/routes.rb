@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
     scope "/participants" do
       root to: "participants#index", as: :participants
+      get "new", to: "participants#new", as: :new_participant
+      post "new", to: "participants#create", as: :create_participant
     end
 
     scope "/participants/:participant_id" do

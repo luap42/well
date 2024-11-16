@@ -1,0 +1,38 @@
+<%= render 'case/case_header', view: :parties %>
+
+<h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte/n erstellen</h2>
+<div class="row">
+  <div class="col-3">
+    <p>Geben Sie rechts die Beteiligtendaten ein oder wählen Sie unten eine Vorlage:</p>
+
+    <% Participant.where(provide_as_template: true).each do |p| %>
+    <div class="card mb-3">
+      <div class="card-body p-1">
+        <%= form_with url: create_participant_url(@case), model: @participant, method: :post do |form| %>
+          <div class="row">
+            <div class="col py-1 px-3">
+              <%= p.name %>
+            </div>
+            <div class="col-auto"><%= form.submit 'Erstellen', class: 'btn btn-sm btn-light' %></div>
+          </div>
+          <%= form.hidden_field :participant_role, { value: p.participant_role.id } %>
+          <%= form.hidden_field :name, { value: p.name } %>
+          <%= form.hidden_field :address_field, { value: p.address_field } %>
+          <%= form.hidden_field :contact_details, { value: p.contact_details } %>
+          <%= form.hidden_field :email, { value: p.email } %>
+          <%= form.hidden_field :fax_no, { value: p.fax_no } %>
+          <%= form.hidden_field :tel_no, { value: p.tel_no } %>
+          <%= form.hidden_field :mobile_no, { value: p.mobile_no } %>
+          <%= form.hidden_field :comment, { value: p.comment } %>
+          <%= form.hidden_field :outdated, { value: 0 } %>
+          <%= form.hidden_field :provide_as_template, { value: 0 } %>
+
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <div class="col-9 border-start">
+    <%= render 'form', form_to: create_participant_url(@case) %>
+  </div>
+</div>

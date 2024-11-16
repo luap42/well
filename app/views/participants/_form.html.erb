@@ -1,9 +1,7 @@
 <%= form_with url: form_to, model: @participant, method: :post do |form| %>
 
-<h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte/n bearbeiten</h2>
-
 <div class="form-floating mb-3">
-    <%= form.select :participant_role, ParticipantRole.all.map { |r| [r.title, r.id]}, {selected: @participant.participant_role.id, prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+    <%= form.select :participant_role, ParticipantRole.all.map { |r| [r.title, r.id]}, {selected: @participant.participant_role&.id, prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
     <%= form.label :participant_role, 'Rolle' %>
 </div>
 
