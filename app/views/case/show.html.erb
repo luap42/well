@@ -30,7 +30,7 @@
     <h2 class="h5 mt-3 mb-3 fw-bold">Wiedervorlagen</h2>
 
     <% @case.representments.current.each do |rp| %>
-      <div class="card mt-3 mb-4 <%= rp.priority ? 'text-bg-danger' : '' %>">
+      <div class="card mb-2 <%= rp.priority ? 'text-bg-danger' : '' %>">
         <div class="card-body p-2">
           <p class="mb-1 opacity-75 fs-small">
             <% if rp.from_user != rp.to_user %>
