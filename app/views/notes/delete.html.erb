@@ -1,0 +1,11 @@
+<%= render 'notes/template', note: @note do %>
+<h2 class="h5 mt-3 mb-3 fw-bold">Notizen</h2>
+
+<p>Wollen Sie die folgende Notiz wirklich löschen?</p>
+<p class="fw-bold"><%= @note.title %></p>
+
+<%= form_with url: destroy_note_path(@case, @note), model: @note, method: :post do |form| %>
+<%= form.submit 'Notiz jetzt löschen', class: 'btn btn-danger mb-3' %>
+<%= link_to 'Abbrechen', edit_note_path(@case, @note), class: 'btn btn-secondary mb-3' %>
+<% end %>
+<% end %>

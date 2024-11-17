@@ -45,6 +45,8 @@ Rails.application.routes.draw do
       post "new", to: "notes#create", as: :create_note
       get ":note_id/edit", to: "notes#edit", as: :edit_note
       post ":note_id/edit", to: "notes#update", as: :update_note
+      get ":note_id/delete", to: "notes#delete", as: :delete_note
+      post ":note_id/delete", to: "notes#destroy", as: :destroy_note
     end
   end
 end

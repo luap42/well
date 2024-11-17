@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
-  before_action :get_case, only: [ :index, :edit, :update, :new, :create ]
-  before_action :get_note, only: [ :edit, :update ]
+  before_action :get_case, only: [ :index, :edit, :update, :new, :create, :delete, :destroy ]
+  before_action :get_note, only: [ :edit, :update, :delete, :destroy ]
 
   def index
     render layout: "layouts/case_view"
@@ -36,6 +36,16 @@ class NotesController < ApplicationController
 
     flash[:success] = "Notiz erfolgreich gespeichert."
     redirect_to edit_note_path(@case, @note)
+  end
+
+  def delete
+    render layout: "layouts/case_view"
+  end
+
+  def destroy
+    @note.update!(deleted: true)
+    flash[:success] = "Notiz erfolgreich gelöscht."
+    redirect_to notes_path(@case)
   end
 
   protected
