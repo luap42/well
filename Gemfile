@@ -58,3 +58,5 @@ gem "devise-bootstrap-views"
 
 gem "bootstrap"
 gem "sassc-rails"
+
+gem "simple_calendar"

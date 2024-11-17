@@ -88,3 +88,16 @@ trix-toolbar {
     padding-bottom: 0;
     margin-bottom: 0.5rem;
 }
+
+.simple-calendar .day.today {
+    background-color: #ffa;
+}
+
+.simple-calendar .day.past {
+    opacity: 0.25;
+}
+.simple-calendar .day.next-month {
+    opacity: 0.5;
+}
+
+.simple-calendar .day.wday-6 h3 { color: red; }

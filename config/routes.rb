@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to: "case#index"
+  get "calendar", to: "calendar#global", as: :global_calendar
 
   scope "/cases" do
     root to: "case#search", as: :cases
@@ -47,6 +48,10 @@ Rails.application.routes.draw do
       post ":note_id/edit", to: "notes#update", as: :update_note
       get ":note_id/delete", to: "notes#delete", as: :delete_note
       post ":note_id/delete", to: "notes#destroy", as: :destroy_note
+    end
+
+    scope "/calendar" do
+      root to: "calendar#index", as: :calendar
     end
   end
 end

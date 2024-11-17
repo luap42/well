@@ -1,0 +1,7 @@
+<%= render 'case/case_header', view: :calendar %>
+<h2 class="h5 mt-3 mb-3 fw-bold">Kalendar</h2>
+
+<%= month_calendar do |date| %>
+  <h3 class="h6 mb-3"><%= date.day %></h3>
+  <p class="mb-1 fst-italic">Keine Termine</p>
+<% end %>
