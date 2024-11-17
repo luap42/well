@@ -38,10 +38,10 @@
       </a>
 
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">WV: sofort</a></li>
-        <li><a class="dropdown-item" href="#">WV: 1 Woche</a></li>
-        <li><a class="dropdown-item" href="#">WV: 2 Wochen</a></li>
-        <li><a class="dropdown-item" href="#">WV: 4 Wochen</a></li>
+        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 0) %>">WV: sofort</a></li>
+        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 7) %>">WV: 1 Woche</a></li>
+        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 14) %>">WV: 2 Wochen</a></li>
+        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 28) %>">WV: 4 Wochen</a></li>
         <li><a class="dropdown-item" href="<%= new_representment_url(@case) %>">Andere WV einstellen</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="<%= clear_representment_url(@case) %>">Weglegen</a></li>

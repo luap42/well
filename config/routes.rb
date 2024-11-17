@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     scope "/represent" do
       get "new", to: "representments#new", as: :new_representment
       post "new", to: "representments#create", as: :create_representment
+      get "new/:days/days", to: "representments#create_for_days", as: :create_representment_for_days
 
       get "clear", to: "representments#clear", as: :clear_representment
     end
