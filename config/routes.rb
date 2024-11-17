@@ -41,6 +41,8 @@ Rails.application.routes.draw do
 
     scope "/notes" do
       root to: "notes#index", as: :notes
+      get "new", to: "notes#new", as: :new_note
+      post "new", to: "notes#create", as: :create_note
       get ":note_id/edit", to: "notes#edit", as: :edit_note
       post ":note_id/edit", to: "notes#update", as: :update_note
     end

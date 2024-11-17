@@ -1,10 +1,10 @@
 <%= form_with url: form_to, model: note, method: :post do |form| %>
   <div class="mb-3">
-    <%= form.text_field :title, class: 'form-control h3', placeholder: '' %>
+    <%= form.text_field :title, class: 'form-control h3', placeholder: 'Betreff eingeben...' %>
   </div>
 
   <div class="mb-3">
-    <%= form.rich_text_area :content %>
+    <%= form.rich_text_area :content, placeholder: 'Schreiben Sie einfach los...' %>
   </div>
 
   <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
