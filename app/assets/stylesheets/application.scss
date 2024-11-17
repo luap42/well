@@ -65,3 +65,8 @@ table.data-table tr :first-child ~ * {
     border-left: 1px solid;
     border-left-color: inherit;
 }
+
+.btn.active,
+.btn:active {
+    box-shadow: 0 0 5px 1px #0003 inset;
+}

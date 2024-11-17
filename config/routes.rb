@@ -34,5 +34,10 @@ Rails.application.routes.draw do
       get "edit", to: "participants#edit", as: :edit_participant
       post "edit", to: "participants#update", as: :update_participant
     end
+
+    scope "/represent" do
+      get "new", to: "representments#new", as: :new_representment
+      post "new", to: "representments#create", as: :create_representment
+    end
   end
 end

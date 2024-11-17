@@ -12,4 +12,8 @@ class User < ApplicationRecord
   def representments
     Representment.current.where(to_user: self)
   end
+
+  def manager_of?(case_)
+    case_.manager.id == self.id
+  end
 end

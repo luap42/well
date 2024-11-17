@@ -1,0 +1,32 @@
+<%= render 'case/case_header', view: :representments %>
+
+<h2 class="h5 mt-3 mb-3 fw-bold">Wiedervorlage des Vorgangs</h2>
+
+<%= form_with url: create_representment_url, model: @representment, method: :post do |form| %>
+
+<div class="form-floating mb-3">
+  <%= form.date_field :when, class: 'form-control', placeholder: '', optional: false %>
+  <%= form.label :when, 'Datum für WV' %>
+</div>
+
+<div class="form-floating mb-3">
+  <%= form.text_field :reason, class: 'form-control', placeholder: '', optional: true %>
+  <%= form.label :reason, 'Anlass für WV' %>
+</div>
+
+<div class="form-floating mb-3">
+    <%= form.select :to_user, User.all.filter {|u| u.manager_of? @case}.map { |u| [u.display_name, u.id]}, {prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+    <%= form.label :to_user, 'WV an' %>
+
+    <div class="form-text ms-1">Eine bestehende WV bei diesem/r Nutzer/in wird gelöscht werden.</div>
+</div>
+
+<div class="form-check mb-2 py-2">
+    <%= form.check_box :priority, class: 'form-check-input', placeholder: '' %>
+    <%= form.label :priority, 'WV ist dringlich', class: 'form-check-label' %>
+</div>
+
+<%= form.submit 'WV verfügen', class: 'btn btn-primary mb-3' %>
+<%= link_to 'Abbrechen', show_case_url(@case), class: 'btn btn-secondary mb-3' %>
+
+<% end %>
