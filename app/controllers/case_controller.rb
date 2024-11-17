@@ -1,5 +1,4 @@
 class CaseController < ApplicationController
-  before_action :require_user_to_sign_in!
   before_action :get_case, only: [ :show, :edit, :update ]
 
   def index; end
