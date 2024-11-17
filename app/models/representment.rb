@@ -5,4 +5,5 @@ class Representment < ApplicationRecord
 
   default_scope { where.not(dismissed: true) }
   scope :current, -> { where(when: ..Date.today).order(priority: :desc, when: :asc) }
+  scope :future, -> { where.not(when: ..Date.today).order(priority: :desc, when: :asc) }
 end

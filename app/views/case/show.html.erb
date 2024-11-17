@@ -26,7 +26,7 @@
 
   </div>
   <div class="col col-12 col-md-4">
-    <% if @case.representments.current.any? %>
+    <% if @case.representments.any? %>
     <h2 class="h5 mt-3 mb-3 fw-bold">Wiedervorlagen</h2>
 
     <% @case.representments.current.each do |rp| %>
@@ -44,7 +44,13 @@
         </div>
       </div>
     <% end %>
+
+    <% @case.representments.future.each do |rp| %>
+    <p class="mb-1 fs-small text-secondary" title="<%= rp.reason %>">WV an <%= rp.to_user.display_name %> am <%= rp.when.strftime("%d.%m.%Y") %></p>
     <% end %>
+
+    <% end %>
+
     <h2 class="h5 mt-3 mb-3 fw-bold">Verantwortliche/r</h2>
 
     <p><%= @case.manager&.display_name %></p>
