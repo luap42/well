@@ -2,6 +2,18 @@
 <h2 class="h5 mt-3 mb-3 fw-bold">Kalendar</h2>
 
 <%= month_calendar do |date| %>
-  <h3 class="h6 mb-3"><%= date.day %></h3>
-  <p class="mb-1 fst-italic">Keine Termine</p>
+  <h3 class="h4 p-1 mb-1"><%= date.day %></h3>
+  <% has_events = @case.calendar_events.where(when: date).any? || @case.representments.where(when: date).any? %>
+  <% if has_events %>
+  <ul class="mb-0 list-unstyled">
+    <% @case.calendar_events.where(when: date).each do |ce| %>
+      <li class="p-1"><%= link_to ce.title, '' %></li>
+    <% end %>
+    <% @case.representments.where(when: date).each do |rp| %>
+      <li class="p-1" title="<%= rp.reason %>">WV an <%= rp.to_user.display_name %></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p class="mb-1 fst-italic fs-small">Keine Termine</p>
+  <% end %>
 <% end %>

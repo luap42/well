@@ -89,6 +89,10 @@ trix-toolbar {
     margin-bottom: 0.5rem;
 }
 
+.simple-calendar table {
+    table-layout: fixed;
+}
+
 .simple-calendar .day.today {
     background-color: #ffa;
 }
@@ -100,4 +104,4 @@ trix-toolbar {
     opacity: 0.5;
 }
 
-.simple-calendar .day.wday-6 h3 { color: red; }
+.simple-calendar .day.wday-0 h3 { color: #c00; }
