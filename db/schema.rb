@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_16_205953) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_17_005104) do
   create_table "case_statuses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_16_205953) do
     t.integer "to_user_id"
     t.integer "from_user_id"
     t.boolean "priority"
+    t.boolean "dismissed"
     t.index ["case_id"], name: "index_representments_on_case_id"
     t.index ["from_user_id"], name: "index_representments_on_from_user_id"
     t.index ["to_user_id"], name: "index_representments_on_to_user_id"
