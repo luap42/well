@@ -42,5 +42,9 @@ Rails.application.routes.draw do
 
       get "clear", to: "representments#clear", as: :clear_representment
     end
+
+    scope "/notes" do
+      root to: "notes#index", as: :notes
+    end
   end
 end
