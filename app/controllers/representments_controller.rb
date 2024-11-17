@@ -1,5 +1,5 @@
 class RepresentmentsController < ApplicationController
-  before_action :get_case, only: [ :new, :create ]
+  before_action :get_case, only: [ :new, :create, :clear ]
 
   def new
     @representment = Representment.new(case: @case)
@@ -15,7 +15,8 @@ class RepresentmentsController < ApplicationController
       from_user: current_user,
       reason: params[:representment][:reason],
       when: params[:representment][:when].to_date,
-      priority: params[:representment][:priority] == "1"
+      priority: params[:representment][:priority] == "1",
+      dismissed: false
     )
 
     unless to_user.manager_of?(@case)
@@ -28,8 +29,17 @@ class RepresentmentsController < ApplicationController
     end
 
     @representment.save!
+    @case.touch
 
-    flash[:success] = "WV erfolgreich angelegt"
+    flash[:success] = "WV erfolgreich angelegt."
+    redirect_to root_path
+  end
+
+  def clear
+    current_user.representments.where(case: @case).update_all(dismissed: true)
+    @case.touch
+
+    flash[:success] = "Vorgang erfolgreich weggelegt."
     redirect_to root_path
   end
 end

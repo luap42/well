@@ -38,6 +38,7 @@ class ParticipantsController < ApplicationController
       outdated: params[:participant][:outdated] == "1",
       provide_as_template: params[:participant][:provide_as_template] == "1"
     )
+    @case.touch
 
     flash[:success] = "Beteiligte/n erfolgreich bearbeitet."
 
@@ -66,6 +67,7 @@ class ParticipantsController < ApplicationController
       outdated: params[:participant][:outdated] == "1",
       provide_as_template: params[:participant][:provide_as_template] == "1"
     )
+    @case.touch
 
     flash[:success] = "Beteiligte/n erfolgreich bearbeitet."
 
