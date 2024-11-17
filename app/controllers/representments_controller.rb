@@ -24,9 +24,7 @@ class RepresentmentsController < ApplicationController
       return render "representments/new", layout: "layouts/case_view"
     end
 
-    to_user.representments.where(case: @case).each do |rp|
-      rp.update!(dismissed: true)
-    end
+    Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
 
     @representment.save!
     @case.touch
@@ -36,7 +34,7 @@ class RepresentmentsController < ApplicationController
   end
 
   def clear
-    current_user.representments.where(case: @case).update_all(dismissed: true)
+    Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
     @case.touch
 
     flash[:success] = "Vorgang erfolgreich weggelegt."
