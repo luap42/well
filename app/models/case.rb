@@ -5,4 +5,5 @@ class Case < ApplicationRecord
 
   has_many :participants
   has_many :representments
+  has_many :notes
 end
