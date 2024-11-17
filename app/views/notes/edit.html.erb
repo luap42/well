@@ -1,0 +1,3 @@
+<%= render 'notes/template', note: @note do %>
+<%= render 'notes/form', note: @note, form_to: update_note_url(@case, @note) %>
+<% end %>

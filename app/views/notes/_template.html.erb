@@ -1,0 +1,20 @@
+<%= render 'case/case_header', view: :notes %>
+
+<div class="row">
+  <div class="col-4">
+    <div class="list-group mb-3">
+      <% @case.notes.each do |n| %>
+        <a href="<%= edit_note_url(@case, n) %>" class="list-group-item list-group-item-action <%= 'active' if note&.id == n.id %>">
+          <p class="mb-1 fw-bold"><%= n.title %></p>
+          <p class="mb-0 opacity-75 fs-small">von <%= n.user.display_name %></p>
+          <p class="mb-0 opacity-75 fs-small">zuletzt am <%= n.updated_at.strftime("%d.%m.%Y %H:%M") %> bearbeitet</p>
+        </a>
+      <% end %>
+    </div>
+
+    <a href="" class="btn btn-secondary">Neue Notiz</a>
+  </div>
+  <div class="col-8">
+    <%= yield %>
+  </div>
+</div>

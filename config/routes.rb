@@ -28,23 +28,21 @@ Rails.application.routes.draw do
       root to: "participants#index", as: :participants
       get "new", to: "participants#new", as: :new_participant
       post "new", to: "participants#create", as: :create_participant
-    end
-
-    scope "/participants/:participant_id" do
-      get "edit", to: "participants#edit", as: :edit_participant
-      post "edit", to: "participants#update", as: :update_participant
+      get ":participant_id/edit", to: "participants#edit", as: :edit_participant
+      post ":participant_id/edit", to: "participants#update", as: :update_participant
     end
 
     scope "/represent" do
       get "new", to: "representments#new", as: :new_representment
       post "new", to: "representments#create", as: :create_representment
       get "new/:days/days", to: "representments#create_for_days", as: :create_representment_for_days
-
       get "clear", to: "representments#clear", as: :clear_representment
     end
 
     scope "/notes" do
       root to: "notes#index", as: :notes
+      get ":note_id/edit", to: "notes#edit", as: :edit_note
+      post ":note_id/edit", to: "notes#update", as: :update_note
     end
   end
 end

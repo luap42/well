@@ -1,0 +1,12 @@
+<%= form_with url: form_to, model: note, method: :post do |form| %>
+  <div class="mb-3">
+    <%= form.text_field :title, class: 'form-control h3', placeholder: '' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.rich_text_area :content %>
+  </div>
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Abbrechen', notes_path(@case), class: 'btn btn-secondary mb-3' %>
+<% end %>

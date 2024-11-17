@@ -77,6 +77,6 @@ class ParticipantsController < ApplicationController
   protected
 
   def get_participant
-    @participant = Participant.find(params[:participant_id])
+    @participant = Participant.where(case: @case).find(params[:participant_id])
   end
 end

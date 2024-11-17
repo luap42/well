@@ -70,3 +70,21 @@ table.data-table tr :first-child ~ * {
 .btn:active {
     box-shadow: 0 0 5px 1px #0003 inset;
 }
+
+.form-control.h3 {
+    font-size: 1.75rem !important
+}
+
+.trix-content {
+    background-color: white;
+    min-height: 350px;
+}
+
+trix-toolbar {
+    top: 45px;
+    position: sticky;
+    background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+    padding: 1rem;
+    padding-bottom: 0;
+    margin-bottom: 0.5rem;
+}
