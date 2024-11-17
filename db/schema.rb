@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_17_170926) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_17_171118) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -90,7 +90,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_17_170926) do
     t.integer "case_id"
     t.integer "user_id"
     t.string "title"
-    t.text "comment"
     t.boolean "deleted"
     t.index ["case_id"], name: "index_notes_on_case_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
