@@ -2,7 +2,7 @@
 <h2 class="h5 mt-3 mb-3 fw-bold">Kalendar</h2>
 
 <%= month_calendar do |date| %>
-  <h3 class="h4 p-1 mb-1"><a href=""><%= date.day %></a></h3>
+  <h3 class="h4 p-1 mb-1"><a href="<%= new_event_path(@case, when: date) %>"><%= date.day %></a></h3>
   <% has_events = @case.calendar_events.where(when: date).any? || @case.representments.where(when: date).any? %>
   <% if has_events %>
   <ul class="mb-0 list-unstyled">

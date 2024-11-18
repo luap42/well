@@ -1,4 +1,4 @@
 <%= render 'case/case_header', view: :calendar %>
 <h2 class="h5 mt-3 mb-3 fw-bold">Kalendareintrag bearbeiten</h2>
 
-<%= render 'calendar/form', form_to: '', event: @calendar_event %>
+<%= render 'calendar/form', form_to: update_event_path(@case, @calendar_event), event: @calendar_event %>

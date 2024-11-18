@@ -1,12 +1,21 @@
 <%= form_with url: form_to, model: event, method: :post do |form| %>
-  <div class="form-floating mb-3">
-    <%= form.text_field :title, class: 'form-control', placeholder: '' %>
-    <%= form.label :title, 'Betreff' %>
+  <div class="row mb-3">
+    <div class="col-12 col-md-6">
+      <div class="form-floating">
+        <%= form.text_field :title, class: 'form-control', placeholder: '' %>
+        <%= form.label :title, 'Betreff' %>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="form-floating">
+        <%= form.date_field :when, class: 'form-control', placeholder: '' %>
+        <%= form.label :when, 'Datum' %>
+      </div>
+    </div>
   </div>
 
-  <div class="form-floating mb-3">
-    <%= form.date_field :when, class: 'form-control', placeholder: '' %>
-    <%= form.label :when, 'Datum' %>
+  <div class="mb-3">
+    <%= form.rich_text_area :comment, placeholder: 'Schreiben Sie einfach los...' %>
   </div>
 
   <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
