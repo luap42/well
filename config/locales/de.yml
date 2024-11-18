@@ -4,7 +4,7 @@ de:
     week: Woche
 
   date:
-    abbr_day_names:
+    day_names:
       - Sonntag
       - Montag
       - Dienstag
@@ -12,6 +12,14 @@ de:
       - Donnerstag
       - Freitag
       - Samstag
+    abbr_day_names:
+      - So
+      - Mo
+      - Di
+      - Mi
+      - Do
+      - Fr
+      - Sa
     month_names:
       - null
       - Januar
