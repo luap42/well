@@ -2,7 +2,7 @@
 
 <% if current_user.representments.any? %>
 
-<h2 class="h5 mt-3 mb-3 fw-bold">Wiedervorlagen</h2>
+<h2 class="h5 mt-5 mb-3 fw-bold">Wiedervorlagen</h2>
 
 <table class="table table-striped-rows table-hover">
   <thead>
@@ -34,4 +34,19 @@
   </tbody>
 </table>
 <% else %>
+<% end %>
+
+<% cases = current_user.cases.map { |c| c.calendar_events.where(when: Date.today).all }.flatten %>
+<% if cases.any? %>
+
+<h2 class="h5 mt-5 mb-3 fw-bold">Termine für heute: <%= Date.today.strftime("%d.%m.%Y") %></h2>
+
+<ul class="list-group">
+  <% cases.each do |ce| %>
+    <li class="list-group-item">
+      <%= link_to "#{ce.case.case_no} - #{ce.case.title}", show_case_url(ce.case), class: 'link-dark d-block px-1 text-decoration-none fs-small mb-1' %>
+      <%= link_to ce.title, edit_event_path(ce.case, ce), class: 'd-block px-1 fw-bold' %>
+    </li>
+  <% end %>
+</ul>
 <% end %>
