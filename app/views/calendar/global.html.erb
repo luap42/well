@@ -8,7 +8,7 @@
     <% cases.each do |ce| %>
       <li class="p-1">
         <p class="fs-small mb-0" title="<%= ce.case.title %>"><%= ce.case.case_no %></p>
-        <p class="mb-0"><%= link_to ce.title, '' %></p>
+        <p class="mb-0"><%= link_to ce.title, edit_event_path(ce.case, ce) %></p>
       </li>
     <% end %>
   </ul>
