@@ -7,10 +7,10 @@
   <% if has_events %>
   <ul class="mb-0 list-unstyled">
     <% @case.calendar_events.where(when: date).each do |ce| %>
-      <li class="p-1"><%= link_to ce.title, '' %></li>
+      <li class="p-1"><%= link_to ce.title, edit_event_path(@case, ce) %></li>
     <% end %>
     <% @case.representments.where(when: date).each do |rp| %>
-      <li class="p-1" title="<%= rp.reason %>"><a href="<%= show_case_path(@case) %>">WV an <%= rp.to_user.display_name %></a></li>
+      <li class="p-1" title="<%= rp.reason %>"><a href="<%= show_case_path(@case) %>" class="link-secondary">WV an <%= rp.to_user.display_name %></a></li>
     <% end %>
   </ul>
   <% else %>

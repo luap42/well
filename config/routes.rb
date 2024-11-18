@@ -52,6 +52,8 @@ Rails.application.routes.draw do
 
     scope "/calendar" do
       root to: "calendar#index", as: :calendar
+      get ":event_id/edit", to: "calendar#edit", as: :edit_event
+      post ":event_id/edit", to: "calendar#update", as: :update_event
     end
   end
 end
