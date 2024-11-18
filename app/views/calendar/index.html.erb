@@ -10,7 +10,7 @@
       <li class="p-1"><%= link_to ce.title, '' %></li>
     <% end %>
     <% @case.representments.where(when: date).each do |rp| %>
-      <li class="p-1" title="<%= rp.reason %>">WV an <%= rp.to_user.display_name %></li>
+      <li class="p-1" title="<%= rp.reason %>"><a href="<%= show_case_path(@case) %>">WV an <%= rp.to_user.display_name %></a></li>
     <% end %>
   </ul>
   <% else %>

@@ -13,7 +13,7 @@ class RepresentmentsController < ApplicationController
       case: @case,
       to_user: to_user,
       from_user: current_user,
-      reason: params[:representment][:reason],
+      reason: (params[:representment][:reason].blank? ? "zur weiteren Bearbeitung" : params[:representment][:reason]),
       when: params[:representment][:when].to_date,
       priority: params[:representment][:priority] == "1",
       dismissed: false

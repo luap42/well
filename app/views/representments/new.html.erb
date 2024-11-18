@@ -11,11 +11,11 @@
 
 <div class="form-floating mb-3">
   <%= form.text_field :reason, class: 'form-control', placeholder: '', optional: true %>
-  <%= form.label :reason, 'Anlass für WV' %>
+  <%= form.label :reason, 'Anlass für WV (optional)' %>
 </div>
 
 <div class="form-floating mb-3">
-    <%= form.select :to_user, User.all.filter {|u| u.manager_of? @case}.map { |u| [u.display_name, u.id]}, {prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+    <%= form.select :to_user, User.all.filter {|u| u.manager_of? @case}.map { |u| [u.display_name, u.id]}, {selected: @case.manager.id, prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
     <%= form.label :to_user, 'WV an' %>
 
     <div class="form-text ms-1">Eine bestehende WV bei diesem/r Nutzer/in wird gelöscht werden.</div>
