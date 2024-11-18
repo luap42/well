@@ -1,0 +1,10 @@
+<%= render 'case/case_header', view: :calendar %>
+<h2 class="h5 mt-3 mb-3 fw-bold">Kalendareintrag löschen</h2>
+
+<p>Wollen Sie den folgenden Eintrag  wirklich löschen?</p>
+<p><strong><%= @calendar_event.title %></strong> am <%= @calendar_event.when.strftime("%d.%m.%Y") %></p>
+
+<%= form_with url: destroy_event_path(@case, @calendar_event), model: @calendar_event, method: :post do |form| %>
+<%= form.submit 'Eintrag jetzt löschen', class: 'btn btn-danger mb-3' %>
+<%= link_to 'Abbrechen', edit_event_path(@case, @calendar_event), class: 'btn btn-secondary mb-3' %>
+<% end %>

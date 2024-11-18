@@ -21,6 +21,6 @@
   <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
   <%= link_to 'Abbrechen', calendar_path(@case, start_date: event.when), class: 'btn btn-secondary mb-3' %>
   <% unless event.new_record? %>
-    <%= link_to 'Eintrag löschen', '', class: 'btn btn-outline-danger mb-3' %>
+    <%= link_to 'Eintrag löschen', delete_event_path(event.case, event), class: 'btn btn-outline-danger mb-3' %>
   <% end %>
 <% end %>

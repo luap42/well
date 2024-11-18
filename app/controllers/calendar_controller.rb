@@ -1,6 +1,6 @@
 class CalendarController < ApplicationController
-  before_action :get_case, only: [ :index, :edit, :update, :new, :create ]
-  before_action :get_calendar_event, only: [ :edit, :update ]
+  before_action :get_case, only: [ :index, :edit, :update, :new, :create, :delete, :destroy ]
+  before_action :get_calendar_event, only: [ :edit, :update, :delete, :destroy ]
 
   def global; end
 
@@ -43,6 +43,16 @@ class CalendarController < ApplicationController
 
     flash[:success] = "Kalendereintrag erfolgreich gespeichert."
     redirect_to edit_event_path(@case, @calendar_event)
+  end
+
+  def delete
+    render layout: "layouts/case_view"
+  end
+
+  def destroy
+    @calendar_event.update!(deleted: true)
+    flash[:success] = "Kalendereintrag erfolgreich gelöscht."
+    redirect_to calendar_path(@case)
   end
 
   protected

@@ -56,6 +56,8 @@ Rails.application.routes.draw do
       post "new", to: "calendar#create", as: :create_event
       get ":event_id/edit", to: "calendar#edit", as: :edit_event
       post ":event_id/edit", to: "calendar#update", as: :update_event
+      get ":event_id/delete", to: "calendar#delete", as: :delete_event
+      post ":event_id/delete", to: "calendar#destroy", as: :destroy_event
     end
   end
 end
