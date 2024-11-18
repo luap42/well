@@ -93,15 +93,32 @@ trix-toolbar {
     table-layout: fixed;
 }
 
+.simple-calendar .day {
+    cursor: pointer;
+    transition: opacity .25s ease;
+}
 .simple-calendar .day.today {
     background-color: #ffa;
 }
-
-.simple-calendar .day.past {
+.simple-calendar .day.next-month,
+.simple-calendar .day.prev-month {
+    opacity: 0.5;
+}
+.simple-calendar .day.past:not(:hover) {
     opacity: 0.25;
 }
-.simple-calendar .day.next-month {
-    opacity: 0.5;
+.simple-calendar .day.next-month.past:not(:hover),
+.simple-calendar .day.prev-month.past:not(:hover) {
+    opacity: 0.125;
 }
 
 .simple-calendar .day.wday-0 h3 { color: #c00; }
+
+.simple-calendar .day h3 a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
