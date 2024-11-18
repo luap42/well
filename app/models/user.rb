@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :cases, foreign_key: :manager
+
   def display_name
     return email if full_name.blank?
     full_name

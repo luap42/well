@@ -1,0 +1,18 @@
+<h1 class="fw-bold mb-3">Dein Kalendar</h1>
+
+<%= month_calendar do |date| %>
+  <h3 class="h4 p-1 mb-1"><%= date.day %></h3>
+  <% cases = current_user.cases.map { |c| c.calendar_events.where(when: date).all }.flatten %>
+  <% if cases.any? %>
+  <ul class="mb-0 list-unstyled">
+    <% cases.each do |ce| %>
+      <li class="p-1">
+        <p class="fs-small mb-0" title="<%= ce.case.title %>"><%= ce.case.case_no %></p>
+        <p class="mb-0"><%= link_to ce.title, '' %></p>
+      </li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p class="mb-1 fst-italic px-1 fs-small">Keine Termine</p>
+  <% end %>
+<% end %>
