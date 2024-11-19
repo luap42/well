@@ -9,6 +9,10 @@ class Case < ApplicationRecord
   has_many :calendar_events
   has_many :folders
 
+  def default_folder
+    folders.where(is_default: true).first
+  end
+
   def ensure_default_folder!
     return if folders.where(is_default: true).any?
     Folder.create!(case: self, name: "Dokumente", is_default: true)

@@ -9,5 +9,5 @@
   <% end %>
 
   <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
-  <%= link_to 'Abbrechen', folder_url(@case, @folder), class: 'btn btn-secondary mb-3' %>
+  <%= link_to 'Abbrechen', folder_url(@case, (@folder.blank? ? @folder : @case.default_folder)), class: 'btn btn-secondary mb-3' %>
 <% end %>

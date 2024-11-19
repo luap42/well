@@ -1,6 +1,6 @@
 <%= render 'documents/template', note: nil, folder: @folder do %>
 
-<h3 class="h3 mb-3 fw-bold"><%= @folder.name %>/</h3>
+<h3 class="h3 mb-3 fw-bold">Ordner bearbeiten</h3>
 
 <%= render 'documents/folder_form', folder: @folder, form_to: update_folder_url(@case, @folder) %>
 

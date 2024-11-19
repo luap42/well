@@ -1,0 +1,7 @@
+<%= render 'documents/template', note: nil, folder: @folder do %>
+
+<h3 class="h3 mb-3 fw-bold">Ordner erstellen</h3>
+
+<%= render 'documents/folder_form', folder: @folder, form_to: create_folder_url(@case) %>
+
+<% end %>

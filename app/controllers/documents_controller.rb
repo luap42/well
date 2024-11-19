@@ -1,9 +1,9 @@
 class DocumentsController < ApplicationController
-  before_action :get_case, only: [ :index, :folder, :edit_folder, :update_folder ]
+  before_action :get_case, only: [ :index, :folder, :edit_folder, :update_folder, :new_folder, :create_folder ]
   before_action :get_folder, only: [ :folder, :edit_folder, :update_folder ]
 
   def index
-    redirect_to folder_url(@case, @case.folders.where(is_default: true).first)
+    redirect_to folder_url(@case, @case.default_folder)
   end
 
   def folder
@@ -16,7 +16,33 @@ class DocumentsController < ApplicationController
 
   def update_folder
     @folder.update!(name: params[:folder][:name])
+    @case.touch
+
     flash[:success] = "Ordner erfolgreich gespeichert."
+    redirect_to folder_path(@case, @folder)
+  end
+
+  def new_folder
+    @folder = Folder.new(
+      case: @case,
+      is_default: false,
+      is_protected: false,
+      password: nil
+    )
+    render layout: "layouts/case_view"
+  end
+
+  def create_folder
+    @folder = Folder.create!(
+      case: @case,
+      name: params[:folder][:name],
+      is_default: false,
+      is_protected: false,
+      password: nil
+    )
+    @case.touch
+
+    flash[:success] = "Ordner erfolgreich angelegt."
     redirect_to folder_path(@case, @folder)
   end
 

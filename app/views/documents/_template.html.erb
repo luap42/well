@@ -10,7 +10,7 @@
           <p class="mb-0">📁 <%= f.name %></p>
         </a>
       <% end %>
-      <a href="" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.new_record? %>">Neuer Ordner</a>
+      <a href="<%= new_folder_url(@case) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.new_record? %>">Neuer Ordner</a>
     </div>
   </div>
   <div class="col-8">
