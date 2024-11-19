@@ -1,0 +1,9 @@
+<%= form_with url: form_to, model: folder, method: :post do |form| %>
+  <div class="form-floating mb-3">
+    <%= form.text_field :name, class: 'form-control', placeholder: '' %>
+    <%= form.label :name, 'Ordnername' %>
+  </div>
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Abbrechen', folder_url(@case, @folder), class: 'btn btn-secondary mb-3' %>
+<% end %>

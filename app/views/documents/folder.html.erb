@@ -1,5 +1,10 @@
 <%= render 'documents/template', note: nil, folder: @folder do %>
 
-<h3 class="h4 fw-bold"><%= @folder.name %>/</h3>
+<h3 class="h3 mb-3 fw-bold"><%= @folder.name %>/</h3>
+
+<div class="mb-2">
+  <a href="" class="btn btn-primary btn-sm">Eintrag hinzufügen</a>
+  <a href="<%= edit_folder_url(@case, @folder) %>" class="btn btn-secondary btn-sm">Ordner bearbeiten</a>
+</div>
 
 <% end %>
