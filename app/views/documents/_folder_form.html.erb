@@ -4,6 +4,10 @@
     <%= form.label :name, 'Ordnername' %>
   </div>
 
+  <% if folder.is_default %>
+  <p>Dieser Ordner ist der <strong>Standard-Ordner</strong>, der verwendet wird, wenn kein anderer Ordner ausgewählt wird.</p>
+  <% end %>
+
   <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
   <%= link_to 'Abbrechen', folder_url(@case, @folder), class: 'btn btn-secondary mb-3' %>
 <% end %>
