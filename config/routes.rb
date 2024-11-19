@@ -59,5 +59,10 @@ Rails.application.routes.draw do
       get ":event_id/delete", to: "calendar#delete", as: :delete_event
       post ":event_id/delete", to: "calendar#destroy", as: :destroy_event
     end
+
+    scope "/documents" do
+      root to: "documents#index", as: :documents
+      get "fo-:folder_id", to: "documents#folder", as: :folder
+    end
   end
 end

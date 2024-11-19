@@ -12,7 +12,7 @@
         <a href="<%= participants_url(@case) %>" class="nav-link <%= 'active' if view == :parties %>">Beteiligte</a>
       </div>
       <div class="nav-item">
-        <a href="" class="nav-link <%= 'active' if view == :docs %>">Dokumente</a>
+        <a href="<%= documents_url(@case) %>" class="nav-link <%= 'active' if view == :docs %>">Dokumente</a>
       </div>
       <div class="nav-item">
         <a href="<%= calendar_url(@case) %>" class="nav-link <%= 'active' if view == :calendar %>">Kalender</a>

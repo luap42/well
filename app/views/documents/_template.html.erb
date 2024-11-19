@@ -1,0 +1,19 @@
+<%= render 'case/case_header', view: :docs %>
+
+<h2 class="h5 mt-3 mb-3 fw-bold">Dokumente</h2>
+
+<div class="row">
+  <div class="col-4">
+    <div class="list-group mb-3">
+      <% @case.folders.order(updated_at: :desc).each do |f| %>
+        <a href="<%= folder_url(@case, f) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.id == f.id %>">
+          <p class="mb-0">📁 <%= f.name %></p>
+        </a>
+      <% end %>
+      <a href="" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.new_record? %>">Neuer Ordner</a>
+    </div>
+  </div>
+  <div class="col-8">
+    <%= yield %>
+  </div>
+</div>
