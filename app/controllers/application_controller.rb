@@ -12,5 +12,6 @@ class ApplicationController < ActionController::Base
 
   def get_case
     @case = Case.find(params[:case_id])
+    @case.ensure_default_folder!
   end
 end
