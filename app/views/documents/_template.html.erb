@@ -5,9 +5,13 @@
 <div class="row">
   <div class="col-4">
     <div class="list-group mb-3">
-      <% @case.folders.order(is_default: :desc, updated_at: :desc).each do |f| %>
+      <% @case.folders.order(is_default: :desc, name: :asc).each do |f| %>
         <a href="<%= folder_url(@case, f) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.id == f.id %>">
+          <% if f.is_default %>
+          <p class="mb-0">🏠 <%= f.name %></p>
+          <% else %>
           <p class="mb-0">📁 <%= f.name %></p>
+          <% end %>
         </a>
       <% end %>
       <a href="<%= new_folder_url(@case) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.new_record? %>">Neuer Ordner</a>
