@@ -16,13 +16,13 @@
   </div>
   <div class="col-12 col-md-2">
     <div class="form-floating">
-      <%= form.select :case_type, CaseType.all.map { |tp| [tp.title, tp.id]}, {include_blank: '(alle)', selected: params[:case_type]}, { class: 'form-select' } %>
+      <%= form.select :case_type, CaseType.all.map { |tp| [tp.title, tp.id] }, {include_blank: '(alle)', selected: params[:case_type]}, { class: 'form-select' } %>
       <%= form.label :case_type, 'Kategorie' %>
     </div>
   </div>
   <div class="col-12 col-md-2">
     <div class="form-floating">
-      <%= form.select :case_status, CaseStatus.all.map { |st| [st.title, st.id]}, {include_blank: '(alle)', selected: params[:case_status]}, { class: 'form-select' } %>
+      <%= form.select :case_status, [['(alle)', 'all'], ['(offene Vorgänge)', 'open']] + CaseStatus.all.map { |st| [st.title, st.id]}, {selected: params[:case_status] || 'open'}, { class: 'form-select' } %>
       <%= form.label :case_status, 'Status' %>
     </div>
   </div>

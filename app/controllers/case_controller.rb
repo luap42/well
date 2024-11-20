@@ -6,6 +6,14 @@ class CaseController < ApplicationController
   def search
     @cases = Case.all
 
+    if params[:case_status].blank? || params[:case_status] == "open"
+      @cases = Case.that_are_open
+    elsif params[:case_status] == "all"
+      @cases = Case.all
+    else
+      @cases = Case.all.where(case_status: CaseStatus.find(params[:case_status]))
+    end
+
     unless params[:case_no].blank?
       @cases = @cases.where(
         "case_no LIKE ? OR case_no LIKE ?",
@@ -20,10 +28,6 @@ class CaseController < ApplicationController
 
     unless params[:case_type].blank?
       @cases = @cases.where(case_type: CaseType.find(params[:case_type]))
-    end
-
-    unless params[:case_status].blank?
-      @cases = @cases.where(case_status: CaseStatus.find(params[:case_status]))
     end
 
     @cases = @cases.order(updated_at: :desc)

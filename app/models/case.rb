@@ -9,6 +9,8 @@ class Case < ApplicationRecord
   has_many :calendar_events
   has_many :folders
 
+  scope :that_are_open, -> { where(case_status: CaseStatus.where.not(case_ends_here: true)) }
+
   def default_folder
     folders.where(is_default: true).first
   end
