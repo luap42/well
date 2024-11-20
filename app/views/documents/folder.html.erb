@@ -1,6 +1,6 @@
 <%= render 'documents/template', note: nil, folder: @folder do %>
 
-<h3 class="h5 mt-3 mb-3 fw-bold"><%= @folder.name %>/</h3>
+<h3 class="h5 mt-3 mb-3 fw-bold"><%= @folder.printable_name %>/</h3>
 
 <div class="mb-4">
   <a href="" class="btn btn-primary btn-sm">Dokument hinzufügen</a>
@@ -13,7 +13,7 @@
   <div class="list-group-item">
     <div class="row mb-1">
       <div class="col-auto">
-        <a href="<%= document_url(@case, @folder, d) %>" class="badge fs-5 fw-bold text-bg-dark text-decoration-none px-1"><%= "%03d" % (@folder.documents.count - id) %></a>
+        <a href="<%= document_url(@case, @folder, d) %>" class="badge fs-5 fw-bold text-bg-dark text-decoration-none px-1"><%= (d.document_number) %></a>
       </div>
       <div class="col pt-0">
         <h4 class="h6 fw-bold m-0 mb-1"><%= link_to d.name, document_url(@case, @folder, d), class: 'link-dark text-decoration-none' %></h4>

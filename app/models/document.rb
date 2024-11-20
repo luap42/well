@@ -10,4 +10,16 @@ class Document < ApplicationRecord
     return user.display_name unless user.blank?
     participant.name
   end
+
+  def true_number
+    folder.documents.count - folder.documents.where("created_at > ?", created_at).count
+  end
+
+  def document_number
+    (folder.documents.count > 667 ? "%04d" : "%03d") % true_number
+  end
+
+  def printable_name
+    document_number + "_" + name.gsub(/[^a-zA-Z0-9-]+/, "_")
+  end
 end
