@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_20_105304) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_20_105658) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -100,6 +100,25 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_105304) do
     t.string "title"
     t.text "description"
     t.boolean "is_enabled"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "case_id"
+    t.integer "folder_id"
+    t.integer "document_type_id"
+    t.integer "user_id"
+    t.integer "participant_id"
+    t.integer "note_id"
+    t.string "name"
+    t.boolean "is_deleted"
+    t.index ["case_id"], name: "index_documents_on_case_id"
+    t.index ["document_type_id"], name: "index_documents_on_document_type_id"
+    t.index ["folder_id"], name: "index_documents_on_folder_id"
+    t.index ["note_id"], name: "index_documents_on_note_id"
+    t.index ["participant_id"], name: "index_documents_on_participant_id"
+    t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
   create_table "folders", force: :cascade do |t|
