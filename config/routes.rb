@@ -38,6 +38,8 @@ Rails.application.routes.draw do
       post "new", to: "representments#create", as: :create_representment
       get "new/:days/days", to: "representments#create_for_days", as: :create_representment_for_days
       get "clear", to: "representments#clear", as: :clear_representment
+      get "step", to: "representments#step", as: :step
+      get "clear-and-step", to: "representments#clear_and_step", as: :clear_and_step
     end
 
     scope "/notes" do

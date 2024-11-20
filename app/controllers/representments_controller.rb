@@ -1,5 +1,5 @@
 class RepresentmentsController < ApplicationController
-  before_action :get_case, only: [ :new, :create, :create_for_days, :clear ]
+  before_action :get_case, only: [ :new, :create, :create_for_days, :clear, :clear_and_step, :step ]
 
   def new
     @representment = Representment.new(case: @case)
@@ -62,6 +62,26 @@ class RepresentmentsController < ApplicationController
     @case.touch
 
     flash[:success] = "Vorgang erfolgreich weggelegt."
+    redirect_to root_path
+  end
+
+  def step
+    if @case.case_status.next_step
+      @case.update!(case_status: @case.case_status.next_step)
+    end
+
+    flash[:success] = "Vorgang erfolgreich als #{@case.case_status.title} markiert."
+    redirect_to show_case_path(@case)
+  end
+
+  def clear_and_step
+    Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
+
+    if @case.case_status.next_step
+      @case.update!(case_status: @case.case_status.next_step)
+    end
+
+    flash[:success] = "Vorgang erfolgreich als #{@case.case_status.title} markiert und weggelegt."
     redirect_to root_path
   end
 end

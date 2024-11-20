@@ -45,6 +45,11 @@
         <li><a class="dropdown-item" href="<%= new_representment_url(@case) %>">Andere WV einstellen</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item" href="<%= clear_representment_url(@case) %>">Weglegen</a></li>
+        <% if @case.case_status.next_step %>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="<%= step_url(@case) %>">Markieren als: <%= @case.case_status.next_step.title %></a></li>
+        <li><a class="dropdown-item" href="<%= clear_and_step_url(@case) %>">&hellip; und weglegen</a></li>
+        <% end %>
       </ul>
     </div>
   </div>
