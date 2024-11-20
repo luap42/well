@@ -3,7 +3,7 @@
 <h3 class="h5 mt-3 mb-3 fw-bold"><%= @folder.name %>/</h3>
 
 <div class="mb-4">
-  <a href="" class="btn btn-primary btn-sm">Eintrag hinzufügen</a>
+  <a href="" class="btn btn-primary btn-sm">Dokument hinzufügen</a>
   <a href="<%= edit_folder_url(@case, @folder) %>" class="btn btn-secondary btn-sm">Ordner bearbeiten</a>
 </div>
 
@@ -17,7 +17,7 @@
       </div>
       <div class="col pt-0">
         <h4 class="h6 fw-bold m-0 mb-1"><%= link_to d.name, '', class: 'link-dark text-decoration-none' %></h4>
-        <p class="m-0 fs-small"><%= d.author_name %>, <%= d.created_at.strftime("%d.%m.%Y") %></p>
+        <p class="m-0 fs-small"><%= d.author_name %>, <%= d.sent_at.strftime("%d.%m.%Y") %></p>
       </div>
       <div class="col-auto pt-0">
         <span class="badge text-bg-secondary"><%= d.document_type.title %></span>

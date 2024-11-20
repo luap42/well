@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_20_105658) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_20_112321) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -113,6 +113,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_105658) do
     t.integer "note_id"
     t.string "name"
     t.boolean "is_deleted"
+    t.date "sent_at"
     t.index ["case_id"], name: "index_documents_on_case_id"
     t.index ["document_type_id"], name: "index_documents_on_document_type_id"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
