@@ -62,11 +62,14 @@ Rails.application.routes.draw do
 
     scope "/documents" do
       root to: "documents#index", as: :documents
+
       get "fo-:folder_id", to: "documents#folder", as: :folder
       get "fo/new", to: "documents#new_folder", as: :new_folder
       post "fo/new", to: "documents#create_folder", as: :create_folder
       get "fo-:folder_id/edit", to: "documents#edit_folder", as: :edit_folder
       post "fo-:folder_id/edit", to: "documents#update_folder", as: :update_folder
+
+      get "fo-:folder_id/do-:document_id", to: "documents#document", as: :document
     end
   end
 end

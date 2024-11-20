@@ -1,0 +1,7 @@
+<%= render 'documents/template', note: nil, folder: @folder do %>
+
+<h3 class="h5 mt-3 mb-3 fw-bold">
+  <%= link_to @folder.name, folder_url(@case, @folder), class: 'text-decoration-none' %>/<%= @document.name %>/
+</h3>
+
+<% end %>

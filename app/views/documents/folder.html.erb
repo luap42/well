@@ -13,10 +13,10 @@
   <div class="list-group-item">
     <div class="row mb-1">
       <div class="col-auto">
-        <a href="" class="badge fs-5 fw-bold text-bg-dark text-decoration-none px-1"><%= "%03d" % (@folder.documents.count - id) %></a>
+        <a href="<%= document_url(@case, @folder, d) %>" class="badge fs-5 fw-bold text-bg-dark text-decoration-none px-1"><%= "%03d" % (@folder.documents.count - id) %></a>
       </div>
       <div class="col pt-0">
-        <h4 class="h6 fw-bold m-0 mb-1"><%= link_to d.name, '', class: 'link-dark text-decoration-none' %></h4>
+        <h4 class="h6 fw-bold m-0 mb-1"><%= link_to d.name, document_url(@case, @folder, d), class: 'link-dark text-decoration-none' %></h4>
         <p class="m-0 fs-small"><%= d.author_name %>, <%= d.sent_at.strftime("%d.%m.%Y") %></p>
       </div>
       <div class="col-auto pt-0">
