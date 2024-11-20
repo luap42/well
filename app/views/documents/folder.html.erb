@@ -2,9 +2,32 @@
 
 <h3 class="h5 mt-3 mb-3 fw-bold"><%= @folder.name %>/</h3>
 
-<div class="mb-2">
+<div class="mb-4">
   <a href="" class="btn btn-primary btn-sm">Eintrag hinzufügen</a>
   <a href="<%= edit_folder_url(@case, @folder) %>" class="btn btn-secondary btn-sm">Ordner bearbeiten</a>
 </div>
+
+<% if @folder.documents.any? %>
+<div class="list-group list-group-flush mb-3">
+  <% @folder.documents.order(created_at: :desc).each_with_index do |d, id| %>
+  <div class="list-group-item">
+    <div class="row mb-1">
+      <div class="col-auto">
+        <a href="" class="badge fs-5 fw-bold text-bg-dark text-decoration-none px-1"><%= "%03d" % (@folder.documents.count - id) %></a>
+      </div>
+      <div class="col pt-2">
+        <h4 class="h6 fw-bold m-0 mb-1"><%= link_to d.name, '', class: 'link-dark text-decoration-none' %></h4>
+        <p class="m-0 fs-small"><%= d.author_name %>, <%= d.created_at.strftime("%d.%m.%Y") %></p>
+      </div>
+      <div class="col-auto pt-1">
+        <span class="badge text-bg-secondary"><%= d.document_type.title %></span>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+<% else %>
+<p>Dieser Ordner ist leer.</p>
+<% end %>
 
 <% end %>
