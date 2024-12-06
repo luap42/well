@@ -17,7 +17,7 @@
       <%= link_to url_for(item.file), class: 'col pt-0 d-block link-dark text-decoration-none', target: '_blank' do %>
         <% if !item.file.blank? %>
         <h4 class="h6 mb-1 fw-bold"><%= item.file_name %></h4>
-        <p class="mb-0 fs-small"><%= item.file.content_type %>, <%= "%.2f" % (item.file.byte_size / 1.0.megabyte) %> MB</p>
+        <p class="mb-0 fs-small"><%= item.file_type %>, <%= "%.2f" % (item.file.byte_size / 1.0.megabyte) %> MB</p>
         <% else %>
         <h4 class="h6 fw-bold text-danger m-0 mb-1"><%= item.file_name %></h4>
         <p class="mb-0 fs-small">Datei nicht gefunden</p>
