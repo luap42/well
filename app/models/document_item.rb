@@ -24,6 +24,8 @@ class DocumentItem < ApplicationRecord
       "HTML-Dokument"
     when "image/png"
       "PNG-Bild"
+    when "application/pkcs7-signature"
+      "Elektronische Signatur"
     else
       file.content_type
     end
