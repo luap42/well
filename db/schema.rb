@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_20_112321) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_06_162624) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -92,6 +92,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_112321) do
     t.index ["case_status_id"], name: "index_cases_on_case_status_id"
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
     t.index ["manager_id"], name: "index_cases_on_manager_id"
+  end
+
+  create_table "document_items", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "folder_id"
+    t.integer "document_id"
+    t.string "file_name"
+    t.boolean "is_primary"
+    t.boolean "is_attachment"
+    t.boolean "is_transactional"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_document_items_on_case_id"
+    t.index ["document_id"], name: "index_document_items_on_document_id"
+    t.index ["folder_id"], name: "index_document_items_on_folder_id"
   end
 
   create_table "document_types", force: :cascade do |t|
