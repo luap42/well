@@ -55,7 +55,19 @@
 
     <p><%= @case.manager&.display_name %></p>
 
+
+    <% events = @case.calendar_events.where(when: Date.today..1.month.from_now) %>
+    <% if events.any? %>
     <h2 class="h5 mt-3 mb-3 fw-bold">Anstehende Termine</h2>
+    <ul class="list-group">
+      <% events.each do |ce| %>
+        <li class="list-group-item">
+          <p class="fs-small mb-0"><%= ce.when.strftime("%d.%m.%Y") %></p>
+          <%= link_to ce.title, edit_event_path(ce.case, ce), class: 'd-block fw-bold' %>
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
 
     <% if @case.participants.count > 0 %>
     <h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte des Vorgangs</h2>
