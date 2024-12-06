@@ -1,0 +1,7 @@
+<%= render 'documents/template', note: nil, folder: @folder do %>
+
+<h3 class="h3 mb-3 fw-bold">Dokument bearbeiten</h3>
+
+<%= render 'documents/document_form', document: @document, form_to: update_document_url(@case, @folder, @document) %>
+
+<% end %>

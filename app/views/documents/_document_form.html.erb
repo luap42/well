@@ -1,0 +1,45 @@
+<%= form_with url: form_to, model: document, method: :post do |form| %>
+  <div class="form-floating mb-3">
+    <%= form.text_field :name, class: 'form-control', placeholder: '' %>
+    <%= form.label :name, 'Name des Dokuments' %>
+  </div>
+
+  <div class="form-floating mb-3">
+    <%= form.date_field :sent_at, class: 'form-control', placeholder: '' %>
+    <%= form.label :sent_at, 'Datum des Dokuments' %>
+  </div>
+
+  <div class="form-floating mb-3">
+    <%= form.select :document_type, DocumentType.all.map { |dt| [dt.title, dt.id]}, {selected: document.document_type&.id, prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+    <%= form.label :document_type, 'Dokumententyp' %>
+  </div>
+
+  <p class="mt-3 mb-1">Wählen Sie aus, von wem das Dokument stammt. Sie können nur entweder eine/n Beteiligte/n oder eine/n Nutzer/in auswählen. Wenn Sie beide auswählen, geht die/der Nutzer/in vor.</p>
+
+  <div class="row mb-3">
+    <div class="col col-md-6">
+      <div class="form-floating">
+        <%= form.select :participant, @case.participants.all.map { |u| [u.name, u.id]}, {selected: document.participant&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select' } %>
+        <%= form.label :participant, 'Beteiligter' %>
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <div class="form-floating">
+        <%= form.select :user, User.all.map { |u| [u.display_name, u.id]}, {selected: document.user&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select' } %>
+        <%= form.label :user, 'Nutzer/in' %>
+      </div>
+    </div>
+  </div>
+
+  <% if document.primary_item.blank? %>
+  <p class="mt-3 mb-1">Sie können auch schon bereits eine Hauptdatei für dieses Dokument hochladen:</p>
+
+  <div class="mb-3">
+    <%= form.file_field :file, class: 'form-control', placeholder: '' %>
+  </div>
+
+  <% end %>
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Abbrechen', document.persisted? ? document_url(@case, @folder, document) : folder_url(@case, @folder), class: 'btn btn-secondary mb-3' %>
+<% end %>

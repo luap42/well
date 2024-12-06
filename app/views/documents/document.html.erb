@@ -38,10 +38,16 @@
   <% end %>
 </div>
 
-<p><a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm">Weitere Datei hochladen</a></p>
+<p>
+  <a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm">Weitere Datei hochladen</a>
+  <a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm">Dokument bearbeiten</a>
+</p>
 <% else %>
 <p>Für dieses Dokument wurden noch keine Dateien hochgeladen.</p>
-<p><a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-primary">Jetzt Datei hochladen</a></p>
+<p>
+  <a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-primary">Jetzt Datei hochladen</a>
+  <a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary">Dokument bearbeiten</a>
+</p>
 <% end %>
 
 <% end %>

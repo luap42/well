@@ -6,7 +6,6 @@
 
 <%= form_with url: create_document_item_url, model: @document_item, method: :post do |form| %>
   <div class="mb-3">
-    <%= form.label :file, 'Datei hochladen' %>
     <%= form.file_field :file, class: 'form-control', placeholder: '' %>
   </div>
 

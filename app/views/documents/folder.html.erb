@@ -3,7 +3,7 @@
 <h3 class="h5 mt-3 mb-3 fw-bold"><%= @folder.printable_name %>/</h3>
 
 <div class="mb-4">
-  <a href="" class="btn btn-primary btn-sm">Dokument hinzufügen</a>
+  <a href="<%= new_document_url(@case, @folder) %>" class="btn btn-primary btn-sm">Dokument hinzufügen</a>
   <a href="<%= edit_folder_url(@case, @folder) %>" class="btn btn-secondary btn-sm">Ordner bearbeiten</a>
 </div>
 
