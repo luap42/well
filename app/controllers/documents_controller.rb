@@ -69,7 +69,7 @@ class DocumentsController < ApplicationController
       sent_at: params[:document][:sent_at].to_date,
       document_type: DocumentType.find(params[:document][:document_type]),
       participant: has_user ? nil : @case.participants.find(params[:document][:participant]),
-      user: has_user ? User.find(params[:document][:user]) : nil,
+      user: has_user ? User.find(params[:document][:user]) : nil
     )
 
     if @document.primary_item.blank? and params[:document][:file]
@@ -93,9 +93,48 @@ class DocumentsController < ApplicationController
   end
 
   def new_document
+    @document = Document.new(
+      case: @case,
+      folder: @folder,
+      sent_at: Date.today,
+      is_deleted: false
+    )
+
+    render layout: "layouts/case_view"
   end
 
   def create_document
+    has_user = !params[:document][:user].blank?
+
+    @document = Document.create!(
+      case: @case,
+      folder: @folder,
+      is_deleted: false,
+      name: params[:document][:name],
+      sent_at: params[:document][:sent_at].to_date,
+      document_type: DocumentType.find(params[:document][:document_type]),
+      participant: has_user ? nil : @case.participants.find(params[:document][:participant]),
+      user: has_user ? User.find(params[:document][:user]) : nil
+    )
+
+    if @document.primary_item.blank? and params[:document][:file]
+      uploaded_file = params[:document][:file]
+      @document_item = DocumentItem.create!(
+        case: @case,
+        folder: @folder,
+        document: @document,
+        file_name: uploaded_file.original_filename,
+        is_primary: true,
+        is_attachment: false,
+        is_transactional: false
+      )
+      @document_item.file.attach(uploaded_file)
+    end
+
+    @case.touch
+
+    flash[:success] = "Dokument erfolgreich erstellt."
+    redirect_to document_path(@case, @folder, @document)
   end
 
   def new_document_item
