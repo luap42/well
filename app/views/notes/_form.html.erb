@@ -7,6 +7,13 @@
     <%= form.rich_text_area :content, placeholder: 'Schreiben Sie einfach los...' %>
   </div>
 
+  <% unless note.document.blank? %>
+    <div class="alert alert-secondary py-2 mb-3">
+      <p class="m-0">Diese Notiz gehört zu dem Dokument <%= link_to "#{note.document.document_number} - #{note.document.name}", document_url(@case, note.document.folder, note.document), target: '_blank', class: 'link-dark' %>.</p>
+    </div>
+    <%= form.hidden_field :document, { value: @note.document.id } %>
+  <% end %>
+
   <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
   <%= link_to 'Abbrechen', notes_path(@case), class: 'btn btn-secondary mb-3' %>
   <% unless note.new_record? %>

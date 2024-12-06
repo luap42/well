@@ -8,6 +8,8 @@
   <% end %>
 </h3>
 
+<a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm mb-3">Weitere Datei hochladen</a>
+<a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm mb-3">Dokument bearbeiten</a>
 
 <% if @document.document_items.any? %>
 <div class="list-group list-group-flush mb-3">
@@ -38,10 +40,25 @@
   <% end %>
 </div>
 
-<p>
-  <a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm">Weitere Datei hochladen</a>
-  <a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm">Dokument bearbeiten</a>
-</p>
+<h4 class="mt-5 mb-3 h5">Notizen zu diesem Dokument</h4>
+
+<% if !@document.note.blank? %>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <%= @document.note.content %>
+  </div>
+  <div class="card-footer">
+    <a href="<%= edit_note_url(@case, @document.note) %>" class="btn btn-outline-secondary btn-sm">Notiz bearbeiten</a>
+  </div>
+</div>
+
+
+
+<% else %>
+<p>Für dieses Dokument wurden noch keine Notiz erstellt. <a href="<%= new_note_url(@case, document: @document) %>">Jetzt erstellen</a></p>
+<% end %>
+
 <% else %>
 <p>Für dieses Dokument wurden noch keine Dateien hochgeladen.</p>
 <p>

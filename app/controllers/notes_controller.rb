@@ -22,6 +22,15 @@ class NotesController < ApplicationController
 
   def new
     @note = Note.new(case: @case, deleted: false)
+    @document = nil
+
+    if params.include? :document
+      @document = @case.documents.find(params[:document])
+      @note.title = "Notiz zu: #{@document.document_number} - #{@document.name}"
+    end
+
+    @note.document = @document
+
     render layout: "layouts/case_view"
   end
 
@@ -33,6 +42,11 @@ class NotesController < ApplicationController
       deleted: false,
       user: current_user
     )
+
+    if params[:note].include? :document
+      @document = @case.documents.find(params[:note][:document])
+      @note.update!(document: @document)
+    end
 
     flash[:success] = "Notiz erfolgreich gespeichert."
     redirect_to edit_note_path(@case, @note)
