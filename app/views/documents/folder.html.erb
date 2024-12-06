@@ -20,7 +20,12 @@
         <p class="m-0 fs-small"><%= d.author_name %>, <%= d.sent_at.strftime("%d.%m.%Y") %></p>
       <% end %>
       <div class="col-auto pt-0">
-        <span class="badge text-bg-secondary"><%= d.document_type.title %></span>
+        <% if d.primary_item.blank? %>
+          <span class="badge text-secondary border"><%= d.document_type.title %></span>
+        <% else %>
+          <%= link_to "#{d.document_type.title}", url_for(d.primary_item.file),
+                      class: 'badge text-bg-secondary text-decoration-none', target: '_blank' %>
+        <% end %>
       </div>
     </div>
   </div>
