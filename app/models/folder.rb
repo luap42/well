@@ -3,6 +3,6 @@ class Folder < ApplicationRecord
   has_many :documents
 
   def printable_name
-    name.gsub(/[^a-zA-Z0-9-]+/, "_")
+    name.gsub(/[^a-zA-Z0-9-ÄäÖöÜüß]+/, "_")
   end
 end

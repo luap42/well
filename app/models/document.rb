@@ -22,7 +22,7 @@ class Document < ApplicationRecord
   end
 
   def printable_name
-    document_number + "_" + name.gsub(/[^a-zA-Z0-9-]+/, "_")
+    document_number + "_" + name.gsub(/[^a-zA-Z0-9-ÄäÖöÜüß]+/, "_")
   end
 
   def primary_item
