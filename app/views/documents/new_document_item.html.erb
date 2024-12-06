@@ -1,0 +1,42 @@
+<%= render 'documents/template', note: nil, folder: @folder do %>
+
+<h3 class="h5 mt-3 mb-3 fw-bold">
+  <%= link_to @folder.printable_name, folder_url(@case, @folder), class: 'text-decoration-none' %>/<%= @document.printable_name %>/
+</h3>
+
+<%= form_with url: create_document_item_url, model: @document_item, method: :post do |form| %>
+  <div class="mb-3">
+    <%= form.label :file, 'Datei hochladen' %>
+    <%= form.file_field :file, class: 'form-control', placeholder: '' %>
+  </div>
+
+  <p class="mb-3">Welche Rolle spielt die Datei für dieses Dokument?</p>
+
+  <div class="mb-3">
+    <div class="form-check mb-1">
+      <%= form.radio_button :type, :primary, class: 'form-check-input', checked: @document.document_items.count == 0 %>
+      <%= form.label :type_primary, 'Hauptdatei' %>
+    </div>
+
+    <div class="form-check mb-1">
+      <%= form.radio_button :type, :attachment, class: 'form-check-input' %>
+      <%= form.label :type_attachment, 'Anlage' %>
+    </div>
+
+    <div class="form-check mb-1">
+      <%= form.radio_button :type, :transactional, class: 'form-check-input' %>
+      <%= form.label :type_transactional, 'Transaktionsbeleg (z. B. E-Mail-Lesebestätigung oder ERV-Beleg)' %>
+    </div>
+
+    <div class="form-check mb-1">
+      <%= form.radio_button :type, :other, class: 'form-check-input', checked: @document.document_items.count != 0 %>
+      <%= form.label :type_other, 'Sonstiges' %>
+    </div>
+  </div>
+
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Abbrechen', document_url(@case, @folder, @document), class: 'btn btn-secondary mb-3' %>
+<% end %>
+
+<% end %>

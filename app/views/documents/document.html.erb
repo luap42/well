@@ -11,7 +11,7 @@
     <div class="row mb-1">
       <div class="col pt-0">
         <% if !item.file.blank? %>
-        <h4 class="h6 fw-bold m-0"><%= link_to item.file_name, item.file, class: 'link-dark text-decoration-none' %></h4>
+        <h4 class="h6 fw-bold m-0"><%= link_to item.file_name, url_for(item.file), class: 'link-dark text-decoration-none' %></h4>
         <% else %>
         <h4 class="h6 fw-bold text-danger m-0 mb-1"><%= item.file_name %></h4>
         <p class="mb-0 fs-small">Datei nicht gefunden</p>
@@ -32,10 +32,10 @@
   <% end %>
 </div>
 
-<p><a href="" class="btn btn-secondary btn-sm">Weitere Datei hochladen</a></p>
+<p><a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm">Weitere Datei hochladen</a></p>
 <% else %>
 <p>Für dieses Dokument wurden noch keine Dateien hochgeladen.</p>
-<p><a href="" class="btn btn-primary">Jetzt Datei hochladen</a></p>
+<p><a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-primary">Jetzt Datei hochladen</a></p>
 <% end %>
 
 <% end %>

@@ -72,6 +72,9 @@ Rails.application.routes.draw do
       post "fo-:folder_id/edit", to: "documents#update_folder", as: :update_folder
 
       get "fo-:folder_id/do-:document_id", to: "documents#document", as: :document
+
+      get "fo-:folder_id/do-:document_id/i/new", to: "documents#new_document_item", as: :new_document_item
+      post "fo-:folder_id/do-:document_id/i/new", to: "documents#create_document_item", as: :create_document_item
     end
   end
 end

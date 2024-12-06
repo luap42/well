@@ -1,8 +1,10 @@
 class DocumentsController < ApplicationController
   before_action :get_case, only: [ :index, :folder, :edit_folder, :update_folder, :new_folder,
-                                   :create_folder, :document ]
-  before_action :get_folder, only: [ :folder, :edit_folder, :update_folder, :document ]
-  before_action :get_document, only: [ :document ]
+                                   :create_folder, :document, :new_document_item,
+                                   :create_document_item ]
+  before_action :get_folder, only: [ :folder, :edit_folder, :update_folder, :document,
+                                     :new_document_item, :create_document_item ]
+  before_action :get_document, only: [ :document, :new_document_item, :create_document_item ]
 
   def index
     redirect_to folder_url(@case, @case.default_folder)
@@ -50,6 +52,34 @@ class DocumentsController < ApplicationController
 
   def document
     render layout: "layouts/case_view"
+  end
+
+  def new_document_item
+    @document_item = DocumentItem.new(
+      case: @case,
+      folder: @folder,
+      document: @document
+    )
+
+    render layout: "layouts/case_view"
+  end
+
+  def create_document_item
+    uploaded_file = params[:document_item][:file]
+    @document_item = DocumentItem.create!(
+      case: @case,
+      folder: @folder,
+      document: @document,
+      file_name: uploaded_file.original_filename,
+      is_primary: params[:document_item][:type].to_sym == :primary,
+      is_attachment: params[:document_item][:type].to_sym == :attachment,
+      is_transactional: params[:document_item][:type].to_sym == :transactional
+    )
+    @document_item.file.attach(uploaded_file)
+    @case.touch
+
+    flash[:success] = "Datei erfolgreich hochgeladen."
+    redirect_to document_path(@case, @folder, @document)
   end
 
   protected
