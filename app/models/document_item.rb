@@ -5,6 +5,17 @@ class DocumentItem < ApplicationRecord
 
   has_one_attached :file
 
+  def short_file_name
+    base_name = File.basename(file_name)
+    extension = File.extname(file_name)
+
+    if base_name.size > 22
+      "#{base_name[..20]}...#{extension[1..]}"
+    else
+      file_name
+    end
+  end
+
   def type
     return :primary if is_primary
     return :attachment if is_attachment
