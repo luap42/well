@@ -4,4 +4,38 @@
   <%= link_to @folder.printable_name, folder_url(@case, @folder), class: 'text-decoration-none' %>/<%= @document.printable_name %>/
 </h3>
 
+<% if @document.document_items.any? %>
+<div class="list-group list-group-flush mb-3">
+  <% @document.document_items.default_order.each do |item| %>
+  <div class="list-group-item">
+    <div class="row mb-1">
+      <div class="col pt-0">
+        <% if !item.file.blank? %>
+        <h4 class="h6 fw-bold m-0"><%= link_to item.file_name, item.file, class: 'link-dark text-decoration-none' %></h4>
+        <% else %>
+        <h4 class="h6 fw-bold text-danger m-0 mb-1"><%= item.file_name %></h4>
+        <p class="mb-0 fs-small">Datei nicht gefunden</p>
+        <% end %>
+      </div>
+      <div class="col-auto pt-0">
+        <% case item.type %>
+        <% when :primary %>
+        <span class="badge text-bg-primary">Hauptdatei</span>
+        <% when :attachment %>
+        <span class="badge text-bg-secondary">Anlage</span>
+        <% when :transactional %>
+        <span class="badge text-bg-secondary">Transaktionsbeleg</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<p><a href="" class="btn btn-secondary btn-sm">Weitere Datei hochladen</a></p>
+<% else %>
+<p>Für dieses Dokument wurden noch keine Dateien hochgeladen.</p>
+<p><a href="" class="btn btn-primary">Jetzt Datei hochladen</a></p>
+<% end %>
+
 <% end %>

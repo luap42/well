@@ -6,6 +6,8 @@ class Document < ApplicationRecord
   belongs_to :participant, optional: true
   belongs_to :note, optional: true
 
+  has_many :document_items
+
   def author_name
     return user.display_name unless user.blank?
     participant.name

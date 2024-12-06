@@ -11,4 +11,8 @@ class DocumentItem < ApplicationRecord
     return :transactional if is_transactional
     :other
   end
+
+  def self.default_order
+    DocumentItem.order(is_primary: :desc, is_attachment: :desc, is_transactional: :asc, file_name: :asc)
+  end
 end
