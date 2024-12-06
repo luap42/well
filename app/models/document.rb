@@ -24,4 +24,8 @@ class Document < ApplicationRecord
   def printable_name
     document_number + "_" + name.gsub(/[^a-zA-Z0-9-]+/, "_")
   end
+
+  def primary_item
+    document_items.where(is_primary: true).first
+  end
 end

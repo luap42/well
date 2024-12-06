@@ -2,25 +2,31 @@
 
 <h3 class="h5 mt-3 mb-3 fw-bold">
   <%= link_to @folder.printable_name, folder_url(@case, @folder), class: 'text-decoration-none' %>/<%= @document.printable_name %>/
+  <% unless @document.primary_item.blank? %>
+    <%= link_to "💾 #{@document.primary_item.file_name}", url_for(@document.primary_item.file),
+              class: 'btn btn-outline-dark py-0 fw-bold shadow-sm', target: '_blank' %>
+  <% end %>
 </h3>
+
 
 <% if @document.document_items.any? %>
 <div class="list-group list-group-flush mb-3">
   <% @document.document_items.default_order.each do |item| %>
   <div class="list-group-item">
     <div class="row mb-1">
-      <div class="col pt-0">
+      <%= link_to url_for(item.file), class: 'col pt-0 d-block link-dark text-decoration-none', target: '_blank' do %>
         <% if !item.file.blank? %>
-        <h4 class="h6 fw-bold m-0"><%= link_to item.file_name, url_for(item.file), class: 'link-dark text-decoration-none' %></h4>
+        <h4 class="h6 mb-1 fw-bold"><%= item.file_name %></h4>
+        <p class="mb-0 fs-small"><%= item.file.content_type %>, <%= "%.2f" % (item.file.byte_size / 1.0.megabyte) %> MB</p>
         <% else %>
         <h4 class="h6 fw-bold text-danger m-0 mb-1"><%= item.file_name %></h4>
         <p class="mb-0 fs-small">Datei nicht gefunden</p>
         <% end %>
-      </div>
+      <% end %>
       <div class="col-auto pt-0">
         <% case item.type %>
         <% when :primary %>
-        <span class="badge text-bg-primary">Hauptdatei</span>
+        <span class="badge text-bg-primary fs-5">Hauptdatei</span>
         <% when :attachment %>
         <span class="badge text-bg-secondary">Anlage</span>
         <% when :transactional %>
