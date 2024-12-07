@@ -4,7 +4,7 @@
   <%= link_to @folder.printable_name, folder_url(@case, @folder), class: 'text-decoration-none' %>/<%= @document.printable_name %>/
   <% unless @document.primary_item.blank? %>
     <%= link_to "💾 #{@document.primary_item.short_file_name}", url_for(@document.primary_item.file),
-              class: 'btn btn-outline-dark py-0 fw-bold shadow-sm', target: '_blank' %>
+              class: 'btn btn-outline-dark py-0 fw-bold shadow-sm my-1', target: '_blank' %>
   <% end %>
 </h3>
 
