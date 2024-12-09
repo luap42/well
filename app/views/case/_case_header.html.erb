@@ -18,6 +18,9 @@
         <a href="<%= calendar_url(@case) %>" class="nav-link <%= 'active' if view == :calendar %>">Kalender</a>
       </div>
       <div class="nav-item">
+        <a href="<%= notes_url(@case) %>" class="nav-link <%= 'active' if view == :tasks %>">Aufgaben</a>
+      </div>
+      <div class="nav-item">
         <a href="<%= notes_url(@case) %>" class="nav-link <%= 'active' if view == :notes %>">Notizen</a>
       </div>
       <div class="nav-item">
