@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :cases, foreign_key: :manager
+  has_many :tasks
 
   def display_name
     return email if full_name.blank?
