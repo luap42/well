@@ -80,5 +80,9 @@ Rails.application.routes.draw do
       get "fo-:folder_id/do-:document_id/i/new", to: "documents#new_document_item", as: :new_document_item
       post "fo-:folder_id/do-:document_id/i/new", to: "documents#create_document_item", as: :create_document_item
     end
+
+    scope "/tasks" do
+      root to: "tasks#index", as: :tasks
+    end
   end
 end

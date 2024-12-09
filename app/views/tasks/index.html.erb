@@ -1,0 +1,15 @@
+<%= render 'case/case_header', view: :tasks %>
+
+<div class="row flex-nowrap g-1 overflow-auto pb-3">
+  <% @case.task_columns.order(:title).each do |col| %>
+    <div class="col col-4">
+      <div class="card">
+        <div class="card-header fw-bold h5">
+          <button class="btn btn-sm btn-light float-end">Bearbeiten</button>
+          <h2 class="h5 m-0 mt-1 fw-bold"><%= col.title %></h2>
+        </div>
+        <div class="card-body"></div>
+      </div>
+    </div>
+  <% end %>
+</div>
