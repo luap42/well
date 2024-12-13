@@ -10,27 +10,27 @@
 <div class="row flex-nowrap g-1 overflow-auto pb-3">
   <% @case.task_columns.order(:title).each do |col| %>
     <div class="col col-4">
-      <div class="card">
-        <div class="card-header fw-bold">
-          <button class="btn btn-sm btn-light float-end">Bearbeiten</button>
+      <div class="card text-bg-light">
+        <div class="card-header pe-2 fw-bold">
+          <button class="btn btn-sm btn-outline-dark float-end">Bearbeiten</button>
           <h2 class="h5 m-0 mt-1 fw-bold"><%= col.title %></h2>
         </div>
-        <div class="card-body p-1">
+        <div class="card-body pb-1">
           <% if col.tasks.any? %>
-            <div class="list-group list-group-flush">
-              <% col.tasks.order(:updated_at).each do |task|%>
-                <a href="" class="list-group-item list-group-item-action">
+            <% col.tasks.order(:updated_at).each do |task|%>
+              <a href="" class="card mb-2 text-decoration-none">
+                <div class="card-body py-2">
                   <p class="mb-0"><strong><%= task.title %></strong></p>
                   <% if task.user %>
                     <p class="mb-0">Für: <%= task.user.display_name %></p>
                   <% else %>
                     <p class="mb-0">nicht zugewiesen</p>
                   <% end %>
-                </a>
-              <% end %>
-            </div>
+                </div>
+              </a>
+            <% end %>
           <% else %>
-            <div class="p-2">Hier ist gerade nichts.</div>
+            <div class="mb-2">Hier ist gerade nichts.</div>
           <% end %>
         </div>
       </div>
