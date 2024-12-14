@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div class="row flex-nowrap g-1 overflow-auto pb-3">
+<div class="row flex-nowrap g-2 overflow-auto pb-3">
   <% @case.task_columns.order(:title).each do |col| %>
     <div class="col col-4">
       <div class="card text-bg-light">
@@ -15,7 +15,7 @@
           <button class="btn btn-sm btn-outline-dark float-end">Bearbeiten</button>
           <h2 class="h5 m-0 mt-1 fw-bold"><%= col.title %></h2>
         </div>
-        <div class="card-body pb-1">
+        <div class="card-body p-2 pb-0">
           <% if col.tasks.any? %>
             <% col.tasks.order(:is_resolved, :due, :updated_at).each do |task|%>
               <a href="<%= edit_task_url(@case, task) %>" class="card mb-2 text-decoration-none <%= task.status == :overdue ? "bg-warning-subtle" : "" %> <%= task.status == :resolved ? "border-success opacity-25" : "shadow-sm" %>">
@@ -33,7 +33,7 @@
               </a>
             <% end %>
           <% else %>
-            <div class="mb-2">Hier ist gerade nichts.</div>
+            <div class="mb-2 p-2 text-center fs-small">Hier ist gerade nichts.</div>
           <% end %>
         </div>
       </div>
