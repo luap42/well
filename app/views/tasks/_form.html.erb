@@ -19,6 +19,20 @@
         <%= form.select :task_column, @case.task_columns.all.map { |dt| [dt.title, dt.id]}, {selected: task.task_column&.id, prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
         <%= form.label :task_column, 'Status' %>
       </div>
+
+      <div class="form-floating mb-3">
+        <%= form.date_field :due, class: 'form-control', placeholder: '' %>
+        <%= form.label :due, 'Zu erledigen bis' %>
+      </div>
+
+      <div class="card">
+        <div class="card-body py-1">
+          <div class="form-check m-0">
+            <%= form.check_box :is_resolved, class: 'form-check-input', checked: task.is_resolved %>
+            <%= form.label :is_resolved, 'Aufgabe als erledigt markieren' %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

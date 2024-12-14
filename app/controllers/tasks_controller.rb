@@ -15,7 +15,9 @@ class TasksController < ApplicationController
       title: params[:task][:title],
       description: params[:task][:description],
       user: params[:task][:user].blank? ? nil : User.find(params[:task][:user]),
-      task_column: @case.task_columns.find(params[:task][:task_column])
+      task_column: @case.task_columns.find(params[:task][:task_column]),
+      due: params[:task][:due].blank? ? nil : params[:task][:due].to_date,
+      is_resolved: !params[:task][:is_resolved].blank?
     )
 
     flash[:success] = "Aufgabe erfolgreich gespeichert."
