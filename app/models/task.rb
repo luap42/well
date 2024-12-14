@@ -6,4 +6,11 @@ class Task < ApplicationRecord
   has_rich_text :description
 
   default_scope { where.not(is_deleted: true) }
+
+  def status
+    return :deleted if is_deleted
+    return :resolved if is_resolved
+    return :overdue if due != nil && due < Date.today
+    :pending
+  end
 end
