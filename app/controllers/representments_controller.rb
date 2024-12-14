@@ -68,6 +68,7 @@ class RepresentmentsController < ApplicationController
   def step
     if @case.case_status.next_step
       @case.update!(case_status: @case.case_status.next_step)
+      @case.touch
     end
 
     flash[:success] = "Vorgang erfolgreich als #{@case.case_status.title} markiert."
@@ -79,6 +80,7 @@ class RepresentmentsController < ApplicationController
 
     if @case.case_status.next_step
       @case.update!(case_status: @case.case_status.next_step)
+      @case.touch
     end
 
     flash[:success] = "Vorgang erfolgreich als #{@case.case_status.title} markiert und weggelegt."

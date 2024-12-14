@@ -21,6 +21,7 @@ class TasksController < ApplicationController
       task_resolution_type: (params[:task][:task_resolution_type].blank? ? nil :
           TaskResolutionType.find(params[:task][:task_resolution_type]))
     )
+    @case.touch
 
     flash[:success] = "Aufgabe erfolgreich gespeichert."
     render "tasks/edit", layout: "layouts/case_view"

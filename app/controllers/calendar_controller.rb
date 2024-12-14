@@ -51,6 +51,7 @@ class CalendarController < ApplicationController
 
   def destroy
     @calendar_event.update!(deleted: true)
+    @case.touch
     flash[:success] = "Kalendereintrag erfolgreich gelöscht."
     redirect_to calendar_path(@case)
   end

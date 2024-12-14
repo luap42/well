@@ -16,6 +16,8 @@ class NotesController < ApplicationController
       content: params[:note][:content]
     )
 
+    @case.touch
+
     flash[:success] = "Notiz erfolgreich gespeichert."
     render "notes/edit", layout: "layouts/case_view"
   end
@@ -48,6 +50,8 @@ class NotesController < ApplicationController
       @note.update!(document: @document)
     end
 
+    @case.touch
+
     flash[:success] = "Notiz erfolgreich gespeichert."
     redirect_to edit_note_path(@case, @note)
   end
@@ -58,6 +62,7 @@ class NotesController < ApplicationController
 
   def destroy
     @note.update!(deleted: true)
+    @case.touch
     flash[:success] = "Notiz erfolgreich gelöscht."
     redirect_to notes_path(@case)
   end
