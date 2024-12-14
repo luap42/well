@@ -17,7 +17,7 @@
         </div>
         <div class="card-body pb-1">
           <% if col.tasks.any? %>
-            <% col.tasks.order(is_resolved: :desc, due: :asc, updated_at: :asc).each do |task|%>
+            <% col.tasks.order(:is_resolved, :due, :updated_at).each do |task|%>
               <a href="<%= edit_task_url(@case, task) %>" class="card mb-2 text-decoration-none <%= task.status == :overdue ? "bg-warning-subtle" : "" %> <%= task.status == :resolved ? "border-success opacity-25" : "shadow-sm" %>">
                 <div class="card-body py-2">
                   <p class="mb-0"><strong><%= task.title %></strong></p>
