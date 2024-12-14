@@ -18,7 +18,7 @@
         <div class="card-body pb-1">
           <% if col.tasks.any? %>
             <% col.tasks.order(:updated_at).each do |task|%>
-              <a href="" class="card mb-2 text-decoration-none">
+              <a href="<%= edit_task_url(@case, task) %>" class="card mb-2 text-decoration-none shadow-sm">
                 <div class="card-body py-2">
                   <p class="mb-0"><strong><%= task.title %></strong></p>
                   <% if task.user %>

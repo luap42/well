@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :case
   belongs_to :task_column
 

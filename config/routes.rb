@@ -83,6 +83,9 @@ Rails.application.routes.draw do
 
     scope "/tasks" do
       root to: "tasks#index", as: :tasks
+
+      get ":task_id/edit", to: "tasks#edit", as: :edit_task
+      post ":task_id/edit", to: "tasks#update", as: :update_task
     end
   end
 end
