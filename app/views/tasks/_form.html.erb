@@ -25,12 +25,15 @@
         <%= form.label :due, 'Zu erledigen bis' %>
       </div>
 
-      <div class="card">
-        <div class="card-body py-1">
+      <div class="card mb-3">
+        <div class="card-header py-1 px-2">
           <div class="form-check m-0">
             <%= form.check_box :is_resolved, class: 'form-check-input', checked: task.is_resolved %>
             <%= form.label :is_resolved, 'Aufgabe als erledigt markieren' %>
           </div>
+        </div>
+        <div class="card-body p-1">
+          <%= form.select :task_resolution_type, TaskResolutionType.order(:title).all.map { |dt| [dt.title, dt.id]}, {selected: task.task_resolution_type&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select' } %>
         </div>
       </div>
     </div>

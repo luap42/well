@@ -2,7 +2,7 @@ class Task < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :case
   belongs_to :task_column
-  belongs_to :task_resolution_type
+  belongs_to :task_resolution_type, optional: true
 
   has_rich_text :description
 
