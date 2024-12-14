@@ -86,6 +86,9 @@ Rails.application.routes.draw do
 
       get ":task_id/edit", to: "tasks#edit", as: :edit_task
       post ":task_id/edit", to: "tasks#update", as: :update_task
+
+      get "new", to: "tasks#new", as: :new_task
+      post "new", to: "tasks#create", as: :create_task
     end
   end
 end
