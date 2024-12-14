@@ -13,7 +13,15 @@
       <div class="card text-bg-light">
         <div class="card-header pe-2 fw-bold">
           <button class="btn btn-sm btn-outline-dark float-end">Bearbeiten</button>
-          <h2 class="h5 m-0 mt-1 fw-bold"><%= col.title %></h2>
+          <h2 class="h5 mb-1 mt-1 fw-bold"><%= col.title %></h2>
+          <p class="mb-0 fs-small fw-normal text-secondary">
+            <% if col.tasks.that_are_overdue.count > 0 %>
+            <%= col.tasks.that_are_open.count %> offene Aufgabe(n) &middot;
+            davon <%= col.tasks.that_are_overdue.count %> überfällig,
+            <% else %>
+            <%= col.tasks.that_are_open.count %> offene Aufgabe(n)
+            <% end %>
+          </p>
         </div>
         <div class="card-body p-2 pb-0">
           <% if col.tasks.any? %>
@@ -29,7 +37,7 @@
                     <p class="mb-0 fs-small">nicht zugewiesen</p>
                   <% end %>
                   <% if task.due %>
-                    <p class="mb-0 fs-small">Bis: <%= task.due.strftime("%d.%m.%Y") %></p>
+                    <p class="mb-0 fs-small">Fällig: <%= task.due.strftime("%d.%m.%Y") %></p>
                   <% end %>
                 </div>
               </a>
