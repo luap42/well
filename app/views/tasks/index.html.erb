@@ -21,7 +21,9 @@
               <a href="<%= edit_task_url(@case, task) %>" class="card mb-2 text-decoration-none <%= task.status == :overdue ? "bg-warning-subtle" : "" %> <%= task.status == :resolved ? "border-success opacity-25" : "shadow-sm" %>">
                 <div class="card-body py-2">
                   <p class="mb-0"><strong><%= task.title %></strong></p>
-                  <% if task.user %>
+                  <% if task.user == current_user %>
+                    <p class="mb-0 fs-small">Für: <strong class="text-bg-warning"><%= task.user.display_name %></strong></p>
+                  <% elsif task.user %>
                     <p class="mb-0 fs-small">Für: <%= task.user.display_name %></p>
                   <% else %>
                     <p class="mb-0 fs-small">nicht zugewiesen</p>
