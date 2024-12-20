@@ -29,10 +29,10 @@
     </div>
   </div>
   <div class="col col-auto px-1">
-    <a href="" class="btn btn-secondary <%= 'active' if view == :letter %>">Schreiben</a>
+    <a href="<%= new_writing_url(@case, current_user.writing_type(:letter)) %>" class="btn btn-secondary <%= 'active' if view == :letter %>">Schreiben</a>
   </div>
   <div class="col col-auto px-1">
-    <a href="" class="btn btn-secondary <%= 'active' if view == :directive %>">Verfügung</a>
+    <a href="<%= new_writing_url(@case, current_user.writing_type(:directive)) %>" class="btn btn-secondary <%= 'active' if view == :directive %>">Verfügung</a>
   </div>
   <div class="col col-auto px-1">
     <div class="dropdown">

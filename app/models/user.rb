@@ -21,6 +21,10 @@ class User < ApplicationRecord
     case_.manager.id == self.id
   end
 
+  def writing_type(token)
+    writing_types.where(default_token: token.to_s).first
+  end
+
   def ensure_default_writing_types!
     WritingType.create!(
       user: self,

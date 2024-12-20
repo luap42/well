@@ -96,5 +96,10 @@ Rails.application.routes.draw do
       get "column/new", to: "tasks#new_task_column", as: :new_task_column
       post "column/new", to: "tasks#create_task_column", as: :create_task_column
     end
+
+    scope "/writing" do
+      get ":type_id/new", to: "writing#new", as: :new_writing
+      post ":type_id/new", to: "writing#create", as: :create_writing
+    end
   end
 end
