@@ -20,4 +20,24 @@ class User < ApplicationRecord
   def manager_of?(case_)
     case_.manager.id == self.id
   end
+
+  def ensure_default_writing_types!
+    WritingType.create!(
+      user: self,
+      title: "Schreiben",
+      default_token: "letter",
+      has_recipient: true,
+      has_cosigning_required: false,
+      is_enabled: true
+    ) unless writing_types.where(default_token: "letter").any?
+
+    WritingType.create!(
+      user: self,
+      title: "Verfügung",
+      default_token: "directive",
+      has_recipient: false,
+      has_cosigning_required: false,
+      is_enabled: true
+    ) unless writing_types.where(default_token: "directive").any?
+  end
 end
