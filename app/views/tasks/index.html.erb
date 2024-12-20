@@ -3,6 +3,7 @@
 
 <div class="clearfix mb-3">
   <div class="float-end">
+    <a href="<%= new_task_url(@case) %>" class="btn btn-outline-dark">Neue Spalte</a>
     <a href="<%= new_task_url(@case) %>" class="btn btn-dark">Neue Aufgabe</a>
   </div>
 </div>
@@ -12,12 +13,12 @@
     <div class="col col-4">
       <div class="card text-bg-light">
         <div class="card-header pe-2 fw-bold">
-          <button class="btn btn-sm btn-outline-dark float-end">Bearbeiten</button>
+          <a href="<%= edit_task_column_url(@case, col) %>" class="btn btn-sm btn-outline-dark float-end">Bearbeiten</a>
           <h2 class="h5 mb-1 mt-1 fw-bold"><%= col.title %></h2>
           <p class="mb-0 fs-small fw-normal text-secondary">
             <% if col.tasks.that_are_overdue.count > 0 %>
             <%= col.tasks.that_are_open.count %> offene Aufgabe(n) &middot;
-            davon <%= col.tasks.that_are_overdue.count %> überfällig,
+            davon <%= col.tasks.that_are_overdue.count %> überfällig
             <% else %>
             <%= col.tasks.that_are_open.count %> offene Aufgabe(n)
             <% end %>

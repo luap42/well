@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
-  before_action :get_case, only: [ :index, :edit, :update, :new, :create ]
+  before_action :get_case, only: [ :index, :edit, :update, :new, :create, :edit_task_column,
+                                   :update_task_column ]
   before_action :get_task, only: [ :edit, :update ]
+  before_action :get_task_column, only: [ :edit_task_column, :update_task_column ]
 
   def index
     render layout: "layouts/case_view"
@@ -56,9 +58,28 @@ class TasksController < ApplicationController
     redirect_to edit_task_path(@case, @task)
   end
 
+  def edit_task_column
+    render layout: "layouts/case_view"
+  end
+
+  def update_task_column
+    @task_column.update!(
+      title: params[:task_column][:title],
+      is_enabled: params[:task_column][:is_enabled] == "1"
+    )
+    @case.touch
+
+    flash[:success] = "Spalte erfolgreich gespeichert."
+    render "tasks/edit_task_column", layout: "layouts/case_view"
+  end
+
   protected
 
   def get_task
     @task = Task.where(case: @case).find(params[:task_id])
+  end
+
+  def get_task_column
+    @task_column = TaskColumn.where(case: @case).find(params[:task_column_id])
   end
 end
