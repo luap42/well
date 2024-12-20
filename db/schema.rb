@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_20_222216) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_20_223118) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -245,6 +245,26 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_20_222216) do
     t.string "full_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "writing_drafts", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "user_id"
+    t.integer "participant_id"
+    t.integer "document_item_id"
+    t.integer "writing_type_id"
+    t.string "title"
+    t.date "writing_date"
+    t.boolean "is_final"
+    t.boolean "is_confirmed"
+    t.boolean "is_deleted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_writing_drafts_on_case_id"
+    t.index ["document_item_id"], name: "index_writing_drafts_on_document_item_id"
+    t.index ["participant_id"], name: "index_writing_drafts_on_participant_id"
+    t.index ["user_id"], name: "index_writing_drafts_on_user_id"
+    t.index ["writing_type_id"], name: "index_writing_drafts_on_writing_type_id"
   end
 
   create_table "writing_types", force: :cascade do |t|
