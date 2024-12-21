@@ -31,6 +31,7 @@ class WritingController < ApplicationController
       is_deleted: false,
       writing_date: nil
     )
+    @writing.input_to_cosignatures(params[:writing_draft][:cosignatures])
     @case.touch
 
     flash[:success] = "Entwurf erfolgreich erstellt"
@@ -47,6 +48,7 @@ class WritingController < ApplicationController
       title: params[:writing_draft][:title],
       content: params[:writing_draft][:content],
     )
+    @writing.input_to_cosignatures(params[:writing_draft][:cosignatures])
     @case.touch
 
     flash[:success] = "Entwurf erfolgreich gespeichert"

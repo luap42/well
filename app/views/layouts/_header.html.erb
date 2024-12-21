@@ -24,7 +24,7 @@
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= current_user.display_name %>
+            <strong>(<%= current_user.shortcode %>)</strong> <%= current_user.display_name %>
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Mein Profil</a></li>
