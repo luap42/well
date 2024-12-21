@@ -1,0 +1,46 @@
+<%= form_with url: form_to, model: writing, method: :post do |form| %>
+
+
+  <div class="row">
+    <div class="col col-auto">
+      <% if @writing_type.has_recipient %>
+        <h2 class="h5 m-0 fw-normal pt-1"><strong>1. <%= @writing_type.title %></strong> an</h2>
+      <% else %>
+        <h2 class="h5 m-0 fw-normal pt-1"><strong>1. <%= @writing_type.title %></strong></h2>
+      <% end %>
+      </div>
+      <div class="col">
+        <% if @writing_type.has_recipient %>
+          <div class="mb-2">
+            <%= form.select :participant, @case.participants.all.map { |u| [u.name, u.id]}, {selected: writing.participant&.id, prompt: 'Empfänger/in auswählen...'}, { class: 'form-select' } %>
+          </div>
+        <% end %>
+
+        <div class="mb-2">
+          <%= form.text_field :title, class: 'form-control fw-bold', placeholder: 'Betreff' %>
+        </div>
+
+        <%= form.rich_text_area :content, placeholder: 'Schreiben Sie einfach los...' %>
+      </div>
+      </div>
+    </div>
+
+
+
+  <h3 class="h5 mt-3 mb-3 fw-normal">2. Gegenzeichnung</h2>
+
+  <% if @writing_type.has_recipient %>
+  <h3 class="h5 mt-3 mb-3 fw-normal">3. Postausgang</h2>
+
+  <% end %>
+
+  <h3 class="h5 mt-3 mb-3 fw-normal"><%= @writing_type.has_recipient ? '4.' : '3.' %> Wiedervorlage</h2>
+
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Abbrechen', show_case_url(@case), class: 'btn btn-secondary mb-3' %>
+  <% unless writing.new_record? %>
+    <%= link_to 'Entwurf löschen', '', class: 'btn btn-outline-danger mb-3' %>
+  <% end %>
+
+<% end %>
