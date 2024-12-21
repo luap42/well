@@ -29,10 +29,36 @@
     </div>
   </div>
   <div class="col col-auto px-1">
-    <a href="<%= new_writing_url(@case, current_user.writing_type(:letter)) %>" class="btn btn-secondary <%= 'active' if view == :letter %>">Schreiben</a>
+    <div class="btn-group">
+      <a href="<%= new_writing_url(@case, current_user.writing_type(:letter)) %>" class="btn btn-secondary <%= 'active' if view == :letter %>">Schreiben</a>
+
+      <% if current_user.letter_style_writing_types.any? %>
+        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Dropdown anzeigen/ausblenden</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <% current_user.letter_style_writing_types.each do |wt| %>
+            <li><a class="dropdown-item" href="<%= new_writing_url(@case, wt) %>"><%= wt.title %></a></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
   </div>
   <div class="col col-auto px-1">
-    <a href="<%= new_writing_url(@case, current_user.writing_type(:directive)) %>" class="btn btn-secondary <%= 'active' if view == :directive %>">Verfügung</a>
+    <div class="btn-group">
+      <a href="<%= new_writing_url(@case, current_user.writing_type(:directive)) %>" class="btn btn-secondary <%= 'active' if view == :directive %>">Verfügung</a>
+
+      <% if current_user.directive_style_writing_types.any? %>
+        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Dropdown anzeigen/ausblenden</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <% current_user.directive_style_writing_types.each do |wt| %>
+            <li><a class="dropdown-item" href="<%= new_writing_url(@case, wt) %>"><%= wt.title %></a></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
   </div>
   <div class="col col-auto px-1">
     <div class="dropdown">
@@ -40,7 +66,7 @@
         Wiedervorlage
       </a>
 
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu dropdown-menu-end">
         <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 0) %>">WV: sofort</a></li>
         <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 7) %>">WV: 1 Woche</a></li>
         <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 14) %>">WV: 2 Wochen</a></li>

@@ -25,6 +25,14 @@ class User < ApplicationRecord
     writing_types.where(default_token: token.to_s).first
   end
 
+  def letter_style_writing_types
+    writing_types.where(default_token: nil, has_recipient: true)
+  end
+
+  def directive_style_writing_types
+    writing_types.where(default_token: nil, has_recipient: false)
+  end
+
   def ensure_default_writing_types!
     WritingType.create!(
       user: self,
