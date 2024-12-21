@@ -20,7 +20,7 @@ class WritingDraft < ApplicationRecord
     open_cosignatures = writing_cosignatures.where(is_obsoleted: false, is_given: false, is_pending: true)
     cosignature_ids = open_cosignatures.all.map { |cs| cs.id }
 
-    input.split("\n").each do |line|
+    input.split("\n").each_with_index do |line, index|
       line = line.split(":", 2)
       user_code = line[0].strip
       request = line.size == 2 ? line[1].strip : nil
@@ -33,6 +33,7 @@ class WritingDraft < ApplicationRecord
           cosig = open_cosignatures.where(user: user).first
           cosig.update!(
             request: request,
+            position: index
           )
           cosignature_ids.delete(cosig.id)
         else
@@ -40,6 +41,7 @@ class WritingDraft < ApplicationRecord
             user: user,
             writing_draft: self,
             request: request,
+            position: index,
             response: nil, given_at: nil,
             is_obsoleted: false, is_given: false, is_pending: true
           )

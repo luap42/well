@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_21_141353) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_21_145003) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -259,6 +259,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_21_141353) do
     t.date "given_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["user_id"], name: "index_writing_cosignatures_on_user_id"
     t.index ["writing_draft_id"], name: "index_writing_cosignatures_on_writing_draft_id"
   end
