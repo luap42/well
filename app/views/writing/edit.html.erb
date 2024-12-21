@@ -1,0 +1,2 @@
+<%= render 'case/case_header', view: @writing_type.default_token&.to_sym || :writing %>
+<%= render 'writing/form', form_to: update_writing_path(@case, @writing), writing: @writing %>

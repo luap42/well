@@ -1,7 +1,7 @@
 class WritingDraft < ApplicationRecord
   belongs_to :case
   belongs_to :user
-  has_one :participant, required: false
+  belongs_to :participant, required: false
   belongs_to :document_item, required: false
   belongs_to :writing_type
 

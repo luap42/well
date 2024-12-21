@@ -100,6 +100,9 @@ Rails.application.routes.draw do
     scope "/writing" do
       get ":type_id/new", to: "writing#new", as: :new_writing
       post ":type_id/new", to: "writing#create", as: :create_writing
+
+      get "draft/:draft_id/edit", to: "writing#edit", as: :edit_writing
+      post "draft/:draft_id/edit", to: "writing#update", as: :update_writing
     end
   end
 end
