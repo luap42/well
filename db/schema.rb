@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_21_140824) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_21_141353) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -246,6 +246,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_21_140824) do
     t.string "shortcode"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "writing_cosignatures", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "writing_draft_id"
+    t.string "request"
+    t.text "response"
+    t.boolean "is_pending"
+    t.boolean "is_obsoleted"
+    t.boolean "is_given"
+    t.date "given_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_writing_cosignatures_on_user_id"
+    t.index ["writing_draft_id"], name: "index_writing_cosignatures_on_writing_draft_id"
   end
 
   create_table "writing_drafts", force: :cascade do |t|

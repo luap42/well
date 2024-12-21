@@ -10,6 +10,7 @@ class Case < ApplicationRecord
   has_many :folders
   has_many :documents
   has_many :task_columns
+  has_many :writing_drafts
 
   scope :that_are_open, -> { where(case_status: CaseStatus.where.not(case_ends_here: true)) }
 

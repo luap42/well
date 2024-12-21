@@ -5,6 +5,8 @@ class WritingDraft < ApplicationRecord
   belongs_to :document_item, required: false
   belongs_to :writing_type
 
+  has_many :writing_cosignatures
+
   has_rich_text :content
   default_scope { where.not(is_deleted: true) }
 end
