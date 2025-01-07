@@ -22,7 +22,9 @@
     <p>Vorgang angelegt am: <%= @case.created_at.strftime("%d.%m.%Y") %></p>
     <p>Status des Vorgangs: <span style="background-color: <%= @case.case_status.color %>"><%= @case.case_status.title %></span></p>
 
+    <% if @case.user_has_permission?(current_user, :case_write) %>
     <a href="<%= edit_case_url(@case) %>" class="btn btn-secondary mt-3 mb-3 btn-sm">Vorgangsinformationen bearbeiten</a>
+    <% end %>
 
   </div>
   <div class="col col-12 col-md-4">

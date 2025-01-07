@@ -62,10 +62,13 @@ class CaseController < ApplicationController
   end
 
   def edit
+    return if require_permission! :case_write
     render layout: "case_view"
   end
 
   def update
+    return if require_permission! :case_write
+
     case_type = CaseType.find(params[:case][:case_type])
     case_status = CaseStatus.find(params[:case][:case_status])
     manager = User.find(params[:case][:manager])
