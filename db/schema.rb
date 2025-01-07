@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_21_145003) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_07_190005) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -57,6 +57,26 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_21_145003) do
     t.date "when"
     t.boolean "deleted"
     t.index ["case_id"], name: "index_calendar_events_on_case_id"
+  end
+
+  create_table "case_permission_types", force: :cascade do |t|
+    t.string "name"
+    t.boolean "case_read"
+    t.boolean "case_write"
+    t.boolean "participants_read"
+    t.boolean "participants_write"
+    t.boolean "calendar_read"
+    t.boolean "calendar_write"
+    t.boolean "documents_read"
+    t.boolean "documents_write"
+    t.boolean "notes_read"
+    t.boolean "notes_write"
+    t.boolean "tasks_read"
+    t.boolean "tasks_write"
+    t.boolean "representments_access"
+    t.boolean "writings_access"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "case_statuses", force: :cascade do |t|

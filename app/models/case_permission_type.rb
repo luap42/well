@@ -1,0 +1,2 @@
+class CasePermissionType < ApplicationRecord
+end
