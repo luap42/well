@@ -11,8 +11,18 @@ class Case < ApplicationRecord
   has_many :documents
   has_many :task_columns
   has_many :writing_drafts
+  has_many :case_permissions
 
   scope :that_are_open, -> { where(case_status: CaseStatus.where.not(case_ends_here: true)) }
+
+  def user_has_permission?(user, rule)
+    return true if user == self.manager
+
+    perm = case_permissions.where(user: user).first
+    return false unless perm
+
+    perm.permission?(rule)
+  end
 
   def default_folder
     folders.where(is_default: true).first
