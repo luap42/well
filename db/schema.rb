@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_07_190005) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_07_190449) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -77,6 +77,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_190005) do
     t.boolean "writings_access"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "case_permissions", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "user_id"
+    t.integer "case_permission_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_case_permissions_on_case_id"
+    t.index ["case_permission_type_id"], name: "index_case_permissions_on_case_permission_type_id"
+    t.index ["user_id"], name: "index_case_permissions_on_user_id"
   end
 
   create_table "case_statuses", force: :cascade do |t|
