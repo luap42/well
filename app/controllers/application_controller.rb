@@ -22,5 +22,14 @@ class ApplicationController < ActionController::Base
     @case = Case.find(params[:case_id])
     @case.ensure_default_folder!
     @case.ensure_default_task_columns!
+
+    require_permission!(:case_read)
+  end
+
+  def require_permission!(perm)
+    unless @case.user_has_permission?(current_user, perm)
+      flash[:danger] = "Du hast keine Berechtigung, diese Seite aufzurufen!"
+      redirect_to :root
+    end
   end
 end
