@@ -6,5 +6,5 @@ class Note < ApplicationRecord
 
   has_rich_text :content
 
-  default_scope { where.not(deleted: true) }
+  default_scope { where.not(is_deleted: true) }
 end

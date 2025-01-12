@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_07_190449) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_12_221437) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_190449) do
     t.integer "case_id"
     t.string "title"
     t.date "when"
-    t.boolean "deleted"
+    t.boolean "is_deleted"
     t.index ["case_id"], name: "index_calendar_events_on_case_id"
   end
 
@@ -185,7 +185,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_190449) do
     t.integer "case_id"
     t.integer "user_id"
     t.string "title"
-    t.boolean "deleted"
+    t.boolean "is_deleted"
     t.index ["case_id"], name: "index_notes_on_case_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
@@ -212,6 +212,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_190449) do
     t.text "comment"
     t.boolean "outdated"
     t.boolean "provide_as_template"
+    t.boolean "is_deleted"
     t.index ["case_id"], name: "index_participants_on_case_id"
     t.index ["participant_role_id"], name: "index_participants_on_participant_role_id"
   end
