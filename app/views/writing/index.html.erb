@@ -1,0 +1,20 @@
+<%= render 'documents/template', note: nil, folder: nil do %>
+
+<h3 class="h5 mt-3 mb-1 fw-bold">Entwürfe</h3>
+
+<% if @case.writing_drafts.any? %>
+<div class="list-group list-group-flush mb-3">
+  <% @case.writing_drafts.order(:title).each do |wd| %>
+  <div class="list-group-item">
+    <%= link_to edit_writing_url(@case, wd), class: 'pt-0 d-block link-dark text-decoration-none' do %>
+      <h4 class="h6 fw-bold m-0 mb-1"><%= wd.writing_type.title %><br><%= wd.title %></h4>
+      <p class="m-0 fs-small">von <%= wd.user.display_name %>, zuletzt bearbeitet am <%= wd.updated_at.strftime("%d.%m.%Y") %></p>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+<% else %>
+<p>Zu diesem Vorgang gibt es keine Entwürfe.</p>
+<% end %>
+
+<% end %>

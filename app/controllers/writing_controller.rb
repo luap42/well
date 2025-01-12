@@ -1,7 +1,12 @@
 class WritingController < ApplicationController
-  before_action :get_case, only: [ :new, :create, :edit, :update ]
+  before_action :get_case, only: [ :index, :new, :create, :edit, :update ]
   before_action :get_writing_type, only: [ :new, :create ]
   before_action :get_writing_draft, only: [ :edit, :update ]
+
+  def index
+    return if require_permission! :writings_access
+    render layout: "layouts/case_view"
+  end
 
   def new
     return if require_permission! :writings_access

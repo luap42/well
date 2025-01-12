@@ -98,6 +98,7 @@ Rails.application.routes.draw do
     end
 
     scope "/writing" do
+      root to: "writing#index", as: :writings
       get ":type_id/new", to: "writing#new", as: :new_writing
       post ":type_id/new", to: "writing#create", as: :create_writing
 
