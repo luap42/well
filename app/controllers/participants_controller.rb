@@ -3,6 +3,7 @@ class ParticipantsController < ApplicationController
   before_action :get_participant, only: [ :edit, :update ]
 
   def index
+    return if require_permission! :participants_read
     @participants = @case.participants
 
     unless params[:name].blank?
@@ -19,10 +20,12 @@ class ParticipantsController < ApplicationController
   end
 
   def edit
+    return if require_permission! :participants_write
     render layout: "layouts/case_view"
   end
 
   def update
+    return if require_permission! :participants_write
     role = ParticipantRole.find(params[:participant][:participant_role])
 
     @participant.update!(
@@ -46,11 +49,13 @@ class ParticipantsController < ApplicationController
   end
 
   def new
+    return if require_permission! :participants_write
     @participant = Participant.new(case: @case)
     render layout: "layouts/case_view"
   end
 
   def create
+    return if require_permission! :participants_write
     role = ParticipantRole.find(params[:participant][:participant_role])
 
     @participant = Participant.create!(

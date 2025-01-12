@@ -17,9 +17,11 @@
   <div class="col-12 col-md-1 p-2 pe-1 pt-1 align-self-center">
     <%= form.submit 'Suchen', class: 'btn btn-primary w-100 py-2' %>
   </div>
-  <div class="col-12 col-md-1 p-2 ps-1 pt-1 align-self-center">
-    <%= link_to 'NEU', new_participant_url(@case), class: 'btn btn-outline-primary w-100 py-2' %>
-  </div>
+  <% if @case.user_has_permission?(current_user, :participants_write) %>
+    <div class="col-12 col-md-1 p-2 ps-1 pt-1 align-self-center">
+      <%= link_to 'NEU', new_participant_url(@case), class: 'btn btn-outline-primary w-100 py-2' %>
+    </div>
+  <% end%>
 </div>
 <% end %>
 
@@ -34,12 +36,14 @@
           &ndash; <%= p.participant_role.title %>
         </h3>
       </div>
-      <div class="col-auto">
-        <a href="<%= edit_participant_url(@case, p) %>">Bearbeiten</a>
-      </div>
-      <div class="col-auto">
-        <a href="" class="link-danger">Löschen</a>
-      </div>
+      <% if @case.user_has_permission?(current_user, :participants_write) %>
+        <div class="col-auto">
+          <a href="<%= edit_participant_url(@case, p) %>">Bearbeiten</a>
+        </div>
+        <div class="col-auto">
+          <a href="" class="link-danger">Löschen</a>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="card-body p-0 border-top collapse <%= @participants.count == 1 ? 'show' : '' %>" id="collapse-body-<%= p.id %>">

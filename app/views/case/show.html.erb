@@ -71,15 +71,17 @@
     </ul>
     <% end %>
 
-    <% if @case.participants.count > 0 %>
-    <h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte des Vorgangs</h2>
-    <ul>
-      <% for part in @case.participants.where(outdated: false) %>
-        <li>
-          <%= part.name %> (<%= part.participant_role.title %>)
-        </li>
+    <% if @case.user_has_permission?(current_user, :participants_write) %>
+      <% if @case.participants.count > 0 %>
+        <h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte des Vorgangs</h2>
+        <ul>
+          <% for part in @case.participants.where(outdated: false) %>
+            <li>
+              <%= part.name %> (<%= part.participant_role.title %>)
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-    </ul>
     <% end %>
   </div>
 </div>
