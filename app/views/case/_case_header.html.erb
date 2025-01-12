@@ -8,80 +8,91 @@
       <div class="nav-item">
         <a href="<%= show_case_url(@case) %>" class="nav-link <%= 'active' if view == :info %>">Informationen</a>
       </div>
-      <div class="nav-item">
-        <a href="<%= participants_url(@case) %>" class="nav-link <%= 'active' if view == :parties %>">Beteiligte</a>
-      </div>
-      <div class="nav-item">
-        <a href="<%= documents_url(@case) %>" class="nav-link <%= 'active' if view == :docs %>">Dokumente</a>
-      </div>
-      <div class="nav-item">
-        <a href="<%= calendar_url(@case) %>" class="nav-link <%= 'active' if view == :calendar %>">Kalender</a>
-      </div>
-      <div class="nav-item">
-        <a href="<%= tasks_url(@case) %>" class="nav-link <%= 'active' if view == :tasks %>">Aufgaben</a>
-      </div>
-      <div class="nav-item">
-        <a href="<%= notes_url(@case) %>" class="nav-link <%= 'active' if view == :notes %>">Notizen</a>
-      </div>
-      <div class="nav-item">
-        <a href="" class="nav-link <%= 'active' if view == :log %>">Protokoll</a>
-      </div>
-    </div>
-  </div>
-  <div class="col col-auto px-1">
-    <div class="btn-group">
-      <a href="<%= new_writing_url(@case, current_user.writing_type(:letter)) %>" class="btn btn-secondary <%= 'active' if view == :letter %>">Schreiben</a>
-
-      <% if current_user.letter_style_writing_types.any? %>
-        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="visually-hidden">Dropdown anzeigen/ausblenden</span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <% current_user.letter_style_writing_types.each do |wt| %>
-            <li><a class="dropdown-item" href="<%= new_writing_url(@case, wt) %>"><%= wt.title %></a></li>
-          <% end %>
-        </ul>
+      <% if @case.user_has_permission?(current_user, :participants_read) %>
+        <div class="nav-item">
+          <a href="<%= participants_url(@case) %>" class="nav-link <%= 'active' if view == :parties %>">Beteiligte</a>
+        </div>
+      <% end %>
+      <% if @case.user_has_permission?(current_user, :documents_read) %>
+        <div class="nav-item">
+          <a href="<%= documents_url(@case) %>" class="nav-link <%= 'active' if view == :docs %>">Dokumente</a>
+        </div>
+      <% end %>
+      <% if @case.user_has_permission?(current_user, :calendar_read) %>
+        <div class="nav-item">
+          <a href="<%= calendar_url(@case) %>" class="nav-link <%= 'active' if view == :calendar %>">Kalender</a>
+        </div>
+      <% end %>
+      <% if @case.user_has_permission?(current_user, :tasks_read) %>
+        <div class="nav-item">
+          <a href="<%= tasks_url(@case) %>" class="nav-link <%= 'active' if view == :tasks %>">Aufgaben</a>
+        </div>
+      <% end %>
+      <% if @case.user_has_permission?(current_user, :notes_read) %>
+        <div class="nav-item">
+          <a href="<%= notes_url(@case) %>" class="nav-link <%= 'active' if view == :notes %>">Notizen</a>
+        </div>
       <% end %>
     </div>
   </div>
-  <div class="col col-auto px-1">
-    <div class="btn-group">
-      <a href="<%= new_writing_url(@case, current_user.writing_type(:directive)) %>" class="btn btn-secondary <%= 'active' if view == :directive %>">Verfügung</a>
+  <% if @case.user_has_permission?(current_user, :writings_access) %>
+    <div class="col col-auto px-1">
+      <div class="btn-group">
+        <a href="<%= new_writing_url(@case, current_user.writing_type(:letter)) %>" class="btn btn-secondary <%= 'active' if view == :letter %>">Schreiben</a>
 
-      <% if current_user.directive_style_writing_types.any? %>
-        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="visually-hidden">Dropdown anzeigen/ausblenden</span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <% current_user.directive_style_writing_types.each do |wt| %>
-            <li><a class="dropdown-item" href="<%= new_writing_url(@case, wt) %>"><%= wt.title %></a></li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
-  </div>
-  <div class="col col-auto px-1">
-    <div class="dropdown">
-      <a class="btn btn-primary dropdown-toggle <%= 'active' if view == :representments %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Wiedervorlage
-      </a>
-
-      <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 0) %>">WV: sofort</a></li>
-        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 7) %>">WV: 1 Woche</a></li>
-        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 14) %>">WV: 2 Wochen</a></li>
-        <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 28) %>">WV: 4 Wochen</a></li>
-        <li><a class="dropdown-item" href="<%= new_representment_url(@case) %>">Andere WV einstellen</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="<%= clear_representment_url(@case) %>">Weglegen</a></li>
-        <% if @case.case_status.next_step %>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="<%= step_url(@case) %>">Markieren als: <%= @case.case_status.next_step.title %></a></li>
-        <li><a class="dropdown-item" href="<%= clear_and_step_url(@case) %>">&hellip; und weglegen</a></li>
+        <% if current_user.letter_style_writing_types.any? %>
+          <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Dropdown anzeigen/ausblenden</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <% current_user.letter_style_writing_types.each do |wt| %>
+              <li><a class="dropdown-item" href="<%= new_writing_url(@case, wt) %>"><%= wt.title %></a></li>
+            <% end %>
+          </ul>
         <% end %>
-      </ul>
+      </div>
     </div>
-  </div>
+    <div class="col col-auto px-1">
+      <div class="btn-group">
+        <a href="<%= new_writing_url(@case, current_user.writing_type(:directive)) %>" class="btn btn-secondary <%= 'active' if view == :directive %>">Verfügung</a>
+
+        <% if current_user.directive_style_writing_types.any? %>
+          <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Dropdown anzeigen/ausblenden</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <% current_user.directive_style_writing_types.each do |wt| %>
+              <li><a class="dropdown-item" href="<%= new_writing_url(@case, wt) %>"><%= wt.title %></a></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <% if @case.user_has_permission?(current_user, :representments_access) %>
+    <div class="col col-auto px-1">
+      <div class="dropdown">
+        <a class="btn btn-primary dropdown-toggle <%= 'active' if view == :representments %>" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Wiedervorlage
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 0) %>">WV: sofort</a></li>
+          <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 7) %>">WV: 1 Woche</a></li>
+          <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 14) %>">WV: 2 Wochen</a></li>
+          <li><a class="dropdown-item" href="<%= create_representment_for_days_url(@case, 28) %>">WV: 4 Wochen</a></li>
+          <li><a class="dropdown-item" href="<%= new_representment_url(@case) %>">Andere WV einstellen</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="<%= clear_representment_url(@case) %>">Weglegen</a></li>
+          <% if @case.case_status.next_step %>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="<%= step_url(@case) %>">Markieren als: <%= @case.case_status.next_step.title %></a></li>
+          <li><a class="dropdown-item" href="<%= clear_and_step_url(@case) %>">&hellip; und weglegen</a></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <% end %>

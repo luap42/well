@@ -13,6 +13,10 @@ class CasePermissionType < ApplicationRecord
       calendar_read
     when :calendar_write
       calendar_write
+    when :tasks_read
+      documents_read
+    when :tasks_write
+      documents_write
     when :documents_read
       documents_read
     when :documents_write
