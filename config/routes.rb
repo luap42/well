@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   root to: "case#index"
   get "calendar", to: "calendar#global", as: :global_calendar
 
+  scope "/profile" do
+    get "edit", to: "profile#edit", as: :edit_profile
+    post "edit", to: "profile#update", as: :update_profile
+  end
+
   scope "/cases" do
     root to: "case#search", as: :cases
     get "new", to: "case#new", as: :new_case

@@ -27,7 +27,7 @@
             <strong>(<%= current_user.shortcode %>)</strong> <%= current_user.display_name %>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Mein Profil</a></li>
+            <li><%= link_to "Mein Profil", edit_profile_path, class: "dropdown-item" %></li>
             <li><%= link_to "Mein Konto", edit_user_registration_path, class: "dropdown-item" %></li>
             <li><a class="dropdown-item" href="#">Administration</a></li>
             <li><hr class="dropdown-divider"></li>

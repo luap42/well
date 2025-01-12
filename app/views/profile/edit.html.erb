@@ -1,0 +1,15 @@
+<h1 class="fw-bold mb-3">Profil bearbeiten</h1>
+
+<%= form_with url: update_profile_url, model: current_user, method: :post do |form| %>
+  <div class="form-floating mb-3">
+    <%= form.text_field :full_name, class: 'form-control', placeholder: '' %>
+    <%= form.label :full_name, 'Anzeigename/Vor- und Nachname' %>
+  </div>
+
+  <div class="form-floating mb-3">
+    <%= form.text_field :shortcode, class: 'form-control', placeholder: '' %>
+    <%= form.label :shortcode, 'Kürzel (sollte eindeutig sein)' %>
+  </div>
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary' %>
+<% end %>
