@@ -31,6 +31,7 @@ class CaseController < ApplicationController
     end
 
     @cases = @cases.order(updated_at: :desc)
+    @cases = @cases.filter { |c| c.user_has_permission?(current_user, :case_read) }
   end
 
   def new
