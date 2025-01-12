@@ -36,9 +36,7 @@ class RepresentmentsController < ApplicationController
   end
 
   def create_for_days
-    return if require_permission! :case_read
     return if require_permission! :representments_access
-
     Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
 
     @representment = Representment.create!(

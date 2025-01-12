@@ -1,5 +1,9 @@
 class CasePermissionType < ApplicationRecord
   def grants? (rule)
+    # If you are not able to read the case, you shouldn't
+    # have access to any other feature either
+    return false unless case_read
+
     case (rule)
     when :case_read
       case_read

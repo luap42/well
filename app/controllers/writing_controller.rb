@@ -4,6 +4,7 @@ class WritingController < ApplicationController
   before_action :get_writing_draft, only: [ :edit, :update ]
 
   def new
+    return if require_permission! :writings_access
     @writing = WritingDraft.new(
       case: @case,
       user: current_user,
@@ -18,6 +19,7 @@ class WritingController < ApplicationController
   end
 
   def create
+    return if require_permission! :writings_access
     @writing = WritingDraft.create!(
       case: @case,
       user: current_user,
@@ -39,10 +41,12 @@ class WritingController < ApplicationController
   end
 
   def edit
+    return if require_permission! :writings_access
     render layout: "layouts/case_view"
   end
 
   def update
+    return if require_permission! :writings_access
     @writing.update!(
       participant: @writing_type.has_recipient ? @case.participants.find(params[:writing_draft][:participant]) : nil,
       title: params[:writing_draft][:title],
