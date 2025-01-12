@@ -2,11 +2,13 @@ class RepresentmentsController < ApplicationController
   before_action :get_case, only: [ :new, :create, :create_for_days, :clear, :clear_and_step, :step ]
 
   def new
+    return if require_permission! :representments_access
     @representment = Representment.new(case: @case)
     render layout: "layouts/case_view"
   end
 
   def create
+    return if require_permission! :representments_access
     to_user = User.find(params[:representment][:to_user])
 
     @representment = Representment.new(
@@ -19,12 +21,12 @@ class RepresentmentsController < ApplicationController
       dismissed: false
     )
 
-    unless to_user.manager_of?(@case)
-      flash[:danger] = "WV-Empfänger muss Manager des Kurses sein."
+    unless @case.user_has_permission?(to_user, :case_read)
+      flash[:danger] = "WV-Empfänger muss Leserechte zum Fall haben."
       return render "representments/new", layout: "layouts/case_view"
     end
 
-    Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
+    Representment.where(case: @case, to_user: to_user).update_all(dismissed: true)
 
     @representment.save!
     @case.touch
@@ -34,10 +36,8 @@ class RepresentmentsController < ApplicationController
   end
 
   def create_for_days
-    unless current_user.manager_of?(@case)
-      flash[:danger] = "WV-Empfänger muss Manager des Kurses sein."
-      return redirect_to show_case_path(@case)
-    end
+    return if require_permission! :case_read
+    return if require_permission! :representments_access
 
     Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
 
@@ -58,6 +58,7 @@ class RepresentmentsController < ApplicationController
   end
 
   def clear
+    return if require_permission! :case_read
     Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
     @case.touch
 
@@ -66,6 +67,7 @@ class RepresentmentsController < ApplicationController
   end
 
   def step
+    return if require_permission! :case_write
     if @case.case_status.next_step
       @case.update!(case_status: @case.case_status.next_step)
       @case.touch
@@ -76,6 +78,8 @@ class RepresentmentsController < ApplicationController
   end
 
   def clear_and_step
+    return if require_permission! :case_write
+    return if require_permission! :representments_access
     Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
 
     if @case.case_status.next_step
