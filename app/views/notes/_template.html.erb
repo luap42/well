@@ -9,7 +9,9 @@
           <p class="mb-0 opacity-75 fs-small">zuletzt am <%= n.updated_at.strftime("%d.%m.%Y %H:%M") %> bearbeitet</p>
         </a>
       <% end %>
-      <a href="<%= new_note_url(@case) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if note&.new_record? %>">Neue Notiz</a>
+      <% if @case.user_has_permission?(current_user, :notes_write) %>
+        <a href="<%= new_note_url(@case) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if note&.new_record? %>">Neue Notiz</a>
+      <% end %>
     </div>
   </div>
   <div class="col-8">

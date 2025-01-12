@@ -3,14 +3,17 @@ class NotesController < ApplicationController
   before_action :get_note, only: [ :edit, :update, :delete, :destroy ]
 
   def index
+    return if require_permission! :notes_read
     render layout: "layouts/case_view"
   end
 
   def edit
+    return if require_permission! :notes_read
     render layout: "layouts/case_view"
   end
 
   def update
+    return if require_permission! :notes_write
     @note.update!(
       title: params[:note][:title],
       content: params[:note][:content]
@@ -23,6 +26,7 @@ class NotesController < ApplicationController
   end
 
   def new
+    return if require_permission! :notes_write
     @note = Note.new(case: @case, deleted: false)
     @document = nil
 
@@ -37,6 +41,7 @@ class NotesController < ApplicationController
   end
 
   def create
+    return if require_permission! :notes_write
     @note = Note.create!(
       case: @case,
       title: params[:note][:title],
@@ -57,10 +62,12 @@ class NotesController < ApplicationController
   end
 
   def delete
+    return if require_permission! :notes_write
     render layout: "layouts/case_view"
   end
 
   def destroy
+    return if require_permission! :notes_write
     @note.update!(deleted: true)
     @case.touch
     flash[:success] = "Notiz erfolgreich gelöscht."

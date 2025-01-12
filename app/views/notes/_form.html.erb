@@ -1,10 +1,16 @@
 <%= form_with url: form_to, model: note, method: :post do |form| %>
   <div class="mb-3">
-    <%= form.text_field :title, class: 'form-control h3', placeholder: 'Betreff eingeben...' %>
+    <%= form.text_field :title, class: 'form-control h3', placeholder: 'Betreff eingeben...', readonly: !@case.user_has_permission?(current_user, :notes_write) %>
   </div>
 
   <div class="mb-3">
-    <%= form.rich_text_area :content, placeholder: 'Schreiben Sie einfach los...' %>
+    <% if @case.user_has_permission?(current_user, :calendar_write) %>
+      <%= form.rich_text_area :content, placeholder: 'Schreiben Sie einfach los...' %>
+    <% else %>
+      <div class="p-2 border rounded">
+        <%= note.content %>
+      </div>
+    <% end %>
   </div>
 
   <% unless note.document.blank? %>
@@ -14,9 +20,14 @@
     <%= form.hidden_field :document, { value: @note.document.id } %>
   <% end %>
 
-  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
-  <%= link_to 'Abbrechen', notes_path(@case), class: 'btn btn-secondary mb-3' %>
-  <% unless note.new_record? %>
-  <%= link_to 'Notiz löschen', delete_note_path(@case, @note), class: 'btn btn-outline-danger mb-3' %>
+
+  <% if @case.user_has_permission?(current_user, :notes_write) %>
+    <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+    <%= link_to 'Abbrechen', notes_path(@case), class: 'btn btn-secondary mb-3' %>
+    <% unless note.new_record? %>
+      <%= link_to 'Notiz löschen', delete_note_path(@case, @note), class: 'btn btn-outline-danger mb-3' %>
+    <% end %>
+  <% else %>
+    <%= link_to 'Abbrechen', notes_path(@case), class: 'btn btn-secondary mb-3' %>
   <% end %>
 <% end %>

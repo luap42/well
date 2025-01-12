@@ -9,7 +9,7 @@
         <% if @case.user_has_permission?(current_user, :tasks_write) %>
           <%= form.rich_text_area :description, placeholder: 'Schreiben Sie einfach los...' %>
         <% else %>
-          <div class="p-2 bg-white border rounded">
+          <div class="p-2 border rounded">
             <%= task.description %>
           </div>
         <% end %>
