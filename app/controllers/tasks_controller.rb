@@ -5,14 +5,17 @@ class TasksController < ApplicationController
   before_action :get_task_column, only: [ :edit_task_column, :update_task_column ]
 
   def index
+    return if require_permission! :tasks_read
     render layout: "layouts/case_view"
   end
 
   def edit
+    return if require_permission! :tasks_read
     render layout: "layouts/case_view"
   end
 
   def update
+    return if require_permission! :tasks_write
     @task.update!(
       title: params[:task][:title],
       description: params[:task][:description],
@@ -30,6 +33,7 @@ class TasksController < ApplicationController
   end
 
   def new
+    return if require_permission! :tasks_write
     @task = Task.new(
       case: @case,
       task_column: @case.task_columns.where(default_token: "open").first,
@@ -41,6 +45,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    return if require_permission! :tasks_write
     @task = Task.create!(
       case: @case,
       is_deleted: false,
@@ -59,10 +64,12 @@ class TasksController < ApplicationController
   end
 
   def edit_task_column
+    return if require_permission! :tasks_write
     render layout: "layouts/case_view"
   end
 
   def update_task_column
+    return if require_permission! :tasks_write
     @task_column.update!(
       title: params[:task_column][:title],
       is_enabled: params[:task_column][:is_enabled] == "1"
@@ -74,6 +81,7 @@ class TasksController < ApplicationController
   end
 
   def new_task_column
+    return if require_permission! :tasks_write
     @task_column = TaskColumn.new(
       case: @case,
       is_enabled: true,
@@ -84,6 +92,7 @@ class TasksController < ApplicationController
   end
 
   def create_task_column
+    return if require_permission! :tasks_write
     @task_column = TaskColumn.create!(
       case: @case,
       title: params[:task_column][:title],

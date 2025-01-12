@@ -1,19 +1,23 @@
 <%= render 'case/case_header', view: :tasks %>
 
 
-<div class="clearfix mb-3">
-  <div class="float-end">
-    <a href="<%= new_task_column_url(@case) %>" class="btn btn-outline-dark">Neue Spalte</a>
-    <a href="<%= new_task_url(@case) %>" class="btn btn-dark">Neue Aufgabe</a>
+<% if @case.user_has_permission?(current_user, :tasks_write) %>
+  <div class="clearfix mb-3">
+    <div class="float-end">
+      <a href="<%= new_task_column_url(@case) %>" class="btn btn-outline-dark">Neue Spalte</a>
+      <a href="<%= new_task_url(@case) %>" class="btn btn-dark">Neue Aufgabe</a>
+    </div>
   </div>
-</div>
+<% end %>
 
 <div class="row flex-nowrap g-2 overflow-auto pb-3">
   <% @case.task_columns.order(:title).each do |col| %>
     <div class="col col-4">
       <div class="card text-bg-light">
         <div class="card-header pe-2 fw-bold">
-          <a href="<%= edit_task_column_url(@case, col) %>" class="btn btn-sm btn-outline-dark float-end">Bearbeiten</a>
+          <% if @case.user_has_permission?(current_user, :tasks_write) %>
+            <a href="<%= edit_task_column_url(@case, col) %>" class="btn btn-sm btn-outline-dark float-end">Bearbeiten</a>
+          <% end %>
           <h2 class="h5 mb-1 mt-1 fw-bold"><%= col.title %></h2>
           <p class="mb-0 fs-small fw-normal text-secondary">
             <% if col.tasks.that_are_overdue.count > 0 %>

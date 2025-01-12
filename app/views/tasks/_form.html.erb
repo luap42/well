@@ -2,48 +2,57 @@
   <div class="row">
     <div class="col col-md-8">
       <div class="mb-3">
-        <%= form.text_field :title, class: 'form-control h3', placeholder: 'Betreff eingeben...' %>
+        <%= form.text_field :title, class: 'form-control h3', placeholder: 'Betreff eingeben...', readonly: !@case.user_has_permission?(current_user, :tasks_write) %>
       </div>
 
       <div class="mb-3">
-        <%= form.rich_text_area :description, placeholder: 'Schreiben Sie einfach los...' %>
+        <% if @case.user_has_permission?(current_user, :tasks_write) %>
+          <%= form.rich_text_area :description, placeholder: 'Schreiben Sie einfach los...' %>
+        <% else %>
+          <div class="p-2 bg-white border rounded">
+            <%= task.description %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="col col-md-4">
       <div class="form-floating mb-3">
-        <%= form.select :user, User.all.map { |u| [u.display_name, u.id]}, {selected: task.user&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select' } %>
+        <%= form.select :user, User.all.map { |u| [u.display_name, u.id]}, {selected: task.user&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select', disabled: !@case.user_has_permission?(current_user, :tasks_write) } %>
         <%= form.label :user, 'Zugewiesen an' %>
       </div>
       
       <div class="form-floating mb-3">
-        <%= form.select :task_column, @case.task_columns.all.map { |dt| [dt.title, dt.id]}, {selected: task.task_column&.id, prompt: 'Bitte auswählen...'}, { class: 'form-select' } %>
+        <%= form.select :task_column, @case.task_columns.all.map { |dt| [dt.title, dt.id]}, {selected: task.task_column&.id, prompt: 'Bitte auswählen...'}, { class: 'form-select', disabled: !@case.user_has_permission?(current_user, :tasks_write) } %>
         <%= form.label :task_column, 'Status' %>
       </div>
 
       <div class="form-floating mb-3">
-        <%= form.date_field :due, class: 'form-control', placeholder: '' %>
+        <%= form.date_field :due, class: 'form-control', placeholder: '', readonly: !@case.user_has_permission?(current_user, :tasks_write) %>
         <%= form.label :due, 'Fällig am' %>
       </div>
 
       <div class="card mb-3">
         <div class="card-header py-1 px-2">
           <div class="form-check m-0">
-            <%= form.check_box :is_resolved, class: 'form-check-input', checked: task.is_resolved %>
+            <%= form.check_box :is_resolved, class: 'form-check-input', checked: task.is_resolved, disabled: !@case.user_has_permission?(current_user, :tasks_write) %>
             <%= form.label :is_resolved, 'Aufgabe als erledigt markieren' %>
           </div>
         </div>
         <div class="card-body p-1">
-          <%= form.select :task_resolution_type, TaskResolutionType.order(:title).all.map { |dt| [dt.title, dt.id]}, {selected: task.task_resolution_type&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select' } %>
+          <%= form.select :task_resolution_type, TaskResolutionType.order(:title).all.map { |dt| [dt.title, dt.id]}, {selected: task.task_resolution_type&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select', disabled: !@case.user_has_permission?(current_user, :tasks_write) } %>
         </div>
       </div>
     </div>
   </div>
 
 
-
-  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
-  <%= link_to 'Abbrechen', tasks_url(@case), class: 'btn btn-secondary mb-3' %>
-  <% unless task.new_record? %>
-    <%= link_to 'Aufgabe löschen', '', class: 'btn btn-outline-danger mb-3' %>
+  <% if @case.user_has_permission?(current_user, :tasks_write) %>
+    <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+    <%= link_to 'Abbrechen', tasks_url(@case), class: 'btn btn-secondary mb-3' %>
+    <% unless task.new_record? %>
+      <%= link_to 'Aufgabe löschen', '', class: 'btn btn-outline-danger mb-3' %>
+    <% end %>
+  <% else %>
+    <%= link_to 'Zurück zur Übersicht', tasks_url(@case), class: 'btn btn-secondary mb-3' %>
   <% end %>
 <% end %>
