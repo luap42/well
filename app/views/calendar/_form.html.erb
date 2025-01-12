@@ -2,25 +2,36 @@
   <div class="row mb-3">
     <div class="col-12 col-md-6">
       <div class="form-floating">
-        <%= form.text_field :title, class: 'form-control', placeholder: '' %>
+        <%= form.text_field :title, class: 'form-control', placeholder: '', readonly: !@case.user_has_permission?(current_user, :calendar_write) %>
         <%= form.label :title, 'Betreff' %>
       </div>
     </div>
     <div class="col-12 col-md-6">
       <div class="form-floating">
-        <%= form.date_field :when, class: 'form-control', placeholder: '' %>
+        <%= form.date_field :when, class: 'form-control', placeholder: '', readonly: !@case.user_has_permission?(current_user, :calendar_write) %>
         <%= form.label :when, 'Datum' %>
       </div>
     </div>
   </div>
 
+
   <div class="mb-3">
-    <%= form.rich_text_area :comment, placeholder: 'Schreiben Sie einfach los...' %>
+    <% if @case.user_has_permission?(current_user, :calendar_write) %>
+      <%= form.rich_text_area :comment, placeholder: 'Schreiben Sie einfach los...' %>
+    <% else %>
+      <div class="p-2 bg-white border rounded">
+        <%= event.comment %>
+      </div>
+    <% end %>
   </div>
 
-  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
-  <%= link_to 'Abbrechen', calendar_path(@case, start_date: event.when), class: 'btn btn-secondary mb-3' %>
-  <% unless event.new_record? %>
-    <%= link_to 'Eintrag löschen', delete_event_path(event.case, event), class: 'btn btn-outline-danger mb-3' %>
+  <% if @case.user_has_permission?(current_user, :calendar_write) %>
+    <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+    <%= link_to 'Abbrechen', calendar_path(@case, start_date: event.when), class: 'btn btn-secondary mb-3' %>
+    <% unless event.new_record? %>
+      <%= link_to 'Eintrag löschen', delete_event_path(event.case, event), class: 'btn btn-outline-danger mb-3' %>
+    <% end %>
+  <% else %>
+    <%= link_to 'Zurück zur Übersicht', calendar_path(@case, start_date: event.when), class: 'btn btn-secondary mb-3' %>
   <% end %>
 <% end %>

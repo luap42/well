@@ -1,6 +1,10 @@
 <%= render 'case/case_header', view: :calendar %>
 <%= month_calendar do |date| %>
-  <h3 class="h4 p-1 mb-1"><a href="<%= new_event_path(@case, when: date) %>"><%= date.day %></a></h3>
+  <% if @case.user_has_permission?(current_user, :calendar_write) %>
+    <h3 class="h4 p-1 mb-1"><a href="<%= new_event_path(@case, when: date) %>"><%= date.day %></a></h3>
+  <% else %>
+    <h3 class="h4 p-1 mb-1"><%= date.day %></h3>
+  <% end %>
   <% has_events = @case.calendar_events.where(when: date).any? || @case.representments.where(when: date).any? %>
   <% if has_events %>
   <ul class="mb-0 list-unstyled">

@@ -5,14 +5,17 @@ class CalendarController < ApplicationController
   def global; end
 
   def index
+    return if require_permission! :calendar_read
     render layout: "layouts/case_view"
   end
 
   def edit
+    return if require_permission! :calendar_read
     render layout: "layouts/case_view"
   end
 
   def update
+    return if require_permission! :calendar_write
     @calendar_event.update!(
       title: params[:calendar_event][:title],
       when: params[:calendar_event][:when].to_date,
@@ -25,6 +28,7 @@ class CalendarController < ApplicationController
   end
 
   def new
+    return if require_permission! :calendar_write
     @calendar_event = CalendarEvent.new(case: @case, deleted: false)
     @calendar_event.when = params[:when].to_date unless params[:when].blank?
 
@@ -32,6 +36,7 @@ class CalendarController < ApplicationController
   end
 
   def create
+    return if require_permission! :calendar_write
     @calendar_event = CalendarEvent.create!(
       case: @case,
       deleted: false,
@@ -46,10 +51,12 @@ class CalendarController < ApplicationController
   end
 
   def delete
+    return if require_permission! :calendar_write
     render layout: "layouts/case_view"
   end
 
   def destroy
+    return if require_permission! :calendar_write
     @calendar_event.update!(deleted: true)
     @case.touch
     flash[:success] = "Kalendereintrag erfolgreich gelöscht."
