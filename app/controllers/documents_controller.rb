@@ -10,18 +10,22 @@ class DocumentsController < ApplicationController
                                        :edit_document, :update_document ]
 
   def index
+    return if require_permission! :documents_read
     redirect_to folder_url(@case, @case.default_folder)
   end
 
   def folder
+    return if require_permission! :documents_read
     render layout: "layouts/case_view"
   end
 
   def edit_folder
+    return if require_permission! :documents_write
     render layout: "layouts/case_view"
   end
 
   def update_folder
+    return if require_permission! :documents_write
     @folder.update!(name: params[:folder][:name])
     @case.touch
 
@@ -30,6 +34,7 @@ class DocumentsController < ApplicationController
   end
 
   def new_folder
+    return if require_permission! :documents_write
     @folder = Folder.new(
       case: @case,
       is_default: false,
@@ -40,6 +45,7 @@ class DocumentsController < ApplicationController
   end
 
   def create_folder
+    return if require_permission! :documents_write
     @folder = Folder.create!(
       case: @case,
       name: params[:folder][:name],
@@ -54,14 +60,17 @@ class DocumentsController < ApplicationController
   end
 
   def document
+    return if require_permission! :documents_read
     render layout: "layouts/case_view"
   end
 
   def edit_document
+    return if require_permission! :documents_write
     render layout: "layouts/case_view"
   end
 
   def update_document
+    return if require_permission! :documents_write
     has_user = !params[:document][:user].blank?
 
     @document.update!(
@@ -93,6 +102,7 @@ class DocumentsController < ApplicationController
   end
 
   def new_document
+    return if require_permission! :documents_write
     @document = Document.new(
       case: @case,
       folder: @folder,
@@ -104,6 +114,7 @@ class DocumentsController < ApplicationController
   end
 
   def create_document
+    return if require_permission! :documents_write
     has_user = !params[:document][:user].blank?
 
     @document = Document.create!(
@@ -138,6 +149,7 @@ class DocumentsController < ApplicationController
   end
 
   def new_document_item
+    return if require_permission! :documents_write
     @document_item = DocumentItem.new(
       case: @case,
       folder: @folder,
@@ -148,6 +160,7 @@ class DocumentsController < ApplicationController
   end
 
   def create_document_item
+    return if require_permission! :documents_write
     uploaded_file = params[:document_item][:file]
     @document_item = DocumentItem.create!(
       case: @case,

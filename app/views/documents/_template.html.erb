@@ -12,7 +12,9 @@
         </a>
       <% end %>
       <a href="" class="list-group-item list-group-item-action">Entwürfe</a>
-      <a href="<%= new_folder_url(@case) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.new_record? %>">Neuer Ordner</a>
+      <% if @case.user_has_permission?(current_user, :documents_write) %>
+        <a href="<%= new_folder_url(@case) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.new_record? %>">Neuer Ordner</a>
+      <% end %>
     </div>
   </div>
   <div class="col-8">

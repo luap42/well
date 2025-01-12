@@ -12,8 +12,10 @@
 
 <% if @document.document_items.any? %>
 
-<a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm mb-3">Weitere Datei hochladen</a>
-<a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm mb-3">Dokument bearbeiten</a>
+<% if @case.user_has_permission?(current_user, :documents_write) %>
+  <a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm mb-3">Weitere Datei hochladen</a>
+  <a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary btn-sm mb-3">Dokument bearbeiten</a>
+<% end %>
 
 <div class="list-group list-group-flush mb-3">
   <% @document.document_items.default_order.each do |item| %>
@@ -64,10 +66,13 @@
 
 <% else %>
 <p>Für dieses Dokument wurden noch keine Dateien hochgeladen.</p>
-<p>
-  <a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-primary">Jetzt Datei hochladen</a>
-  <a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary">Dokument bearbeiten</a>
-</p>
+
+<% if @case.user_has_permission?(current_user, :documents_write) %>
+  <p>
+    <a href="<%= new_document_item_path(@case, @folder, @document) %>" class="btn btn-primary">Jetzt Datei hochladen</a>
+    <a href="<%= edit_document_path(@case, @folder, @document) %>" class="btn btn-secondary">Dokument bearbeiten</a>
+  </p>
 <% end %>
 
+<% end %>
 <% end %>
