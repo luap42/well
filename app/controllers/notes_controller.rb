@@ -68,7 +68,7 @@ class NotesController < ApplicationController
 
   def destroy
     return if require_permission! :notes_write
-    @note.update!(deleted: true)
+    @note.update!(is_deleted: true)
     @case.touch
     flash[:success] = "Notiz erfolgreich gelöscht."
     redirect_to notes_path(@case)

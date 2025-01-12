@@ -86,13 +86,13 @@ Rails.application.routes.draw do
 
       get ":task_id/edit", to: "tasks#edit", as: :edit_task
       post ":task_id/edit", to: "tasks#update", as: :update_task
-
       get "new", to: "tasks#new", as: :new_task
       post "new", to: "tasks#create", as: :create_task
+      get ":task_id/delete", to: "tasks#delete", as: :delete_task
+      post ":task_id/delete", to: "tasks#destroy", as: :destroy_task
 
       get "column/:task_column_id/edit", to: "tasks#edit_task_column", as: :edit_task_column
       post "column/:task_column_id/edit", to: "tasks#update_task_column", as: :update_task_column
-
       get "column/new", to: "tasks#new_task_column", as: :new_task_column
       post "column/new", to: "tasks#create_task_column", as: :create_task_column
     end

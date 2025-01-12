@@ -57,7 +57,7 @@ class CalendarController < ApplicationController
 
   def destroy
     return if require_permission! :calendar_write
-    @calendar_event.update!(deleted: true)
+    @calendar_event.update!(is_deleted: true)
     @case.touch
     flash[:success] = "Kalendereintrag erfolgreich gelöscht."
     redirect_to calendar_path(@case)

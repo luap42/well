@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
   before_action :get_case, only: [ :index, :edit, :update, :new, :create, :edit_task_column,
-                                   :update_task_column, :new_task_column, :create_task_column ]
-  before_action :get_task, only: [ :edit, :update ]
+                                   :update_task_column, :new_task_column, :create_task_column,
+                                  :delete, :destroy ]
+  before_action :get_task, only: [ :edit, :update, :delete, :destroy ]
   before_action :get_task_column, only: [ :edit_task_column, :update_task_column ]
 
   def index
@@ -103,6 +104,19 @@ class TasksController < ApplicationController
 
     flash[:success] = "Spalte erfolgreich erstellt."
     redirect_to edit_task_column_path(@case, @task_column)
+  end
+
+  def delete
+    return if require_permission! :tasks_write
+    render layout: "layouts/case_view"
+  end
+
+  def destroy
+    return if require_permission! :tasks_write
+    @task.update!(is_deleted: true)
+    @case.touch
+    flash[:success] = "Aufgabe erfolgreich gelöscht."
+    redirect_to tasks_path(@case)
   end
 
   protected

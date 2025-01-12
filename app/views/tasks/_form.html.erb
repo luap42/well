@@ -50,7 +50,7 @@
     <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
     <%= link_to 'Abbrechen', tasks_url(@case), class: 'btn btn-secondary mb-3' %>
     <% unless task.new_record? %>
-      <%= link_to 'Aufgabe löschen', '', class: 'btn btn-outline-danger mb-3' %>
+      <%= link_to 'Aufgabe löschen', delete_task_url(@case, task), class: 'btn btn-outline-danger mb-3' %>
     <% end %>
   <% else %>
     <%= link_to 'Zurück zur Übersicht', tasks_url(@case), class: 'btn btn-secondary mb-3' %>
