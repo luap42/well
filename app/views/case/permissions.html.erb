@@ -1,0 +1,36 @@
+<%= render 'case_header', view: :permissions %>
+
+<h2 class="h5 mb-3 fw-bold">Berechtigungen <% if current_user.manager_of? @case %>bearbeiten<% end %></h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Kürzel</th>
+      <th>Name</th>
+      <th>E-Mail</th>
+      <th>Rolle</th>
+      <% if current_user.manager_of? @case %>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @case.case_permissions.each do |cp| %>
+      <tr>
+        <td><code><%= cp.user.shortcode %></code></td>
+        <td><%= cp.user.display_name %></td>
+        <td><%= mail_to cp.user.email %></td>
+        <td><%= cp.case_permission_type.name %></td>
+        <% if current_user.manager_of? @case %>
+        <td>
+          <a href="" class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user.manager_of? @case %>
+<a href="" class="btn btn-secondary">Berechtigung hinzufügen</a>
+<% end %>

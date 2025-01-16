@@ -1,5 +1,5 @@
 class CaseController < ApplicationController
-  before_action :get_case, only: [ :show, :edit, :update ]
+  before_action :get_case, only: [ :show, :edit, :update, :permissions ]
 
   def index; end
 
@@ -77,14 +77,22 @@ class CaseController < ApplicationController
     @case.update!(
       case_type: case_type,
       case_status: case_status,
-      manager: manager,
       title: params[:case][:title],
       summary: params[:case][:summary],
       local_records: params[:case][:local_records] || nil
     )
 
+    if current_user.manager_of? @case
+      @case.update!(manager: manager)
+    end
+
     flash[:success] = "Vorgang erfolgreich bearbeitet."
 
     redirect_to show_case_path(@case.id)
+  end
+
+  def permissions
+    return if require_permission! :case_read
+    render layout: "case_view"
   end
 end
