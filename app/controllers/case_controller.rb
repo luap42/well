@@ -72,7 +72,6 @@ class CaseController < ApplicationController
 
     case_type = CaseType.find(params[:case][:case_type])
     case_status = CaseStatus.find(params[:case][:case_status])
-    manager = User.find(params[:case][:manager])
 
     @case.update!(
       case_type: case_type,
@@ -80,9 +79,10 @@ class CaseController < ApplicationController
       title: params[:case][:title],
       summary: params[:case][:summary],
       local_records: params[:case][:local_records] || nil
-    )
+      )
 
     if current_user.manager_of? @case
+      manager = User.find(params[:case][:manager])
       @case.update!(manager: manager)
     end
 
