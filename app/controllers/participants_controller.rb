@@ -90,7 +90,7 @@ class ParticipantsController < ApplicationController
     @participant.update!(is_deleted: true)
     @case.touch
 
-    flash[:success] = "Beteiligte/r erfolgreich gespeichert."
+    flash[:success] = "Beteiligte/r erfolgreich gelöscht."
     redirect_to participants_path(@case)
   end
 
