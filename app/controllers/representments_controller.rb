@@ -31,6 +31,10 @@ class RepresentmentsController < ApplicationController
     @representment.save!
     @case.touch
 
+    if to_user == current_user
+      stop_timer_if_exists!
+    end
+
     flash[:success] = "WV erfolgreich angelegt."
     redirect_to root_path
   end
@@ -51,6 +55,8 @@ class RepresentmentsController < ApplicationController
 
     @case.touch
 
+    stop_timer_if_exists!
+
     flash[:success] = "WV erfolgreich angelegt."
     redirect_to root_path
   end
@@ -59,6 +65,8 @@ class RepresentmentsController < ApplicationController
     return if require_permission! :case_read
     Representment.where(case: @case, to_user: current_user).update_all(dismissed: true)
     @case.touch
+
+    stop_timer_if_exists!
 
     flash[:success] = "Vorgang erfolgreich weggelegt."
     redirect_to root_path
@@ -85,7 +93,18 @@ class RepresentmentsController < ApplicationController
       @case.touch
     end
 
+    stop_timer_if_exists!
+
     flash[:success] = "Vorgang erfolgreich als #{@case.case_status.title} markiert und weggelegt."
     redirect_to root_path
+  end
+
+  protected
+
+  def stop_timer_if_exists!
+    if TimeRecord.has_current_for_case_and_user? @case, current_user
+      time_record = TimeRecord.current_for_case_and_user @case, current_user
+      time_record.stop!
+    end
   end
 end
