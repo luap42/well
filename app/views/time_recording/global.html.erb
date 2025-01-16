@@ -27,7 +27,7 @@
           <td><%= tr.ends_at.strftime("%H:%M") %></td>
           <td><%= tr.duration_in_min %> min</td>
           <td>
-            <a href="" class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
+            <a href="<%= edit_timer_url(tr.case, tr) %>" class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
           </td>
         </tr>
       <% end %>

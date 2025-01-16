@@ -128,6 +128,9 @@ Rails.application.routes.draw do
     scope "/timer" do
       get "start", to: "time_recording#start", as: :start_timer
       get "stop", to: "time_recording#stop", as: :stop_timer
+
+      get ":time_record_id/edit", to: "time_recording#edit", as: :edit_timer
+      post ":time_record_id/edit", to: "time_recording#update", as: :update_timer
     end
   end
 end

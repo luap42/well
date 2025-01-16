@@ -1,5 +1,6 @@
 class TimeRecordingController < ApplicationController
-  before_action :get_case, only: [ :start, :stop ]
+  before_action :get_case, only: [ :start, :stop, :edit, :update ]
+  before_action :get_time_record, only: [ :edit, :update ]
 
   def global; end
 
@@ -35,5 +36,34 @@ class TimeRecordingController < ApplicationController
     time_record.stop!
 
     redirect_to safe_path(params[:redirect_url])
+  end
+
+  def edit
+    render layout: "layouts/case_view"
+  end
+
+  def update
+    begins_at = params[:time_record][:begins_at].in_time_zone(Rails.configuration.time_zone)
+    ends_at = params[:time_record][:begins_at].in_time_zone(Rails.configuration.time_zone)
+
+    if begins_at > ends_at
+      ends_at = begins_et
+    end
+
+    @time_record.update!(
+      comment: params[:time_record][:comment],
+      begins_at: begins_at,
+      ends_at: ends_at
+    )
+
+    flash[:success] = "Zeiteintragung wurde erfolgreich angepasst"
+
+    redirect_to show_case_url(@case)
+  end
+
+  protected
+
+  def get_time_record
+    @time_record = @case.time_records.where(user: current_user).find(params[:time_record_id])
   end
 end
