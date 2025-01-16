@@ -26,6 +26,9 @@
               <p class="m-0 h5 text-secondary">Zeiterfassung</p>
             </div>
             <div class="col-auto">
+              <a href="<%= new_timer_url(@case) %>" class="btn btn-sm btn-outline-secondary">+</a>
+            </div>
+            <div class="col-auto">
               <a href="<%= start_timer_url(@case, redirect_url: request.original_url) %>" class="btn btn-sm btn-secondary">Starten</a>
             </div>
           </div>

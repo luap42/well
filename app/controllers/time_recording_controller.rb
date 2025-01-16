@@ -1,5 +1,5 @@
 class TimeRecordingController < ApplicationController
-  before_action :get_case, only: [ :start, :stop, :edit, :update, :delete, :destroy ]
+  before_action :get_case, only: [ :start, :stop, :new, :create, :edit, :update, :delete, :destroy ]
   before_action :get_time_record, only: [ :edit, :update, :delete, :destroy ]
 
   def global; end
@@ -38,13 +38,48 @@ class TimeRecordingController < ApplicationController
     redirect_to safe_path(params[:redirect_url])
   end
 
+  def new
+    return if require_permission! :time_record_access
+    @time_record = TimeRecord.new(
+      case: @case, user: current_user,
+      begins_at: DateTime.now
+    )
+    render layout: "layouts/case_view"
+  end
+
+  def create
+    return if require_permission! :time_record_access
+    begins_at = params[:time_record][:begins_at].in_time_zone(Rails.configuration.time_zone)
+    ends_at = params[:time_record][:ends_at].in_time_zone(Rails.configuration.time_zone)
+    of_user = User.find(params[:time_record][:user])
+
+    if begins_at > ends_at
+      ends_at = begins_et
+    end
+
+    TimeRecord.create!(
+      case: @case,
+      user: of_user,
+      begins_at: begins_at,
+      ends_at: ends_at,
+      running: false,
+      comment: params[:time_record][:comment]
+    )
+
+    flash[:success] = "Zeiteintragung wurde erfolgreich hinzugefügt"
+
+    redirect_to show_case_url(@case)
+  end
+
   def edit
+    return if require_permission! :time_record_access
     render layout: "layouts/case_view"
   end
 
   def update
+    return if require_permission! :time_record_access
     begins_at = params[:time_record][:begins_at].in_time_zone(Rails.configuration.time_zone)
-    ends_at = params[:time_record][:begins_at].in_time_zone(Rails.configuration.time_zone)
+    ends_at = params[:time_record][:ends_at].in_time_zone(Rails.configuration.time_zone)
 
     if begins_at > ends_at
       ends_at = begins_et
@@ -62,10 +97,12 @@ class TimeRecordingController < ApplicationController
   end
 
   def delete
+    return if require_permission! :time_record_access
     render layout: "layouts/case_view"
   end
 
   def destroy
+    return if require_permission! :time_record_access
     @time_record.destroy!()
     flash[:success] = "Zeiteintragung wurde erfolgreich gelöscht"
     redirect_to show_case_url(@case)

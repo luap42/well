@@ -1,0 +1,5 @@
+<%= render 'case/case_header', view: :time_recording %>
+
+<h3 class="h3 mb-3 fw-bold">Erfasste Zeit hinzufügen</h3>
+
+<%= render 'time_recording/form', time_record: @time_record, form_to: create_timer_url(@case) %>
