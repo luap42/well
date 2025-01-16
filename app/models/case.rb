@@ -12,6 +12,7 @@ class Case < ApplicationRecord
   has_many :task_columns
   has_many :writing_drafts
   has_many :case_permissions
+  has_many :time_records
 
   scope :that_are_open, -> { where(case_status: CaseStatus.where.not(case_ends_here: true)) }
 

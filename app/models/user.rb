@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :cases, foreign_key: :manager
   has_many :tasks
   has_many :writing_types
+  has_many :time_records
 
   def display_name
     return email if full_name.blank?
