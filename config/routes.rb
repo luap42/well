@@ -131,6 +131,9 @@ Rails.application.routes.draw do
 
       get ":time_record_id/edit", to: "time_recording#edit", as: :edit_timer
       post ":time_record_id/edit", to: "time_recording#update", as: :update_timer
+
+      get ":time_record_id/delete", to: "time_recording#delete", as: :delete_timer
+      post ":time_record_id/delete", to: "time_recording#destroy", as: :destroy_timer
     end
   end
 end

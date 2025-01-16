@@ -10,8 +10,6 @@
     <%= form.label :begins_at, 'Beginn der erfassten Zeit' %>
   </div>
 
-  <%= time_record.begins_at %>
-
   <div class="form-floating mb-3">
     <%= form.datetime_field :ends_at, class: 'form-control', placeholder: '', step: 1 %>
     <%= form.label :ends_at, 'Ende der erfassten Zeit' %>
@@ -23,6 +21,9 @@
   </div>
 
   <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <% unless time_record.new_record? %>
+    <%= link_to 'Erfasste Zeit löschen', delete_timer_url(@case, time_record), class: 'btn btn-outline-danger mb-3' %>
+  <% end %>
   <%= link_to 'Abbrechen', show_case_url(@case), class: 'btn btn-secondary mb-3' %>
 
 <% end %>

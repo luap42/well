@@ -1,6 +1,6 @@
 class TimeRecordingController < ApplicationController
-  before_action :get_case, only: [ :start, :stop, :edit, :update ]
-  before_action :get_time_record, only: [ :edit, :update ]
+  before_action :get_case, only: [ :start, :stop, :edit, :update, :delete, :destroy ]
+  before_action :get_time_record, only: [ :edit, :update, :delete, :destroy ]
 
   def global; end
 
@@ -58,6 +58,16 @@ class TimeRecordingController < ApplicationController
 
     flash[:success] = "Zeiteintragung wurde erfolgreich angepasst"
 
+    redirect_to show_case_url(@case)
+  end
+
+  def delete
+    render layout: "layouts/case_view"
+  end
+
+  def destroy
+    @time_record.destroy!()
+    flash[:success] = "Zeiteintragung wurde erfolgreich gelöscht"
     redirect_to show_case_url(@case)
   end
 
