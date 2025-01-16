@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_16_165018) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_16_165949) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -77,6 +77,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_165018) do
     t.boolean "writings_access"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "time_record_access"
   end
 
   create_table "case_permissions", force: :cascade do |t|

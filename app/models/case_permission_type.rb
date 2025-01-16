@@ -41,6 +41,9 @@ class CasePermissionType < ApplicationRecord
     when :writings_access
       writings_access
 
+    when :time_record_access
+      time_record_access
+
     else
       false
     end
@@ -63,6 +66,7 @@ class CasePermissionType < ApplicationRecord
     response << "Notizen bearbeiten" if notes_write
     response << "Wiedervorlagen verwalten" if representments_access
     response << "Schriftstücke fertigen" if writings_access
+    response << "Zeit erfassen" if time_record_access
 
     response
   end
