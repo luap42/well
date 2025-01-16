@@ -126,6 +126,8 @@ Rails.application.routes.draw do
     end
 
     scope "/timer" do
+      root to: "time_recording#index", as: :timers
+
       get "start", to: "time_recording#start", as: :start_timer
       get "stop", to: "time_recording#stop", as: :stop_timer
 

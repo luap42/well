@@ -1,8 +1,13 @@
 class TimeRecordingController < ApplicationController
-  before_action :get_case, only: [ :start, :stop, :new, :create, :edit, :update, :delete, :destroy ]
+  before_action :get_case, only: [ :start, :stop, :new, :create, :edit, :update, :delete, :destroy, :index ]
   before_action :get_time_record, only: [ :edit, :update, :delete, :destroy ]
 
   def global; end
+
+  def index
+    return if require_permission! :time_record_access
+    render layout: "layouts/case_view"
+  end
 
   def start
     return if require_permission! :time_record_access
@@ -68,7 +73,7 @@ class TimeRecordingController < ApplicationController
 
     flash[:success] = "Zeiteintragung wurde erfolgreich hinzugefügt"
 
-    redirect_to show_case_url(@case)
+    redirect_to timers_url(@case)
   end
 
   def edit
@@ -93,7 +98,7 @@ class TimeRecordingController < ApplicationController
 
     flash[:success] = "Zeiteintragung wurde erfolgreich angepasst"
 
-    redirect_to show_case_url(@case)
+    redirect_to timers_url(@case)
   end
 
   def delete
@@ -105,7 +110,7 @@ class TimeRecordingController < ApplicationController
     return if require_permission! :time_record_access
     @time_record.destroy!()
     flash[:success] = "Zeiteintragung wurde erfolgreich gelöscht"
-    redirect_to show_case_url(@case)
+    redirect_to timers_url(@case)
   end
 
   protected

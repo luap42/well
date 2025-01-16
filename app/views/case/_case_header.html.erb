@@ -11,7 +11,7 @@
         <div class="p-2 shadow-sm border border-danger rounded w-300px">
           <div class="row align-items-center g-1">
             <div class="col lh-1">
-              <p class="m-0 h5 text-danger fw-bold">Zeiterfassung läuft</p>
+              <p class="m-0 h5"><a href="<%= timers_url(@case) %>" class="link-danger text-decoration-none">Zeiterfassung läuft</a></p>
               <p class="m-0 fs-small">Beginn: <%= time_record.begins_at.strftime("%H:%M") %> Uhr</p>
             </div>
             <div class="col-auto">
@@ -23,7 +23,7 @@
         <div class="p-2 border rounded w-300px">
           <div class="row align-items-center g-1">
             <div class="col lh-1">
-              <p class="m-0 h5 text-secondary">Zeiterfassung</p>
+              <p class="m-0 h5"><a href="<%= timers_url(@case) %>" class="link-secondary text-decoration-none">Zeiterfassung</a></p>
             </div>
             <div class="col-auto">
               <a href="<%= new_timer_url(@case) %>" class="btn btn-sm btn-outline-secondary">+</a>
