@@ -1,7 +1,7 @@
 <%= render 'case/case_header', view: :parties %>
 
 <%= form_with method: :get do |form| %>
-<div class="row g-1 mb-3">
+<div class="row g-1 mb-3 d-print-none">
   <div class="col-12 col-md-2">
     <div class="form-floating">
       <%= form.select :participant_role, ParticipantRole.all.map { |tp| [tp.title, tp.id]}, {include_blank: '(alle)', selected: params[:participant_role]}, { class: 'form-select' } %>
@@ -37,10 +37,10 @@
         </h3>
       </div>
       <% if @case.user_has_permission?(current_user, :participants_write) %>
-        <div class="col-auto">
+        <div class="col-auto d-print-none">
           <a href="<%= edit_participant_url(@case, p) %>">Bearbeiten</a>
         </div>
-        <div class="col-auto">
+        <div class="col-auto d-print-none">
           <a href="" class="link-danger">Löschen</a>
         </div>
       <% end %>

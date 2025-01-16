@@ -175,7 +175,8 @@ trix-toolbar {
         padding: 0;
     }
 
-    .btn:not(.print-keep) {
+    .btn:not(.print-keep),
+    trix-toolbar {
         display: none !important;
     }
 }
