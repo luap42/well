@@ -3,17 +3,17 @@ class PermissionsController < ApplicationController
   before_action :get_permission, only: [ :edit, :update, :delete, :destroy ]
 
   def index
-    return if require_permission! :case_read
+    return if require_case_manager!
     render layout: "case_view"
   end
 
   def edit
-    return unless current_user.manager_of? @case
+    return if require_case_manager!
     render layout: "case_view"
   end
 
   def update
-    return unless current_user.manager_of? @case
+    return if require_case_manager!
 
     @case_permission.update!(
       case_permission_type: CasePermissionType.find(params[:case_permission][:permission_type])
@@ -25,13 +25,13 @@ class PermissionsController < ApplicationController
   end
 
   def new
-    return unless current_user.manager_of? @case
+    return if require_case_manager!
     @case_permission = CasePermission.new(case: @case)
     render layout: "case_view"
   end
 
   def create
-    return unless current_user.manager_of? @case
+    return if require_case_manager!
 
     @case_permission = CasePermission.create!(
       case: @case,
@@ -45,12 +45,12 @@ class PermissionsController < ApplicationController
   end
 
   def delete
-    return unless current_user.manager_of? @case
+    return if require_case_manager!
     render layout: "case_view"
   end
 
   def destroy
-    return unless current_user.manager_of? @case
+    return if require_case_manager!
 
     @case_permission.destroy!
     @case.touch

@@ -23,11 +23,19 @@ class ApplicationController < ActionController::Base
     @case.ensure_default_folder!
     @case.ensure_default_task_columns!
 
-    return if require_permission!(:case_read)
+    nil if require_permission!(:case_read)
   end
 
   def require_permission!(perm)
     unless @case.user_has_permission?(current_user, perm)
+      flash[:danger] = "Du hast keine Berechtigung, diese Seite aufzurufen!"
+      redirect_to :root # rubocop:ignore Style/RedundantReturn
+      true
+    end
+  end
+
+  def require_case_manager!
+    unless current_user.manager_of? @case
       flash[:danger] = "Du hast keine Berechtigung, diese Seite aufzurufen!"
       redirect_to :root # rubocop:ignore Style/RedundantReturn
       true
