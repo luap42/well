@@ -1,0 +1,35 @@
+<h1 class="fw-bold mb-3">Deine erfassten Zeiten</h1>
+
+<% TimeRecord.where(user: current_user, running: false).all \
+    .group_by { |tr| tr.begins_at.to_date }.to_a \
+    .sort_by { |k,v| k }.reverse.each do |k, v| %>
+  <h2 class="h5 mt-4 fw-bold"><%= k.strftime("%d.%m.%Y") %></h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="2">Vorgang</th>
+        <th>Kommentar</th>
+        <th>Beginn</th>
+        <th>Ende</th>
+        <th>Dauer</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% v.sort_by { |tr| tr.begins_at }.reverse.each do |tr| %>
+        <tr>
+          <td><%= link_to tr.case.case_no, show_case_url(tr.case), class: 'link-dark text-decoration-none' %></td>
+          <td><%= link_to tr.case.title, show_case_url(tr.case), class: 'link-dark text-decoration-none' %></td>
+          <td><%= tr.comment %></td>
+          <td><%= tr.begins_at.strftime("%H:%M") %></td>
+          <td><%= tr.ends_at.strftime("%H:%M") %></td>
+          <td><%= tr.duration_in_min %> min</td>
+          <td>
+            <a href="" class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

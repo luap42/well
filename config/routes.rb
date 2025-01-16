@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: "case#index"
   get "calendar", to: "calendar#global", as: :global_calendar
+  get "timer", to: "time_recording#global", as: :global_timers
 
   scope "/profile" do
     get "edit", to: "profile#edit", as: :edit_profile

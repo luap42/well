@@ -4,14 +4,14 @@ class TimeRecord < ApplicationRecord
 
   def duration
     if running
-      DateTime.now - begins_at.to_datetime
+      (DateTime.now - begins_at.to_datetime) * 24 * 60
     else
-      ends_at - begins_at
+      (ends_at - begins_at) / 60
     end
   end
 
   def duration_in_min
-    (duration * 24 * 60).round
+    (duration).round
   end
 
   def stop!

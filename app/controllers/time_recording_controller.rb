@@ -1,6 +1,8 @@
 class TimeRecordingController < ApplicationController
   before_action :get_case, only: [ :start, :stop ]
 
+  def global; end
+
   def start
     return if require_permission! :time_record_access
 
