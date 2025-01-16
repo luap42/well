@@ -29,7 +29,7 @@ class CalendarController < ApplicationController
 
   def new
     return if require_permission! :calendar_write
-    @calendar_event = CalendarEvent.new(case: @case, deleted: false)
+    @calendar_event = CalendarEvent.new(case: @case, is_deleted: false)
     @calendar_event.when = params[:when].to_date unless params[:when].blank?
 
     render layout: "layouts/case_view"
@@ -39,7 +39,7 @@ class CalendarController < ApplicationController
     return if require_permission! :calendar_write
     @calendar_event = CalendarEvent.create!(
       case: @case,
-      deleted: false,
+      is_deleted: false,
       title: params[:calendar_event][:title],
       when: params[:calendar_event][:when].to_date,
       comment: params[:calendar_event][:comment]

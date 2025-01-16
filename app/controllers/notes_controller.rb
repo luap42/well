@@ -27,7 +27,7 @@ class NotesController < ApplicationController
 
   def new
     return if require_permission! :notes_write
-    @note = Note.new(case: @case, deleted: false)
+    @note = Note.new(case: @case, is_deleted: false)
     @document = nil
 
     if params.include? :document
@@ -46,7 +46,7 @@ class NotesController < ApplicationController
       case: @case,
       title: params[:note][:title],
       content: params[:note][:content],
-      deleted: false,
+      is_deleted: false,
       user: current_user
     )
 
