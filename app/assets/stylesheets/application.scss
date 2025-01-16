@@ -163,3 +163,19 @@ trix-toolbar {
 .w-300px {
     width: 300px;
 }
+
+@media print {
+    body.bg-light {
+        background-color: transparent !important;
+    }
+
+    .d-print-fullwidth {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .btn:not(.print-keep) {
+        display: none !important;
+    }
+}

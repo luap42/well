@@ -1,6 +1,6 @@
 <%= render 'case/case_header', view: :docs %>
 <div class="row">
-  <div class="col-4">
+  <div class="col-12 col-md-4 d-print-none">
     <div class="list-group mb-3">
       <% @case.folders.order(is_default: :desc, name: :asc).each do |f| %>
         <a href="<%= folder_url(@case, f) %>" class="list-group-item list-group-item-action <%= 'active list-group-item-light' if folder&.id == f.id %>">
@@ -17,7 +17,7 @@
       <% end %>
     </div>
   </div>
-  <div class="col-8">
+  <div class="col-12 col-md-8 d-print-fullwidth">
     <%= yield %>
   </div>
 </div>

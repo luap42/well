@@ -5,7 +5,7 @@
     <div class="mb-1 h3 fw-normal"><%= @case.title %></div>
   </div>
   <% if @case.user_has_permission?(current_user, :time_record_access) %>
-    <div class="col-auto">
+    <div class="col-auto d-print-none">
       <% if TimeRecord.has_current_for_case_and_user?(@case, current_user) %>
         <% time_record = TimeRecord.current_for_case_and_user(@case, current_user) %>
         <div class="p-2 shadow-sm border border-danger rounded w-300px">
@@ -38,7 +38,7 @@
   <% end %>
 </div>
 
-<div class="row mt-4">
+<div class="row mt-4 d-print-none">
   <div class="col">
     <div class="nav nav-pills">
       <div class="nav-item">
