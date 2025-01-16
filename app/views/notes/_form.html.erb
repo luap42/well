@@ -7,7 +7,7 @@
     <% if @case.user_has_permission?(current_user, :calendar_write) %>
       <%= form.rich_text_area :content, placeholder: 'Schreiben Sie einfach los...' %>
     <% else %>
-      <div class="p-2 border rounded">
+      <div class="rounded">
         <%= note.content %>
       </div>
     <% end %>
