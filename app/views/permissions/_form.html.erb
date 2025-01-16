@@ -1,0 +1,26 @@
+<%= form_with url: form_to, model: permission, method: :post do |form| %>
+
+  <div class="form-floating mb-3">
+    <%= form.select :user, User.all.map { |u| [u.display_name, u.id]}, {selected: permission.user&.id, include_blank: 'Ggf. auswählen...'}, { class: 'form-select', disabled: permission.persisted? } %>
+    <%= form.label :user, 'Nutzer/in' %>
+  </div>
+
+  <p>Welche Berechtigung soll vergeben werden?</p>
+
+
+  <div class="mb-4 ms-3">
+    <% CasePermissionType.all.each do |cpt| %>
+      <div class="form-check mb-3">
+        <%= form.radio_button :permission_type, cpt.id, class: 'form-check-input' %>
+        <div class="form-check-label">
+          <%= form.label "permission_type_#{cpt.id}", cpt.name, class: 'form-label fw-bold mb-0' %>
+          <p class="my-1 form-text">Umfasst: <%= cpt.attributes.join(", ") || "keine Berechtigungen" %></p>
+        </div>
+    </div>
+    <% end %>
+  </div>
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Abbrechen', permissions_url(@case), class: 'btn btn-secondary mb-3' %>
+
+<% end %>

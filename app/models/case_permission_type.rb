@@ -45,4 +45,25 @@ class CasePermissionType < ApplicationRecord
       false
     end
   end
+
+  def attributes
+    response = []
+
+    response << "Vorgang sehen" if case_read
+    response << "Stammdaten bearbeiten" if case_write
+    response << "Beteiligte einsehen" if participants_read
+    response << "Beteiligte bearbeiten" if participants_write
+    response << "Termine einsehen" if calendar_read
+    response << "Termine bearbeiten" if calendar_write
+    response << "Aufgaben einsehen" if tasks_read
+    response << "Aufgaben bearbeiten" if tasks_write
+    response << "Dokumente einsehen" if documents_read
+    response << "Dokumente bearbeiten" if documents_write
+    response << "Notizen lesen" if notes_read
+    response << "Notizen bearbeiten" if notes_write
+    response << "Wiedervorlagen verwalten" if representments_access
+    response << "Schriftstücke fertigen" if writings_access
+
+    response
+  end
 end
