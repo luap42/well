@@ -38,6 +38,9 @@ Rails.application.routes.draw do
 
       get ":permission_id/edit", to: "permissions#edit", as: :edit_permission
       post ":permission_id/edit", to: "permissions#update", as: :update_permission
+
+      get ":permission_id/delete", to: "permissions#delete", as: :delete_permission
+      post ":permission_id/delete", to: "permissions#destroy", as: :destroy_permission
     end
 
     scope "/participants" do

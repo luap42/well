@@ -1,6 +1,6 @@
 <%= render 'case/case_header', view: :permissions %>
 
-<h2 class="h5 mb-3 fw-bold">Berechtigungen <% if current_user.manager_of? @case %>bearbeiten<% end %></h2>
+<h2 class="h3 mb-3 fw-bold">Berechtigungen <% if current_user.manager_of? @case %>bearbeiten<% end %></h2>
 
 <table class="table">
   <thead>
@@ -16,8 +16,8 @@
   </thead>
   <tbody>
     <% @case.case_permissions.each do |cp| %>
-      <tr>
-        <td><code><%= cp.user.shortcode %></code></td>
+      <tr class="align-middle">
+        <td><span class="fs-5 badge text-bg-dark fw-normal py-1 lh-1 font-monospace"><%= cp.user.shortcode %></span></td>
         <td><%= cp.user.display_name %></td>
         <td><%= mail_to cp.user.email %></td>
         <td>
@@ -26,6 +26,7 @@
         <% if current_user.manager_of? @case %>
         <td>
           <a href="<%= edit_permission_url(@case, cp) %>" class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
+          <a href="<%= delete_permission_url(@case, cp) %>" class="btn btn-outline-danger py-0 px-1 btn-sm">Entfernen</a>
         </td>
         <% end %>
       </tr>

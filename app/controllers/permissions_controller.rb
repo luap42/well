@@ -1,6 +1,6 @@
 class PermissionsController < ApplicationController
-  before_action :get_case, only: [ :index, :edit, :update, :new, :create ]
-  before_action :get_permission, only: [ :edit, :update ]
+  before_action :get_case, only: [ :index, :edit, :update, :new, :create, :delete, :destroy ]
+  before_action :get_permission, only: [ :edit, :update, :delete, :destroy ]
 
   def index
     return if require_permission! :case_read
@@ -42,6 +42,21 @@ class PermissionsController < ApplicationController
 
     flash[:success] = "Berechtigung erfolgreich hinzugefügt."
     redirect_to edit_permission_url(@case, @case_permission)
+  end
+
+  def delete
+    return unless current_user.manager_of? @case
+    render layout: "case_view"
+  end
+
+  def destroy
+    return unless current_user.manager_of? @case
+
+    @case_permission.destroy!
+    @case.touch
+
+    flash[:success] = "Berechtigung erfolgreich gelöscht."
+    redirect_to permissions_url(@case)
   end
 
   protected

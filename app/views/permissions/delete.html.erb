@@ -1,0 +1,12 @@
+<%= render 'case/case_header', view: :permissions %>
+
+<h2 class="h3 mt-3 mb-3 fw-bold">Berechtigung entziehen</h2>
+
+<p class="mb-1">Wollen Sie die Berechtigung, die Sie an?</p>
+<p class="fw-bold mb-1"><%= @case_permission.user.display_name %></p>
+<p>erteilt haben, wirklich entziehen?</p>
+
+<%= form_with url: destroy_permission_url(@case, @case_permission), model: @note, method: :post do |form| %>
+<%= form.submit 'Berechtigung jetzt entziehen', class: 'btn btn-danger mb-3' %>
+<%= link_to 'Abbrechen', permissions_url(@case), class: 'btn btn-secondary mb-3' %>
+<% end %>
