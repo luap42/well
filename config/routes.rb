@@ -123,5 +123,10 @@ Rails.application.routes.draw do
       get "draft/:draft_id/edit", to: "writing#edit", as: :edit_writing
       post "draft/:draft_id/edit", to: "writing#update", as: :update_writing
     end
+
+    scope "/timer" do
+      get "start", to: "time_recording#start", as: :start_timer
+      get "stop", to: "time_recording#stop", as: :stop_timer
+    end
   end
 end

@@ -15,7 +15,7 @@
               <p class="m-0 fs-small">Beginn: <%= time_record.begins_at.strftime("%H:%M") %> Uhr</p>
             </div>
             <div class="col-auto">
-              <a href="" class="btn btn-sm btn-danger">Stoppen</a>
+              <a href="<%= stop_timer_url(@case, redirect_url: request.original_url) %>" class="btn btn-sm btn-danger">Stoppen</a>
             </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
               <p class="m-0 h5 text-secondary">Zeiterfassung</p>
             </div>
             <div class="col-auto">
-              <a href="" class="btn btn-sm btn-secondary">Starten</a>
+              <a href="<%= start_timer_url(@case, redirect_url: request.original_url) %>" class="btn btn-sm btn-secondary">Starten</a>
             </div>
           </div>
         </div>

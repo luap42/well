@@ -3,8 +3,22 @@ class TimeRecord < ApplicationRecord
   belongs_to :case
 
   def duration
-    return nil if running
-    ends_at - begins_at
+    if running
+      DateTime.now - begins_at.to_datetime
+    else
+      ends_at - begins_at
+    end
+  end
+
+  def duration_in_min
+    (duration * 24 * 60).round
+  end
+
+  def stop!
+    update!(
+      running: false,
+      ends_at: DateTime.now
+    )
   end
 
   def self.current_for_case_and_user(case_, user)

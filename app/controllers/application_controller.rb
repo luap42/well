@@ -41,4 +41,17 @@ class ApplicationController < ActionController::Base
       true
     end
   end
+
+  def path_exists?(path)
+    Rails.application.routes.recognize_path(path)
+    true
+  rescue ActionController::RoutingError
+    false
+  end
+
+  def safe_path(path)
+    return root_url if path.blank?
+    return root_url unless path_exists? path
+    URI.parse(path).path
+  end
 end
