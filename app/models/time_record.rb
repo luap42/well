@@ -15,11 +15,11 @@ class TimeRecord < ApplicationRecord
     TimeRecord.where(case: case_, user: user, running: true).any?
   end
 
-  def self.current_for_user?(case_, user)
+  def self.current_for_user(user)
     TimeRecord.where(user: user, running: true).first
   end
 
-  def self.has_current_for_user?(case_, user)
+  def self.has_current_for_user?(user)
     TimeRecord.where(user: user, running: true).any?
   end
 end

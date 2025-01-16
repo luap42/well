@@ -25,6 +25,13 @@
       </ul>
       <div class="flex-grow-1"></div>
       <ul class="navbar-nav">
+        <% if TimeRecord.has_current_for_user? current_user %>
+        <% time_record = TimeRecord.current_for_user(current_user) %>
+          <li class="nav-item me-2" title="<%= time_record.case.title %>">
+            <a class="nav-link text-danger fw-bold" href="<%= show_case_url(time_record.case) %>">🕒 <%= time_record.case.case_no %></a>
+          </li>
+        <% else %>
+        <% end %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <strong>(<%= current_user.shortcode %>)</strong> <%= current_user.display_name %>
