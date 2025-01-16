@@ -24,14 +24,14 @@ Rails.application.routes.draw do
     get "new", to: "case#new", as: :new_case
     put "new", to: "case#create", as: :create_case
   end
-  
+
   scope "/c/:case_id" do
     root to: "case#show", as: :show_case
     get "edit", to: "case#edit", as: :edit_case
     post "edit", to: "case#update", as: :update_case
-    
+
     scope "/permissions" do
-      root to: "case#permissions", as: :permissions
+      root to: "permissions#index", as: :permissions
     end
 
     scope "/participants" do

@@ -1,5 +1,5 @@
 class CaseController < ApplicationController
-  before_action :get_case, only: [ :show, :edit, :update, :permissions ]
+  before_action :get_case, only: [ :show, :edit, :update ]
 
   def index; end
 
@@ -89,10 +89,5 @@ class CaseController < ApplicationController
     flash[:success] = "Vorgang erfolgreich bearbeitet."
 
     redirect_to show_case_path(@case.id)
-  end
-
-  def permissions
-    return if require_permission! :case_read
-    render layout: "case_view"
   end
 end
