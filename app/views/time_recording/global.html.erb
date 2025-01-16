@@ -3,7 +3,8 @@
 <% TimeRecord.where(user: current_user, running: false).all \
     .group_by { |tr| tr.begins_at.to_date }.to_a \
     .sort_by { |k,v| k }.reverse.each do |k, v| %>
-  <h2 class="h5 mt-4 fw-bold"><%= k.strftime("%d.%m.%Y") %></h2>
+  <% total_time = v.map { |tr| tr.duration_in_min }.sum %>
+  <h2 class="h5 mt-4 fw-bold"><%= k.strftime("%d.%m.%Y") %> &ndash; insgesamt: <%= total_time %> min</h2>
 
   <table class="table">
     <thead>
