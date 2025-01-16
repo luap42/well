@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       post "new", to: "participants#create", as: :create_participant
       get ":participant_id/edit", to: "participants#edit", as: :edit_participant
       post ":participant_id/edit", to: "participants#update", as: :update_participant
+      get ":participant_id/delete", to: "participants#delete", as: :delete_participant
+      post ":participant_id/delete", to: "participants#destroy", as: :destroy_participant
     end
 
     scope "/represent" do

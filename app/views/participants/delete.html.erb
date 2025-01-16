@@ -1,0 +1,11 @@
+<%= render 'case/case_header', view: :permissions %>
+
+<h2 class="h3 mt-3 mb-3 fw-bold">Beteiligte/n entfernen</h2>
+
+<p>Wollen Sie die/den folgende/n Beteiligte/n wirklich entfernen?</p>
+<p class="fw-bold"><%= @participant.name %></p>
+
+<%= form_with url: destroy_participant_url(@case, @participant), model: @participant, method: :post do |form| %>
+<%= form.submit 'Beteiligte/n jetzt entfernen', class: 'btn btn-danger mb-3' %>
+<%= link_to 'Abbrechen', participants_url(@case), class: 'btn btn-secondary mb-3' %>
+<% end %>

@@ -41,7 +41,7 @@
           <a href="<%= edit_participant_url(@case, p) %>">Bearbeiten</a>
         </div>
         <div class="col-auto d-print-none">
-          <a href="" class="link-danger">Löschen</a>
+          <a href="<%= delete_participant_url(@case, p) %>" class="link-danger">Löschen</a>
         </div>
       <% end %>
     </div>

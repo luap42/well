@@ -1,6 +1,6 @@
 class ParticipantsController < ApplicationController
-  before_action :get_case, only: [ :index, :edit, :update, :new, :create ]
-  before_action :get_participant, only: [ :edit, :update ]
+  before_action :get_case, only: [ :index, :edit, :update, :new, :create, :delete, :destroy ]
+  before_action :get_participant, only: [ :edit, :update, :delete, :destroy ]
 
   def index
     return if require_permission! :participants_read
@@ -78,6 +78,20 @@ class ParticipantsController < ApplicationController
     flash[:success] = "Beteiligte/n erfolgreich bearbeitet."
 
     redirect_to edit_participant_path(@case.id, @participant.id)
+  end
+
+  def delete
+    return if require_permission! :participants_write
+    render layout: "layouts/case_view"
+  end
+
+  def destroy
+    return if require_permission! :participants_write
+    @participant.update!(is_deleted: true)
+    @case.touch
+
+    flash[:success] = "Beteiligte/r erfolgreich gespeichert."
+    redirect_to participants_path(@case)
   end
 
   protected
