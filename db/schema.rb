@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_12_221437) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_16_165018) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -264,6 +264,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_12_221437) do
     t.index ["task_column_id"], name: "index_tasks_on_task_column_id"
     t.index ["task_resolution_type_id"], name: "index_tasks_on_task_resolution_type_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
+
+  create_table "time_records", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "user_id"
+    t.string "comment"
+    t.datetime "begins_at"
+    t.datetime "ends_at"
+    t.boolean "running"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_time_records_on_case_id"
+    t.index ["user_id"], name: "index_time_records_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
