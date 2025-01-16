@@ -5,6 +5,13 @@
     <%= form.label :user, 'Nutzer/in' %>
   </div>
 
+  <% unless time_record.new_record? %>
+    <div class="form-floating">
+      <%= form.text_field :duration_in_min, class: 'form-select', disabled: true, value: "#{time_record.duration_in_min} min" %>
+      <%= form.label :user, 'Dauer' %>
+    </div>
+  <% end %>
+
   <div class="form-floating mb-3">
     <%= form.datetime_field :begins_at, class: 'form-control', placeholder: '', step: 1 %>
     <%= form.label :begins_at, 'Beginn der erfassten Zeit' %>
