@@ -11,7 +11,7 @@
   <div class="mb-4 ms-3">
     <% CasePermissionType.all.each do |cpt| %>
       <div class="form-check mb-3">
-        <%= form.radio_button :permission_type, cpt.id, class: 'form-check-input' %>
+        <%= form.radio_button :permission_type, cpt.id, class: 'form-check-input', checked: cpt.id == permission.case_permission_type&.id %>
         <div class="form-check-label">
           <%= form.label "permission_type_#{cpt.id}", cpt.name, class: 'form-label fw-bold mb-0' %>
           <p class="my-1 form-text">Umfasst: <%= cpt.attributes.join(", ") || "keine Berechtigungen" %></p>

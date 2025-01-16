@@ -1,5 +1,5 @@
 class PermissionsController < ApplicationController
-  before_action :get_case, only: [ :index, :edit, :update ]
+  before_action :get_case, only: [ :index, :edit, :update, :new, :create ]
   before_action :get_permission, only: [ :edit, :update ]
 
   def index
@@ -21,6 +21,26 @@ class PermissionsController < ApplicationController
     @case.touch
 
     flash[:success] = "Berechtigung erfolgreich gespeichert."
+    redirect_to edit_permission_url(@case, @case_permission)
+  end
+
+  def new
+    return unless current_user.manager_of? @case
+    @case_permission = CasePermission.new(case: @case)
+    render layout: "case_view"
+  end
+
+  def create
+    return unless current_user.manager_of? @case
+
+    @case_permission = CasePermission.create!(
+      case: @case,
+      user: User.find(params[:case_permission][:user]),
+      case_permission_type: CasePermissionType.find(params[:case_permission][:permission_type])
+    )
+    @case.touch
+
+    flash[:success] = "Berechtigung erfolgreich hinzugefügt."
     redirect_to edit_permission_url(@case, @case_permission)
   end
 

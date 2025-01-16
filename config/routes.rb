@@ -32,6 +32,10 @@ Rails.application.routes.draw do
 
     scope "/permissions" do
       root to: "permissions#index", as: :permissions
+
+      get "new", to: "permissions#new", as: :new_permission
+      post "new", to: "permissions#create", as: :create_permission
+
       get ":permission_id/edit", to: "permissions#edit", as: :edit_permission
       post ":permission_id/edit", to: "permissions#update", as: :update_permission
     end

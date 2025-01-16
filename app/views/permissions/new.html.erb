@@ -1,0 +1,5 @@
+<%= render 'case/case_header', view: :permissions %>
+
+<h3 class="h3 mb-3 fw-bold">Berechtigung hinzufügen</h3>
+
+<%= render 'permissions/form', permission: @case_permission, form_to: create_permission_url(@case) %>

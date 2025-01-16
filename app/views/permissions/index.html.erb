@@ -34,5 +34,5 @@
 </table>
 
 <% if current_user.manager_of? @case %>
-<a href="" class="btn btn-secondary">Berechtigung hinzufügen</a>
+<a href="<%= new_permission_url(@case) %>" class="btn btn-secondary">Berechtigung hinzufügen</a>
 <% end %>
