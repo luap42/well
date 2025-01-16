@@ -70,6 +70,7 @@ class ParticipantsController < ApplicationController
       mobile_no: params[:participant][:mobile_no],
       comment: params[:participant][:comment],
       outdated: params[:participant][:outdated] == "1",
+      is_deleted: false,
       provide_as_template: params[:participant][:provide_as_template] == "1"
     )
     @case.touch
