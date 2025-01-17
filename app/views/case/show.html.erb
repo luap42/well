@@ -84,13 +84,27 @@
       <% if @case.participants.count > 0 %>
         <h2 class="h5 mt-3 mb-3 fw-bold">Beteiligte des Vorgangs</h2>
         <ul>
-          <% for part in @case.participants.where(outdated: false) %>
+          <% @case.participants.where(outdated: false).each do |part| %>
             <li>
               <%= part.name %> (<%= part.participant_role.title %>)
             </li>
           <% end %>
         </ul>
       <% end %>
+    <% end %>
+
+    <% if @case.linked_cases.count > 0 %>
+      <h2 class="h5 mt-3 mb-3 fw-bold">Zugehörige Vorgänge</h2>
+      <ul class="list-unstyled">
+        <% @case.linked_cases.each do |linked_case| %>
+            <% if linked_case.target_case.user_has_permission? current_user, :case_read %>
+              <li><%= link_to linked_case.target_case.case_no, show_case_url(linked_case.target_case), target: '_blank', title: linked_case.target_case.title %></li>
+            <% else %>
+              <li><abbr title="<%= linked_case.target_case.title %>"><%= linked_case.target_case.case_no %></abbr></li>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
   </div>
 </div>

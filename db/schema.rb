@@ -355,7 +355,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_155755) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "case_statuses", "case_statuses", column: "next_step_id"
   add_foreign_key "cases", "users", column: "manager_id"
-  add_foreign_key "linked_cases", "target_cases"
+  add_foreign_key "linked_cases", "cases", column: "target_case_id"
   add_foreign_key "representments", "users", column: "from_user_id"
   add_foreign_key "representments", "users", column: "to_user_id"
 end
