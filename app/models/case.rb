@@ -57,4 +57,34 @@ class Case < ApplicationRecord
       is_enabled: true
     ) unless task_columns.where(default_token: "done").any?
   end
+
+  def linked_cases_to_input
+    linked_cases.map { |c| c.target_case.case_no }.join("\n")
+  end
+
+  def input_to_linked_cases(input)
+    linked_case_ids = linked_cases.all.map { |lc| lc.id }
+
+    input.split("\n").map { |cn| cn.strip }.each do |case_no|
+      case_ = Case.where(case_no: case_no)
+
+      if case_.any?
+        case_ = case_.first
+
+        if linked_cases.where(target_case: case_).any?
+          lc = linked_cases.where(target_case: case_).first
+          linked_case_ids.delete(lc.id)
+        else
+          LinkedCase.create!(
+            case: self,
+            target_case: case_
+          )
+        end
+      end
+    end
+
+    linked_case_ids.each do |cid|
+      linked_cases.find(cid).destroy!
+    end
+  end
 end

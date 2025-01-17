@@ -79,7 +79,9 @@ class CaseController < ApplicationController
       title: params[:case][:title],
       summary: params[:case][:summary],
       local_records: params[:case][:local_records] || nil
-      )
+    )
+
+    @case.input_to_linked_cases(params[:case][:linked_cases_input])
 
     if current_user.manager_of? @case
       manager = User.find(params[:case][:manager])
