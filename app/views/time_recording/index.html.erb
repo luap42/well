@@ -2,6 +2,27 @@
 
 <h1 class="h3 fw-bold mb-3">Erfasste Zeiten</h1>
 
+<h2 class="h4 mt-4 mb-3 fw-bold">Überblick</h2>
+
+<table class="table w-25">
+  <thead>
+    <tr>
+      <th>Benutzer</th>
+      <th>Zeit insgesamt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% TimeRecord.where(case: @case, running: false).all \
+        .group_by { |tr| tr.user.id }.to_a.map { |k, v| [k, v.map { |tr| tr.duration_in_min }.sum] } \
+        .sort_by { |uid, tsm| tsm }.reverse.each do |uid, tsm| %>
+    <tr>
+      <td><%= User.find(uid).display_name %></th>
+      <td><%= min_to_fqtf tsm %></th>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <% TimeRecord.where(case: @case, running: false).all \
     .group_by { |tr| tr.begins_at.to_date }.to_a \
     .sort_by { |k,v| k }.reverse.each do |k, v| %>
@@ -28,7 +49,7 @@
           <td><%= tr.comment %></td>
           <td><%= tr.begins_at.strftime("%H:%M") %></td>
           <td><%= tr.ends_at.strftime("%H:%M") %></td>
-          <td><%= tr.duration_in_min %> min</td>
+          <td><%= min_to_fqtf tr.duration_in_min %></td>
           <td>
             <a href="<%= edit_timer_url(tr.case, tr) %>"
                class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
