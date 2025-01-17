@@ -164,6 +164,10 @@ trix-toolbar {
     width: 300px;
 }
 
+.mw-500px {
+    max-width: 500px;
+}
+
 @media print {
     body.bg-light {
         background-color: transparent !important;
