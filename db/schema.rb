@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_16_165949) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_17_155755) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -180,6 +180,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_165949) do
     t.index ["case_id"], name: "index_folders_on_case_id"
   end
 
+  create_table "linked_cases", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "target_case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_linked_cases_on_case_id"
+    t.index ["target_case_id"], name: "index_linked_cases_on_target_case_id"
+  end
+
   create_table "notes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -346,6 +355,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_165949) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "case_statuses", "case_statuses", column: "next_step_id"
   add_foreign_key "cases", "users", column: "manager_id"
+  add_foreign_key "linked_cases", "target_cases"
   add_foreign_key "representments", "users", column: "from_user_id"
   add_foreign_key "representments", "users", column: "to_user_id"
 end
