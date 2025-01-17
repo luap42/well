@@ -28,7 +28,7 @@
         <% if TimeRecord.has_current_for_user? current_user %>
         <% time_record = TimeRecord.current_for_user(current_user) %>
           <li class="nav-item me-2" title="<%= time_record.case.title %>">
-            <a class="nav-link text-danger fw-bold" href="<%= show_case_url(time_record.case) %>">🕒 <%= time_record.case.case_no %> &ndash; <%= (time_record.duration_in_min).to_i %> min</a>
+            <a class="nav-link text-danger fw-bold" href="<%= show_case_url(time_record.case) %>">🕒 <%= time_record.case.case_no %> &ndash; <%= min_to_fqtf time_record.duration_in_min %></a>
           </li>
         <% else %>
         <% end %>

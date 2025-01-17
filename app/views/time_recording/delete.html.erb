@@ -3,7 +3,7 @@
 <h2 class="h3 mb-3 fw-bold">Erfasste Zeit löschen</h2>
 
 <p>Wollen Sie die folgende erfasste Zeit wirklich löschen?</p>
-<p class="fw-bold"><%= @time_record.begins_at.strftime("%d.%m.%Y %H:%M") %> bis <%= @time_record.ends_at.strftime("%H:%M") %> (<%= @time_record.duration_in_min %> min)<% if @time_record.comment %> &ndash; <%= @time_record.comment %><% end %></p>
+<p class="fw-bold"><%= @time_record.begins_at.strftime("%d.%m.%Y %H:%M") %> bis <%= @time_record.ends_at.strftime("%H:%M") %> (<%= min_to_fqtf @time_record.duration_in_min %>)<% if @time_record.comment %> &ndash; <%= @time_record.comment %><% end %></p>
 
 <%= form_with url: destroy_timer_url(@case, @time_record), model: @time_record, method: :post do |form| %>
 <%= form.submit 'Erfasste Zeit jetzt löschen', class: 'btn btn-danger mb-3' %>

@@ -7,7 +7,7 @@
 
   <% unless time_record.new_record? %>
     <div class="form-floating">
-      <%= form.text_field :duration_in_min, class: 'form-select', disabled: true, value: "#{time_record.duration_in_min} min" %>
+      <%= form.text_field :duration_in_min, class: 'form-select', disabled: true, value: "#{min_to_fqtf time_record.duration_in_min}" %>
       <%= form.label :user, 'Dauer' %>
     </div>
   <% end %>
