@@ -5,6 +5,6 @@ class CalendarEvent < ApplicationRecord
   default_scope { where.not(is_deleted: true) }
 
   def time
-    which_time.strftime("%H:%M")
+    which_time&.strftime("%H:%M")
   end
 end
