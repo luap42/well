@@ -173,6 +173,15 @@ trix-toolbar {
         background-color: transparent !important;
     }
 
+    nav.navbar {
+        box-shadow: none !important;
+        background-color: #fafafa !important;
+
+        .navbar-toggler, .navbar-collapse {
+            display: none !important;
+        }
+    }
+
     .d-print-fullwidth {
         width: 100%;
         margin: 0;

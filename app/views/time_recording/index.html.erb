@@ -4,14 +4,15 @@
 
 <h2 class="h4 mt-4 mb-3 fw-bold">Überblick</h2>
 
-<table class="table mw-500px">
+<table class="table mb-1 mw-500px">
   <thead>
     <tr>
       <th>Benutzer</th>
-      <th>Zeit insgesamt</th>
+      <th>Erfasste Zeit</th>
     </tr>
   </thead>
   <tbody>
+    <% tsm_sum = 0 %>
     <% TimeRecord.where(case: @case, running: false).all \
         .group_by { |tr| tr.user.id }.to_a.map { |k, v| [k, v.map { |tr| tr.duration_in_min }.sum] } \
         .sort_by { |uid, tsm| tsm }.reverse.each do |uid, tsm| %>
@@ -19,8 +20,15 @@
       <td><%= User.find(uid).display_name %></th>
       <td><%= min_to_fqtf tsm %></th>
     </tr>
+    <% tsm_sum += tsm %>
     <% end %>
   </tbody>
+  <% if tsm_sum != 0 %>
+  <tfoot>
+    <td class="text-end">insgesamt:</td>
+    <td><%= min_to_fqtf tsm_sum %></td>
+  </tfoot>
+  <% end %>
 </table>
 
 <% TimeRecord.where(case: @case, running: false).all \
