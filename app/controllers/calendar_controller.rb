@@ -19,6 +19,7 @@ class CalendarController < ApplicationController
     @calendar_event.update!(
       title: params[:calendar_event][:title],
       when: params[:calendar_event][:when].to_date,
+      which_time: params[:calendar_event][:which_time].blank? ? nil : params[:calendar_event][:which_time].to_time,
       comment: params[:calendar_event][:comment]
     )
     @case.touch
@@ -42,6 +43,7 @@ class CalendarController < ApplicationController
       is_deleted: false,
       title: params[:calendar_event][:title],
       when: params[:calendar_event][:when].to_date,
+      which_time: params[:calendar_event][:which_time].blank? ? nil : params[:calendar_event][:which_time].to_time,
       comment: params[:calendar_event][:comment]
     )
     @case.touch

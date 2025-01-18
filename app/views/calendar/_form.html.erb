@@ -6,10 +6,16 @@
         <%= form.label :title, 'Betreff' %>
       </div>
     </div>
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-3">
       <div class="form-floating">
         <%= form.date_field :when, class: 'form-control', placeholder: '', readonly: !@case.user_has_permission?(current_user, :calendar_write) %>
         <%= form.label :when, 'Datum' %>
+      </div>
+    </div>
+    <div class="col-12 col-md-3">
+      <div class="form-floating">
+        <%= form.time_field :which_time, class: 'form-control', placeholder: '', readonly: !@case.user_has_permission?(current_user, :calendar_write), value: event.time %>
+        <%= form.label :which_time, 'Uhrzeit (optional)' %>
       </div>
     </div>
   </div>

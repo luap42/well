@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_17_155755) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_18_212542) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_155755) do
     t.string "title"
     t.date "when"
     t.boolean "is_deleted"
+    t.time "which_time"
     t.index ["case_id"], name: "index_calendar_events_on_case_id"
   end
 
