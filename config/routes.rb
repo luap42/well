@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   scope "/profile" do
     get "edit", to: "profile#edit", as: :edit_profile
     post "edit", to: "profile#update", as: :update_profile
+
+    get "writing-types", to: "profile#writing_types", as: :edit_writing_types
   end
 
   scope "/cases" do

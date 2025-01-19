@@ -1,0 +1,32 @@
+<h1 class="fw-bold mb-3">Dokumententypen bearbeiten</h1>
+
+<p>Deine Dokumententypen:</p>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Bezeichnung</th>
+      <th>Basistyp</th>
+      <th>Gegenzeichnung?</th>
+      <th>aktiv?</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% WritingType.unscoped.where(user: current_user).each do |wt| %>
+      <tr>
+        <td><%= wt.title %></td>
+        <td><%= wt.has_recipient ? "Schreiben" : "Verfügung" %></td>
+        <td><%= wt.has_cosigning_required ? "erforderlich" : "-" %></td>
+        <td><%= wt.is_enabled ? "aktiv" : "deaktiviert" %></td>
+        <td>
+          <a href=""
+              class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<a href="" class="btn btn-secondary btn-sm">Hinzufügen</a>

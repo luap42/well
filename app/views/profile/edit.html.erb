@@ -1,5 +1,7 @@
 <h1 class="fw-bold mb-3">Profil bearbeiten</h1>
 
+<p class="mb-4"><%= link_to "Dokumententypen bearbeiten", edit_writing_types_url %></p>
+
 
 <%= form_with url: update_profile_url, model: current_user, method: :post do |form| %>
 

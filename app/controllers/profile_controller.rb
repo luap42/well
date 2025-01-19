@@ -11,4 +11,6 @@ class ProfileController < ApplicationController
 
     redirect_to edit_profile_url
   end
+
+  def writing_types; end
 end
