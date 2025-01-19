@@ -26,5 +26,6 @@ module Well
     config.time_zone = "Europe/Berlin"
     config.i18n.default_locale = :de
     config.beginning_of_week = :monday
+    config.encoding = "utf-8"
   end
 end

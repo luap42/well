@@ -113,6 +113,7 @@ GEM
     devise-bootstrap-views (1.1.0)
     devise-i18n (1.12.1)
       devise (>= 4.9.0)
+    dimensions (1.3.0)
     drb (2.2.1)
     erubi (1.13.0)
     execjs (2.9.1)
@@ -128,6 +129,10 @@ GEM
     ffi (1.17.0-x86_64-linux-musl)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    html2odt (0.4.6)
+      dimensions
+      nokogiri
+      rubyzip
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     image_processing (1.13.0)
@@ -367,6 +372,7 @@ DEPENDENCIES
   devise (~> 4.9)
   devise-bootstrap-views
   devise-i18n
+  html2odt (~> 0.4.6)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

@@ -1,7 +1,7 @@
 class WritingController < ApplicationController
-  before_action :get_case, only: [ :index, :new, :create, :edit, :update, :finalize ]
+  before_action :get_case, only: [ :index, :new, :create, :edit, :update, :finalize, :download ]
   before_action :get_writing_type, only: [ :new, :create ]
-  before_action :get_writing_draft, only: [ :edit, :update, :finalize ]
+  before_action :get_writing_draft, only: [ :edit, :update, :finalize, :download ]
 
   def index
     return if require_permission! :writings_access
@@ -70,6 +70,7 @@ class WritingController < ApplicationController
   end
 
   def finalize
+    return if require_permission! :writings_access
     if @writing_type.has_cosigning_required && !@writing.writing_cosignatures.any?
       flash[:danger] = "Entwurf kann nicht finalisiert werden: erforderliche Gegenzeichnungen wurden nicht verlangt"
       return redirect_to edit_writing_url(@case, @writing)
@@ -79,6 +80,21 @@ class WritingController < ApplicationController
     @case.touch
 
     redirect_to edit_writing_url(@case, @writing)
+  end
+
+  def download
+    return if require_permission! :writings_access
+    return redirect_to edit_writing_url(@case, @writing) unless @writing.is_final
+
+    writing_odt = helpers.create_writing(@writing)
+
+    if params[:format] == "odt"
+      send_data writing_odt,
+            type: "application/vnd.oasis.opendocument.text",
+            disposition: "attachment",
+            filename: "report.odt"
+    elsif params[:format] == "pdf"
+    end
   end
 
   protected

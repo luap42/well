@@ -62,3 +62,5 @@ gem "sassc-rails"
 gem "simple_calendar"
 
 gem "odf-report", "~> 0.8.1"
+
+gem "html2odt", "~> 0.4.6"
