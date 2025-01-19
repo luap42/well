@@ -60,3 +60,5 @@ gem "bootstrap"
 gem "sassc-rails"
 
 gem "simple_calendar"
+
+gem "odf-report", "~> 0.8.1"
