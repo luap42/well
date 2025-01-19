@@ -23,7 +23,7 @@ module WritingHelper
 
       r.add_field :'writing.subject', wdraft.title
       r.add_field :'writing.content', "{{content}}"
-      r.add_field :'writing.date', wdraft.writing_date
+      r.add_field :'writing.date', wdraft.writing_date.strftime("%d.%m.%Y")
 
       if wdraft.writing_type.has_recipient
         r.add_field :'recipient.name', wdraft.participant.name

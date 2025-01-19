@@ -76,7 +76,7 @@ class WritingController < ApplicationController
       return redirect_to edit_writing_url(@case, @writing)
     end
 
-    @writing.update!(is_final: true)
+    @writing.update!(is_final: true, writing_date: Date.today)
     @case.touch
 
     redirect_to edit_writing_url(@case, @writing)
