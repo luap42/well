@@ -16,7 +16,11 @@ class CaseController < ApplicationController
 
     unless params[:case_no].blank?
       @cases = @cases.where(
-        "case_no LIKE ? OR case_no LIKE ?",
+        "case_no LIKE ? OR case_no LIKE ? OR pre_canonical_no LIKE ? OR pre_canonical_no LIKE ?",
+        # for case_no
+        Case.sanitize_sql_like(params[:case_no]) + "%",
+        "%" + Case.sanitize_sql_like(params[:case_no]),
+        # for pre_canonical_no
         Case.sanitize_sql_like(params[:case_no]) + "%",
         "%" + Case.sanitize_sql_like(params[:case_no])
       )
