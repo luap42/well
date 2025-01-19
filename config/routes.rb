@@ -130,6 +130,8 @@ Rails.application.routes.draw do
 
       get "draft/:draft_id/edit", to: "writing#edit", as: :edit_writing
       post "draft/:draft_id/edit", to: "writing#update", as: :update_writing
+
+      get "draft/:draft_id/finalize", to: "writing#finalize", as: :finalize_writing
     end
 
     scope "/timer" do

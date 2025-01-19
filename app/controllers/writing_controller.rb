@@ -1,7 +1,7 @@
 class WritingController < ApplicationController
-  before_action :get_case, only: [ :index, :new, :create, :edit, :update ]
+  before_action :get_case, only: [ :index, :new, :create, :edit, :update, :finalize ]
   before_action :get_writing_type, only: [ :new, :create ]
-  before_action :get_writing_draft, only: [ :edit, :update ]
+  before_action :get_writing_draft, only: [ :edit, :update, :finalize ]
 
   def index
     return if require_permission! :writings_access
@@ -47,7 +47,12 @@ class WritingController < ApplicationController
 
   def edit
     return if require_permission! :writings_access
-    render layout: "layouts/case_view"
+
+    if !@writing.is_final
+      render layout: "layouts/case_view"
+    else
+      render "writing/show_final", layout: "layouts/case_view"
+    end
   end
 
   def update
@@ -62,6 +67,18 @@ class WritingController < ApplicationController
 
     flash[:success] = "Entwurf erfolgreich gespeichert"
     render "writing/edit", layout: "layouts/case_view"
+  end
+
+  def finalize
+    if @writing_type.has_cosigning_required && !@writing.writing_cosignatures.any?
+      flash[:danger] = "Entwurf kann nicht finalisiert werden: erforderliche Gegenzeichnungen wurden nicht verlangt"
+      return redirect_to edit_writing_url(@case, @writing)
+    end
+
+    @writing.update!(is_final: true)
+    @case.touch
+
+    redirect_to edit_writing_url(@case, @writing)
   end
 
   protected

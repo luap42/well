@@ -1,0 +1,82 @@
+<%= render 'case/case_header', view: @writing_type.default_token&.to_sym || :writing %>
+
+<div class="card">
+  <div class="card-header">Entwurf</div>
+  <div class="card-body">
+    <% if @writing_type.has_recipient %>
+      <h2 class="h5 mb-2 fw-bold">1. <%= @writing_type.title %></h2>
+      <table class="table bg-light table-borderless mb-3">
+        <tr>
+          <td>an:</td>
+          <td><%= @writing.participant.name %><br><%= @writing.participant.address_field %></td>
+        </tr>
+        <tr>
+          <td>Betreff:</td>
+          <td><%= @writing.title %></td>
+        </tr>
+      </table>
+    <% else %>
+      <h2 class="h5 mb-2 fw-bold">1. <%= @writing_type.title %></h2>
+      <h3 class="h4 mb-3 fw-bold"><%= @writing.title %></h3>
+    <% end %>
+
+
+    <% if @writing_type.has_recipient %>
+    <% end %>
+
+    <%= @writing.content %>
+  </div>
+  <% ctr = 1 %>
+  <% if @writing.writing_cosignatures.any? %>
+    <div class="card-body border-top">
+      <h3 class="h5 m-0 mb-2 fw-normal"><%= ctr += 1 %>. Gegenzeichnung</h3>
+      <div class="card mb-2">
+        <% @writing.writing_cosignatures.each do |wc| %>
+          <div class="card-body py-1">
+            <div class="row">
+              <div class="col col-auto font-monospace"><%= wc.user.shortcode %></div>
+              <div class="col col-2"><%= wc.user.display_name %></div>
+              <div class="col"><%= wc.request %></div>
+              <div class="col col-auto">
+                <% if wc.is_pending %>
+                  <strong class="text-bg-warning px-2">Ausstehend</strong>
+                <% elsif wc.is_given %>
+                  <strong class="text-bg-success px-2">Erteilt</strong>
+                <% elsif !wc.is_obsoleted %>
+                  <strong class="text-bg-danger px-2">Verweigert</strong>
+                <% end %>
+              </div>
+              <div class="col col-auto">
+                <% if wc.user == current_user %>
+                  <a href="" class="btn w-100 btn-sm py-0 px-1 btn-secondary">Bearbeiten</a>
+                <% else %>
+                  <a href="" class="btn w-100 btn-sm py-0 px-1 btn-outline-secondary disabled" disabled>Bearbeiten</a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="card-body border-top">
+    <% if @writing_type.has_recipient %>
+      <h3 class="h5 m-0 mb-3 fw-normal"><%= ctr += 1 %>. Postausgang</h3>
+    <% else %>
+      <h3 class="h5 m-0 mb-3 fw-normal"><%= ctr += 1 %>. zum Vorgang</h3>
+    <% end %>
+
+    <% if @writing.writing_cosignatures.where(is_pending: true).any? %>
+      <p class="fw-bold text-danger">Nicht möglich: Es gibt noch ausstehende Gegenzeichnungen.</p>
+    <% elsif @writing.writing_cosignatures.where.not(is_given: true).any? %>
+      <p class="fw-bold text-danger">Nicht möglich: Die Gegenzeichnung wurde verweigert.</p>
+    <% else %>
+      <a href="" class="btn btn-primary">Schreiben herunterladen</a>
+    <% end %>
+  </div>
+
+  <div class="card-body border-top">
+    <h3 class="h5 m-0 mb-2 fw-normal"><%= ctr += 1 %>. Wiedervorlage</h3>
+  </div>
+</div>
