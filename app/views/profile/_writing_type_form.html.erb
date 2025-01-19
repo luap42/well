@@ -1,0 +1,28 @@
+<%= form_with url: form_to, model: writing_type, method: :post do |form| %>
+  <div class="form-floating mb-3">
+    <%= form.text_field :title, class: 'form-control', placeholder: '' %>
+    <%= form.label :title, 'Bezeichnung' %>
+  </div>
+
+  <div class="form-check mb-1">
+    <%= form.check_box :has_recipient, class: 'form-check-input', placeholder: '' %>
+    <%= form.label :has_recipient, 'Dokument hat Empfänger/in', class: 'form-check-label' %>
+  </div>
+
+  <div class="form-check mb-1">
+    <%= form.check_box :has_cosigning_required, class: 'form-check-input', placeholder: '' %>
+    <%= form.label :has_cosigning_required, 'Dokument bedarf der Gegenzeichnung', class: 'form-check-label' %>
+  </div>
+
+  <div class="form-check mb-3">
+    <%= form.check_box :is_enabled, class: 'form-check-input', placeholder: '' %>
+    <%= form.label :is_enabled, 'Dokumententyp ist aktiv', class: 'form-check-label' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.file_field :template, class: 'form-control', placeholder: '' %>
+  </div>
+
+  <%= form.submit 'Speichern', class: 'btn btn-primary mb-3' %>
+  <%= link_to 'Abbrechen', edit_writing_types_url, class: 'btn btn-secondary mb-3' %>
+<% end %>

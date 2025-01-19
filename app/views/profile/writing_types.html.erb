@@ -10,6 +10,7 @@
       <th>Basistyp</th>
       <th>Gegenzeichnung?</th>
       <th>aktiv?</th>
+      <th>Dokument</th>
       <th></th>
     </tr>
   </thead>
@@ -20,8 +21,9 @@
         <td><%= wt.has_recipient ? "Schreiben" : "Verfügung" %></td>
         <td><%= wt.has_cosigning_required ? "erforderlich" : "-" %></td>
         <td><%= wt.is_enabled ? "aktiv" : "deaktiviert" %></td>
+        <td><%= wt.template.attached? ? wt.template.filename : '-' %>
         <td>
-          <a href=""
+          <a href="<%= edit_writing_type_url(wt) %>"
               class="btn btn-outline-secondary py-0 px-1 btn-sm">Bearbeiten</a>
         </td>
       </tr>
