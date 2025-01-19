@@ -7,7 +7,7 @@
 
     <p class="mb-1"><%= @case.title %></p>
 
-    <p><%= @case.case_no %></p>
+    <p><%= @case.case_no %><% if @case.is_canonical %> (aus: <%= @case.pre_canonical_no %>)<% end %></p>
 
     <h2 class="h5 mt-3 mb-3 fw-bold">Kurzbeschreibung</h2>
     <%= simple_format(@case.summary) %>
@@ -23,7 +23,11 @@
     <p>Status des Vorgangs: <span style="background-color: <%= @case.case_status.color %>"><%= @case.case_status.title %></span></p>
 
     <% if @case.user_has_permission?(current_user, :case_write) %>
-    <a href="<%= edit_case_url(@case) %>" class="btn btn-secondary mt-3 mb-3 btn-sm">Vorgangsinformationen bearbeiten</a>
+      <a href="<%= edit_case_url(@case) %>" class="btn btn-secondary mt-3 mb-3 btn-sm">Vorgangsinformationen bearbeiten</a>
+    <% end %>
+    <% if current_user.manager_of?(@case) && !@case.is_canonical %>
+      <button type="submit" form="canonization-form" class="btn btn-secondary mt-3 mb-3 btn-sm">Als Grundsatzvorgang markieren</a>
+      <%= form_with url: canonize_case_url(@case), method: :post, id: "canonization-form" %>
     <% end %>
 
   </div>

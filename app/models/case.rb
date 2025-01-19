@@ -87,4 +87,12 @@ class Case < ApplicationRecord
       linked_cases.find(cid).destroy!
     end
   end
+
+  def canonize!
+    update!(
+      pre_canonical_no: case_no,
+      is_canonical: true,
+      case_no: case_type.new_canonical_no
+    )
+  end
 end

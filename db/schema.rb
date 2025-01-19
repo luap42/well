@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_18_212542) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_19_222117) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -122,6 +122,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_18_212542) do
     t.text "summary"
     t.string "local_records"
     t.integer "manager_id"
+    t.boolean "is_canonical"
+    t.string "pre_canonical_no"
     t.index ["case_status_id"], name: "index_cases_on_case_status_id"
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
     t.index ["manager_id"], name: "index_cases_on_manager_id"

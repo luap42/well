@@ -1,5 +1,5 @@
 class CaseController < ApplicationController
-  before_action :get_case, only: [ :show, :edit, :update ]
+  before_action :get_case, only: [ :show, :edit, :update, :canonize ]
 
   def index; end
 
@@ -50,7 +50,8 @@ class CaseController < ApplicationController
       case_no: case_no,
       title: params[:case][:title],
       summary: params[:case][:summary],
-      manager: current_user
+      manager: current_user,
+      is_canonical: false
     )
 
     flash[:success] = "Vorgang erfolgreich angelegt."
@@ -90,6 +91,17 @@ class CaseController < ApplicationController
 
     flash[:success] = "Vorgang erfolgreich bearbeitet."
 
-    redirect_to show_case_path(@case.id)
+    redirect_to show_case_path(@case)
+  end
+
+  def canonize
+    return if require_case_manager!
+
+    unless @case.is_canonical
+      @case.canonize!
+      flash[:success] = "Vorgang wurde erfolgreich als Grundsatzvorgang markiert."
+    end
+
+    redirect_to show_case_path(@case)
   end
 end

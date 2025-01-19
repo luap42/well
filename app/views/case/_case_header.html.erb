@@ -1,7 +1,7 @@
 <% content_for(:case_header) do %>
 <div class="row">
   <div class="col">
-    <div class="mb-1 h5 fw-bold"><%= @case.case_no %> &middot; <%= @case.case_type.title %></div>
+    <div class="mb-1 h5 fw-bold"><%= @case.case_no %> &middot; <%= @case.case_type.title %><% if @case.is_canonical %> &middot; Grundsatzvorgang<% end %></div>
     <div class="mb-1 h3 fw-normal"><%= @case.title %></div>
   </div>
   <% if @case.user_has_permission?(current_user, :time_record_access) %>

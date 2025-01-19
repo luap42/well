@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     get "edit", to: "case#edit", as: :edit_case
     post "edit", to: "case#update", as: :update_case
 
+    post "canonize", to: "case#canonize", as: :canonize_case
+
     scope "/permissions" do
       root to: "permissions#index", as: :permissions
 
