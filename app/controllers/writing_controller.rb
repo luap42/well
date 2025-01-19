@@ -94,6 +94,11 @@ class WritingController < ApplicationController
             disposition: "attachment",
             filename: "report.odt"
     elsif params[:format] == "pdf"
+      writing_pdf = helpers.convert_to_pdf(@writing, writing_odt)
+      send_data writing_pdf,
+            type: "application/pdf",
+            disposition: "attachment",
+            filename: "report.pdf"
     end
   end
 

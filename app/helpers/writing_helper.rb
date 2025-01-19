@@ -1,5 +1,6 @@
 require "odf-report"
 require "html2odt"
+require "libreconv"
 
 module WritingHelper
   def create_writing(wdraft)
@@ -26,6 +27,19 @@ module WritingHelper
     doc.data
   ensure
     first_stage&.close
+  end
+
+  def convert_to_pdf(wdraft, data)
+    second_stage = Tempfile.new("wdraft-b-#{wdraft.id}", binmode: true)
+    third_stage = Tempfile.new("wdraft-c-#{wdraft.id}", binmode: true)
+
+    second_stage << data
+    Libreconv.convert(second_stage.path, third_stage.path)
+    third_stage.rewind
+    IO.read third_stage
+  ensure
+    second_stage&.close
+    third_stage&.close
   end
 
   def prepare_content(content)
