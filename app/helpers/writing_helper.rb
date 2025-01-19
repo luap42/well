@@ -11,6 +11,11 @@ module WritingHelper
 
     report = ODFReport::Report.new(tpl_path) do |r|
       r.add_field :case_no, wdraft.case.case_no
+      r.add_field :'case.title', wdraft.case.title
+
+      r.add_field :'manager.name', wdraft.case.manager.display_name
+      r.add_field :'manager.email', wdraft.case.manager.email
+      r.add_field :'manager.shortcode', wdraft.case.manager.shortcode
 
       r.add_field :'author.name', wdraft.user.display_name
       r.add_field :'author.email', wdraft.user.email
@@ -18,6 +23,17 @@ module WritingHelper
 
       r.add_field :'writing.subject', wdraft.title
       r.add_field :'writing.content', "{{content}}"
+      r.add_field :'writing.date', wdraft.writing_date
+
+      if wdraft.writing_type.has_recipient
+        r.add_field :'recipient.name', wdraft.participant.name
+        r.add_field :'recipient.address', wdraft.participant.address_field
+        r.add_field :'recipient.contact_details', wdraft.participant.contact_details
+        r.add_field :'recipient.email', wdraft.participant.email
+        r.add_field :'recipient.tel_no', wdraft.participant.tel_no
+        r.add_field :'recipient.mobile_no', wdraft.participant.mobile_no
+        r.add_field :'recipient.fax_no', wdraft.participant.fax_no
+      end
     end
 
     first_stage = Tempfile.new("wdraft-a-#{wdraft.id}", binmode: true)
@@ -44,6 +60,7 @@ module WritingHelper
 
   def prepare_content(content)
     content = content.to_s
+    content = content.gsub("<br><br>", "</div><div>")
     prepd = Nokogiri.HTML(content).tap do |superdoc|
       doc = superdoc.css("div.trix-content").first
       doc.xpath("//comment()").remove

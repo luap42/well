@@ -97,7 +97,7 @@ class WritingController < ApplicationController
       writing_pdf = helpers.convert_to_pdf(@writing, writing_odt)
       send_data writing_pdf,
             type: "application/pdf",
-            disposition: "attachment",
+            # disposition: "attachment",
             filename: "report.pdf"
     end
   end
