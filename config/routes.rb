@@ -38,6 +38,9 @@ Rails.application.routes.draw do
 
     post "canonize", to: "case#canonize", as: :canonize_case
 
+    get "pin", to: "case#pin", as: :pin_case
+    get "unpin", to: "case#unpin", as: :unpin_case
+
     scope "/permissions" do
       root to: "permissions#index", as: :permissions
 

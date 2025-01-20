@@ -1,5 +1,5 @@
 class CaseController < ApplicationController
-  before_action :get_case, only: [ :show, :edit, :update, :canonize ]
+  before_action :get_case, only: [ :show, :edit, :update, :canonize, :pin, :unpin ]
 
   def index; end
 
@@ -104,6 +104,24 @@ class CaseController < ApplicationController
     unless @case.is_canonical
       @case.canonize!
       flash[:success] = "Vorgang wurde erfolgreich als Grundsatzvorgang markiert."
+    end
+
+    redirect_to show_case_path(@case)
+  end
+
+  def pin
+    unless current_user.pinned_cases.where(case: @case).any?
+      PinnedCase.create!(user: current_user, case: @case)
+      flash[:success] = "Vorgang wurde erfolgreich auf der Startseite angeheftet."
+    end
+
+    redirect_to show_case_path(@case)
+  end
+
+  def unpin
+    if current_user.pinned_cases.where(case: @case).any?
+      current_user.pinned_cases.where(case: @case).first.delete
+      flash[:success] = "Vorgang wurde erfolgreich von der Startseite abgelöst."
     end
 
     redirect_to show_case_path(@case)

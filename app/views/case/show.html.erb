@@ -25,6 +25,11 @@
     <% if @case.user_has_permission?(current_user, :case_write) %>
       <a href="<%= edit_case_url(@case) %>" class="btn btn-secondary mt-3 mb-3 btn-sm">Vorgangsinformationen bearbeiten</a>
     <% end %>
+    <% if current_user.pinned_cases.where(case: @case).any? %>
+      <a href="<%= unpin_case_url(@case) %>" class="btn btn-secondary mt-3 mb-3 btn-sm active">Vorgang von Startseite ablösen</a>
+    <% else %>
+      <a href="<%= pin_case_url(@case) %>" class="btn btn-secondary mt-3 mb-3 btn-sm">Vorgang auf Startseite anheften</a>
+    <% end %>
     <% if current_user.manager_of?(@case) && !@case.is_canonical %>
       <button type="submit" form="canonization-form" class="btn btn-secondary mt-3 mb-3 btn-sm">Als Grundsatzvorgang markieren</a>
       <%= form_with url: canonize_case_url(@case), method: :post, id: "canonization-form" %>
