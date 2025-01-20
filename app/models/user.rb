@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :tasks
   has_many :writing_types
   has_many :time_records
+  has_many :pinned_cases
 
   def display_name
     return email if full_name.blank?

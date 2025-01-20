@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_19_222117) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_20_111848) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -228,6 +228,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_19_222117) do
     t.boolean "is_deleted"
     t.index ["case_id"], name: "index_participants_on_case_id"
     t.index ["participant_role_id"], name: "index_participants_on_participant_role_id"
+  end
+
+  create_table "pinned_cases", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_pinned_cases_on_case_id"
+    t.index ["user_id"], name: "index_pinned_cases_on_user_id"
   end
 
   create_table "representments", force: :cascade do |t|
