@@ -1,8 +1,38 @@
 <h1 class="fw-bold mb-3">Übersicht</h1>
 
-<% if current_user.representments.any? %>
+<% if current_user.pinned_cases.any? %>
+<div class="row mt-5">
+  <% current_user.pinned_cases.each do |pc| %>
+    <div class="col col-4">
+      <a href="<%= show_case_url(pc.case) %>" class="card text-decoration-none shadow-sm">
+        <div class="card-body">
+          <p class="mb-1">📌 <%= pc.case.case_no %></p>
+          <p class="mb-0 fs-5 fw-bold"><%= pc.case.title %></p>
+        </div>
+      </a>
+    </div>
+  <% end %>
+</div>
+<% end %>
 
-<h2 class="h5 mt-5 mb-3 fw-bold">Wiedervorlagen</h2>
+<% cases = current_user.cases.map { |c| c.calendar_events.where(when: Date.today).all }.flatten %>
+<% if cases.any? %>
+
+<h2 class="h5 mt-5 mb-3 fw-bold" id="events">Termine für heute: <%= I18n.translate("date.day_names")[Date.today.wday] %>, den <%= Date.today.strftime("%d.%m.%Y") %></h2>
+
+<ul class="list-group">
+  <% cases.each do |ce| %>
+    <li class="list-group-item">
+      <%= link_to "#{ce.case.case_no} - #{ce.case.title}", show_case_url(ce.case), class: 'link-dark d-block px-1 text-decoration-none fs-small mb-1' %>
+      <%= link_to ce.title, edit_event_path(ce.case, ce), class: 'd-block px-1 fw-bold' %>
+    </li>
+  <% end %>
+</ul>
+<% end %>
+
+
+<% if current_user.representments.any? %>
+<h2 class="h5 mt-5 mb-3 fw-bold" id="representments">Wiedervorlagen</h2>
 
 <table class="table table-striped-rows table-hover">
   <thead>
@@ -34,19 +64,4 @@
   </tbody>
 </table>
 <% else %>
-<% end %>
-
-<% cases = current_user.cases.map { |c| c.calendar_events.where(when: Date.today).all }.flatten %>
-<% if cases.any? %>
-
-<h2 class="h5 mt-5 mb-3 fw-bold">Termine für heute: <%= I18n.translate("date.day_names")[Date.today.wday] %>, den <%= Date.today.strftime("%d.%m.%Y") %></h2>
-
-<ul class="list-group">
-  <% cases.each do |ce| %>
-    <li class="list-group-item">
-      <%= link_to "#{ce.case.case_no} - #{ce.case.title}", show_case_url(ce.case), class: 'link-dark d-block px-1 text-decoration-none fs-small mb-1' %>
-      <%= link_to ce.title, edit_event_path(ce.case, ce), class: 'd-block px-1 fw-bold' %>
-    </li>
-  <% end %>
-</ul>
 <% end %>
