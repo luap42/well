@@ -3,8 +3,8 @@
 <% if current_user.pinned_cases.any? %>
 <div class="row mt-5">
   <% current_user.pinned_cases.each do |pc| %>
-    <div class="col col-4">
-      <a href="<%= show_case_url(pc.case) %>" class="card text-decoration-none shadow-sm">
+    <div class="col col-4 mb-3">
+      <a href="<%= show_case_url(pc.case) %>" class="card text-decoration-none shadow-sm h-100">
         <div class="card-body">
           <p class="mb-1">📌 <%= pc.case.case_no %></p>
           <p class="mb-0 fs-5 fw-bold"><%= pc.case.title %></p>
@@ -14,22 +14,6 @@
   <% end %>
 </div>
 <% end %>
-
-<% cases = current_user.cases.map { |c| c.calendar_events.where(when: Date.today).all }.flatten %>
-<% if cases.any? %>
-
-<h2 class="h5 mt-5 mb-3 fw-bold" id="events">Termine für heute: <%= I18n.translate("date.day_names")[Date.today.wday] %>, den <%= Date.today.strftime("%d.%m.%Y") %></h2>
-
-<ul class="list-group">
-  <% cases.each do |ce| %>
-    <li class="list-group-item">
-      <%= link_to "#{ce.case.case_no} - #{ce.case.title}", show_case_url(ce.case), class: 'link-dark d-block px-1 text-decoration-none fs-small mb-1' %>
-      <%= link_to ce.title, edit_event_path(ce.case, ce), class: 'd-block px-1 fw-bold' %>
-    </li>
-  <% end %>
-</ul>
-<% end %>
-
 
 <% if current_user.representments.any? %>
 <h2 class="h5 mt-5 mb-3 fw-bold" id="representments">Wiedervorlagen</h2>
@@ -63,5 +47,75 @@
     <% end %>
   </tbody>
 </table>
-<% else %>
+<% end %>
+
+<% cases = current_user.cases.map { |c| c.calendar_events.where(when: Date.today).all }.flatten %>
+<% if cases.any? %>
+<h2 class="h5 mt-5 mb-3 fw-bold" id="events">Termine für heute: <%= I18n.translate("date.day_names")[Date.today.wday] %>, den <%= Date.today.strftime("%d.%m.%Y") %></h2>
+
+<table class="table table-striped-rows table-hover">
+  <thead>
+    <tr>
+      <th scope="col" colspan=2>Vorgang</th>
+      <th scope="col">Uhrzeit</th>
+      <th scope="col">Betreff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% cases.sort_by { |c| c.which_time.blank? ? '' : c.time }.each do |ce| %>
+      <tr>
+        <td><%= link_to ce.case.case_no, show_case_url(ce.case), class: 'link-dark fw-bold' %></td>
+        <td><%= link_to ce.case.title, show_case_url(ce.case), class: 'link-dark text-decoration-none' %></td>
+        <td><%= ce.time %></td>
+        <td colspan=2><%= link_to ce.title, edit_event_path(ce.case, ce), class: 'link-dark fw-bold' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<% if current_user.tasks.where(is_resolved: false, due: ...7.days.from_now).any? %>
+<h2 class="h5 mt-5 mb-3 fw-bold" id="tasks">Deine Aufgaben</h2>
+
+<div class="row mb-4">
+  <div class="col-4">
+    <h3 class="h6 mb-3 fw-bold">Überfällig</h3>
+    <%= current_user.tasks.where(is_resolved: false, due: ...Date.today).order(due: :asc).each do |task| %>
+      <a href="<%= edit_task_url(task.case, task) %>" class="card mb-2 text-decoration-none bg-warning-subtle">
+        <div class="card-header fs-small py-1"><%= task.case.case_no %> - <%= task.case.title %></div>
+        <div class="card-body py-2">
+          <p class="mb-0"><strong><%= task.title %></strong></p>
+          <p class="mb-0 fs-small">Für: <strong class="text-bg-warning"><%= task.user.display_name %></strong></p>
+          <p class="mb-0 fs-small">Fällig: <%= task.due.strftime("%d.%m.%Y") %></p>
+        </div>
+      </a>
+    <% end.blank? ? 'Hier ist gerade nichts.' : '' %>
+  </div>
+  <div class="col-4">
+    <h3 class="h6 mb-3 fw-bold">Fällig: Heute</h3>
+    <%= current_user.tasks.where(is_resolved: false, due: Date.today).order(due: :asc).each do |task| %>
+      <a href="<%= edit_task_url(task.case, task) %>" class="card mb-2 text-decoration-none">
+        <div class="card-header fs-small py-1"><%= task.case.case_no %> - <%= task.case.title %></div>
+        <div class="card-body py-2">
+          <p class="mb-0"><strong><%= task.title %></strong></p>
+          <p class="mb-0 fs-small">Für: <strong class="text-bg-warning"><%= task.user.display_name %></strong></p>
+          <p class="mb-0 fs-small">Fällig: <%= task.due.strftime("%d.%m.%Y") %></p>
+        </div>
+      </a>
+    <% end.blank? ? 'Hier ist gerade nichts.' : '' %>
+  </div>
+  <div class="col-4">
+    <h3 class="h6 mb-3 fw-bold">Fällig: Nächsten 7 Tage</h3>
+    <%= current_user.tasks.where(is_resolved: false, due: 1.day.from_now...7.days.from_now).order(due: :asc).each do |task| %>
+      <a href="<%= edit_task_url(task.case, task) %>" class="card mb-2 text-decoration-none">
+        <div class="card-header fs-small py-1"><%= task.case.case_no %> - <%= task.case.title %></div>
+        <div class="card-body py-2">
+          <p class="mb-0"><strong><%= task.title %></strong></p>
+          <p class="mb-0 fs-small">Für: <strong class="text-bg-warning"><%= task.user.display_name %></strong></p>
+          <p class="mb-0 fs-small">Fällig: <%= task.due.strftime("%d.%m.%Y") %></p>
+        </div>
+      </a>
+    <% end.blank? ? 'Hier ist gerade nichts.' : '' %>
+  </div>
+</div>
 <% end %>
