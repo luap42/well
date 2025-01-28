@@ -5,7 +5,8 @@ class ProfileController < ApplicationController
   def update
     current_user.update!(
       full_name: params[:user][:full_name],
-      shortcode: params[:user][:shortcode]
+      shortcode: params[:user][:shortcode],
+      time_billing_factor_in_ct: params[:user][:time_billing_factor_in_ct].to_i
     )
 
     flash[:success] = "Profil erfolgreich bearbeitet."

@@ -8,25 +8,33 @@
   <thead>
     <tr>
       <th>Benutzer</th>
-      <th>Erfasste Zeit</th>
+      <th class="text-end">Erfasste Zeit</th>
+      <th class="text-end">Betrag</th>
     </tr>
   </thead>
   <tbody>
     <% tsm_sum = 0 %>
+    <% tbf_sum = 0 %>
     <% TimeRecord.where(case: @case, running: false).all \
         .group_by { |tr| tr.user.id }.to_a.map { |k, v| [k, v.map { |tr| tr.duration_in_min }.sum] } \
         .sort_by { |uid, tsm| tsm }.reverse.each do |uid, tsm| %>
     <tr>
-      <td><%= User.find(uid).display_name %></th>
-      <td><%= min_to_fqtf tsm %></th>
+      <td><%= User.find(uid).display_name %></td>
+      <td class="font-monospace text-end"><%= min_to_fqtf tsm %></td>
+      <% time_billing_factor = User.find(uid).time_billing_factor_in_ct %>
+      <% unless time_billing_factor.blank? %>
+        <td class="font-monospace text-end"><%= ("%.2f" % ((tsm / 60.0) * (time_billing_factor / 100.0))).sub(".", ",") %> EUR</td>
+        <% tbf_sum += (tsm / 60.0) * (time_billing_factor / 100.0) %>
+      <% end %>
     </tr>
     <% tsm_sum += tsm %>
     <% end %>
   </tbody>
   <% if tsm_sum != 0 %>
   <tfoot>
-    <td class="text-end">insgesamt:</td>
-    <td><%= min_to_fqtf tsm_sum %></td>
+    <td class="fw-bold">insgesamt:</td>
+    <td class="font-monospace text-end"><%= min_to_fqtf tsm_sum %></td>
+    <td class="font-monospace text-end"><%= ("%.2f" % tbf_sum).sub(".", ",") %> EUR</td>
   </tfoot>
   <% end %>
 </table>

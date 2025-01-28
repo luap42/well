@@ -20,5 +20,10 @@
     <%= form.label :shortcode, 'Kürzel (sollte eindeutig sein)' %>
   </div>
 
+  <div class="form-floating mb-3">
+    <%= form.number_field :time_billing_factor_in_ct, class: 'form-control', placeholder: '' %>
+    <%= form.label :time_billing_factor_in_ct, 'Stundenlohn (in 1ct, also 1 EUR = 100ct)' %>
+  </div>
+
   <%= form.submit 'Speichern', class: 'btn btn-primary' %>
 <% end %>
