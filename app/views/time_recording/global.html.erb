@@ -4,7 +4,7 @@
     .group_by { |tr| tr.begins_at.to_date }.to_a \
     .sort_by { |k,v| k }.reverse.each do |k, v| %>
   <% total_time = v.map { |tr| tr.duration_in_min }.sum %>
-  <h2 class="h4 mt-4 mb-3 fw-bold"><%= k.strftime("%d.%m.%Y") %> &ndash; insgesamt: <%= min_to_fqtf total_time %></h2>
+  <h2 class="h4 mt-4 mb-3 fw-bold"><%= l(k, format: "%A, den %d.%m.%Y") %> &ndash; insgesamt: <%= min_to_fqtf total_time %></h2>
 
   <table class="table">
     <thead>

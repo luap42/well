@@ -198,6 +198,10 @@ trix-toolbar {
         border: none;
         background-color: transparent;
         padding: 0;
+
+        &:disabled {
+            background-color: transparent !important;
+        }
     }
 
     .form-select {
