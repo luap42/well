@@ -1,12 +1,13 @@
 class CaseType < ApplicationRecord
   default_scope { where(enabled: true) }
+  has_many :cases
 
   def new_case_no
     today = Date.today
     this_year = today.at_beginning_of_year
     year_code = today.year.to_s[2..]
 
-    cases_with_this_type_in_this_year = Case.where(
+    cases_with_this_type_in_this_year = Case.unscoped.where(
       case_type: self,
       created_at: this_year..
     ).where.not(is_canonical: true).count
@@ -16,7 +17,7 @@ class CaseType < ApplicationRecord
   end
 
   def new_canonical_no
-    cases_with_this_type_that_are_canonical = Case.where(
+    cases_with_this_type_that_are_canonical = Case.unscoped.where(
       case_type: self,
       is_canonical: true
     ).count
