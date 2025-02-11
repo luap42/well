@@ -72,7 +72,9 @@
     <% elsif @writing.writing_cosignatures.where.not(is_given: true).any? %>
       <p class="fw-bold text-danger">Nicht möglich: Die Gegenzeichnung wurde verweigert.</p>
     <% else %>
-      <a href="<%= download_writing_url(@case, @writing, format: :pdf) %>" class="btn btn-primary">Schreiben herunterladen</a>
+      <% if @writing.generated_pdf.attached? %>
+        <a href="<%= url_for(@writing.generated_pdf) %>" class="btn btn-primary">Schreiben herunterladen</a>
+      <% end %>
     <% end %>
   </div>
 

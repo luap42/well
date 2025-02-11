@@ -1,7 +1,7 @@
 class WritingController < ApplicationController
-  before_action :get_case, only: [ :index, :new, :create, :edit, :update, :finalize, :download ]
+  before_action :get_case, only: [ :index, :new, :create, :edit, :update, :finalize ]
   before_action :get_writing_type, only: [ :new, :create ]
-  before_action :get_writing_draft, only: [ :edit, :update, :finalize, :download ]
+  before_action :get_writing_draft, only: [ :edit, :update, :finalize ]
 
   def index
     return if require_permission! :writings_access
@@ -77,29 +77,18 @@ class WritingController < ApplicationController
     end
 
     @writing.update!(is_final: true, writing_date: Date.today)
+
+    writing_odt = helpers.create_writing(@writing)
+    writing_pdf = helpers.convert_to_pdf(@writing, writing_odt)
+    @writing.generated_pdf.attach(
+      io: StringIO.new(writing_pdf),
+      filename: "#{@writing.printable_name}.pdf",
+      content_type: "application/pdf"
+    )
+
     @case.touch
 
     redirect_to edit_writing_url(@case, @writing)
-  end
-
-  def download
-    return if require_permission! :writings_access
-    return redirect_to edit_writing_url(@case, @writing) unless @writing.is_final
-
-    writing_odt = helpers.create_writing(@writing)
-
-    if params[:format] == "odt"
-      send_data writing_odt,
-            type: "application/vnd.oasis.opendocument.text",
-            disposition: "attachment",
-            filename: "report.odt"
-    elsif params[:format] == "pdf"
-      writing_pdf = helpers.convert_to_pdf(@writing, writing_odt)
-      send_data writing_pdf,
-            type: "application/pdf",
-            # disposition: "attachment",
-            filename: "report.pdf"
-    end
   end
 
   protected

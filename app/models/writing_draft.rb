@@ -7,8 +7,14 @@ class WritingDraft < ApplicationRecord
 
   has_many :writing_cosignatures
 
+  has_one_attached :generated_pdf
+
   has_rich_text :content
   default_scope { where.not(is_deleted: true) }
+
+  def printable_name
+    title.gsub(/[^a-zA-Z0-9-ÄäÖöÜüß]+/, "_")
+  end
 
   def cosignature_to_input
     writing_cosignatures.where(is_obsoleted: false, is_given: false, is_pending: true).map do |cs|
