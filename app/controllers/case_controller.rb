@@ -46,7 +46,12 @@ class CaseController < ApplicationController
   def create
     case_type = CaseType.find(params[:case][:case_type])
     case_status = CaseStatus.find(params[:case][:case_status])
-    case_no = case_type.new_case_no()
+
+    if params[:case][:back_for_year].blank?
+      case_no = case_type.new_case_no()
+    else
+      case_no = case_type.new_case_no(year: Date.new(params[:case][:back_for_year].to_i))
+    end
 
     @case = Case.create!(
       case_type: case_type,

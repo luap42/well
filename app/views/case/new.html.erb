@@ -32,4 +32,15 @@
 <%= form.submit 'Vorgang anlegen', class: 'btn btn-primary' %>
 <%= link_to 'Zurück', cases_path, class: 'btn btn-secondary' %>
 
+<hr class="mt-3">
+
+<p>Sie können den Vorgang auch rückwirkend für ein vergangenes Jahr eintragen.</p>
+
+<div class="form-floating mb-3">
+  <%= form.number_field :back_for_year, class: 'form-control', placeholder: '', min: 1900 %>
+  <%= form.label :back_for_year, 'Jahr' %>
+</div>
+
+<%= form.submit 'Vorgang rückwirkend eintragen', class: 'btn btn-secondary' %>
+
 <% end %>
