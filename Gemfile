@@ -66,3 +66,5 @@ gem "odf-report", "~> 0.8.1"
 gem "html2odt", "~> 0.4.6"
 
 gem "libreconv", "~> 0.9.5"
+
+gem "mysql2", "~> 0.5.6"
