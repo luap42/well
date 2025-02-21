@@ -11,9 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
-  create_table "action_text_rich_texts", force: :cascade do |t|
+  create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
-    t.text "body"
+    t.text "body", size: :long
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.datetime "created_at", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
-  create_table "active_storage_attachments", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -43,16 +43,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "calendar_events", force: :cascade do |t|
+  create_table "calendar_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "case_id"
+    t.bigint "case_id"
     t.string "title"
     t.date "when"
     t.boolean "is_deleted"
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["case_id"], name: "index_calendar_events_on_case_id"
   end
 
-  create_table "case_permission_types", force: :cascade do |t|
+  create_table "case_permission_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.boolean "case_read"
     t.boolean "case_write"
@@ -81,10 +81,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.boolean "time_record_access"
   end
 
-  create_table "case_permissions", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "user_id"
-    t.integer "case_permission_type_id"
+  create_table "case_permissions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
+    t.bigint "user_id"
+    t.bigint "case_permission_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_id"], name: "index_case_permissions_on_case_id"
@@ -92,19 +92,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["user_id"], name: "index_case_permissions_on_user_id"
   end
 
-  create_table "case_statuses", force: :cascade do |t|
+  create_table "case_statuses", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
     t.string "color"
-    t.integer "next_step_id"
+    t.bigint "next_step_id"
     t.boolean "case_ends_here"
     t.boolean "enabled"
     t.boolean "case_begins_here"
     t.index ["next_step_id"], name: "index_case_statuses_on_next_step_id"
   end
 
-  create_table "case_types", force: :cascade do |t|
+  create_table "case_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "prefix"
@@ -112,16 +112,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.boolean "enabled"
   end
 
-  create_table "cases", force: :cascade do |t|
+  create_table "cases", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "case_type_id"
-    t.integer "case_status_id"
+    t.bigint "case_type_id"
+    t.bigint "case_status_id"
     t.string "case_no"
     t.string "title"
     t.text "summary"
     t.string "local_records"
-    t.integer "manager_id"
+    t.bigint "manager_id"
     t.boolean "is_canonical"
     t.string "pre_canonical_no"
     t.index ["case_status_id"], name: "index_cases_on_case_status_id"
@@ -129,10 +129,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["manager_id"], name: "index_cases_on_manager_id"
   end
 
-  create_table "document_items", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "folder_id"
-    t.integer "document_id"
+  create_table "document_items", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
+    t.bigint "folder_id"
+    t.bigint "document_id"
     t.string "file_name"
     t.boolean "is_primary"
     t.boolean "is_attachment"
@@ -144,7 +144,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["folder_id"], name: "index_document_items_on_folder_id"
   end
 
-  create_table "document_types", force: :cascade do |t|
+  create_table "document_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
@@ -152,15 +152,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.boolean "is_enabled"
   end
 
-  create_table "documents", force: :cascade do |t|
+  create_table "documents", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "case_id"
-    t.integer "folder_id"
-    t.integer "document_type_id"
-    t.integer "user_id"
-    t.integer "participant_id"
-    t.integer "note_id"
+    t.bigint "case_id"
+    t.bigint "folder_id"
+    t.bigint "document_type_id"
+    t.bigint "user_id"
+    t.bigint "participant_id"
+    t.bigint "note_id"
     t.string "name"
     t.boolean "is_deleted"
     t.date "sent_at"
@@ -172,10 +172,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
-  create_table "folders", force: :cascade do |t|
+  create_table "folders", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "case_id"
+    t.bigint "case_id"
     t.string "name"
     t.string "password"
     t.boolean "is_protected"
@@ -183,38 +183,38 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["case_id"], name: "index_folders_on_case_id"
   end
 
-  create_table "linked_cases", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "target_case_id"
+  create_table "linked_cases", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
+    t.bigint "target_case_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_id"], name: "index_linked_cases_on_case_id"
     t.index ["target_case_id"], name: "index_linked_cases_on_target_case_id"
   end
 
-  create_table "notes", force: :cascade do |t|
+  create_table "notes", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "case_id"
-    t.integer "user_id"
+    t.bigint "case_id"
+    t.bigint "user_id"
     t.string "title"
     t.boolean "is_deleted"
     t.index ["case_id"], name: "index_notes_on_case_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
-  create_table "participant_roles", force: :cascade do |t|
+  create_table "participant_roles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
     t.boolean "enabled"
   end
 
-  create_table "participants", force: :cascade do |t|
+  create_table "participants", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "case_id"
-    t.integer "participant_role_id"
+    t.bigint "case_id"
+    t.bigint "participant_role_id"
     t.string "name"
     t.text "address_field"
     t.text "contact_details"
@@ -230,23 +230,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["participant_role_id"], name: "index_participants_on_participant_role_id"
   end
 
-  create_table "pinned_cases", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "user_id"
+  create_table "pinned_cases", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_id"], name: "index_pinned_cases_on_case_id"
     t.index ["user_id"], name: "index_pinned_cases_on_user_id"
   end
 
-  create_table "representments", force: :cascade do |t|
+  create_table "representments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "case_id"
+    t.bigint "case_id"
     t.date "when"
     t.string "reason"
-    t.integer "to_user_id"
-    t.integer "from_user_id"
+    t.bigint "to_user_id"
+    t.bigint "from_user_id"
     t.boolean "priority"
     t.boolean "dismissed"
     t.index ["case_id"], name: "index_representments_on_case_id"
@@ -254,8 +254,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["to_user_id"], name: "index_representments_on_to_user_id"
   end
 
-  create_table "task_columns", force: :cascade do |t|
-    t.integer "case_id"
+  create_table "task_columns", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
     t.string "title"
     t.string "default_token"
     t.boolean "is_enabled"
@@ -264,33 +264,33 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["case_id"], name: "index_task_columns_on_case_id"
   end
 
-  create_table "task_resolution_types", force: :cascade do |t|
+  create_table "task_resolution_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "title"
     t.boolean "is_enabled"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "task_column_id"
-    t.integer "user_id"
+  create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
+    t.bigint "task_column_id"
+    t.bigint "user_id"
     t.string "title"
     t.boolean "is_deleted"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "due"
     t.boolean "is_resolved"
-    t.integer "task_resolution_type_id"
+    t.bigint "task_resolution_type_id"
     t.index ["case_id"], name: "index_tasks_on_case_id"
     t.index ["task_column_id"], name: "index_tasks_on_task_column_id"
     t.index ["task_resolution_type_id"], name: "index_tasks_on_task_resolution_type_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
-  create_table "time_records", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "user_id"
+  create_table "time_records", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
+    t.bigint "user_id"
     t.string "comment"
     t.datetime "begins_at"
     t.datetime "ends_at"
@@ -301,7 +301,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["user_id"], name: "index_time_records_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -316,9 +316,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "writing_cosignatures", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "writing_draft_id"
+  create_table "writing_cosignatures", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "writing_draft_id"
     t.string "request"
     t.text "response"
     t.boolean "is_pending"
@@ -332,12 +332,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["writing_draft_id"], name: "index_writing_cosignatures_on_writing_draft_id"
   end
 
-  create_table "writing_drafts", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "user_id"
-    t.integer "participant_id"
-    t.integer "document_item_id"
-    t.integer "writing_type_id"
+  create_table "writing_drafts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "case_id"
+    t.bigint "user_id"
+    t.bigint "participant_id"
+    t.bigint "document_item_id"
+    t.bigint "writing_type_id"
     t.string "title"
     t.date "writing_date"
     t.boolean "is_final"
@@ -352,8 +352,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_124546) do
     t.index ["writing_type_id"], name: "index_writing_drafts_on_writing_type_id"
   end
 
-  create_table "writing_types", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "writing_types", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "title"
     t.string "default_token"
     t.boolean "has_recipient"
