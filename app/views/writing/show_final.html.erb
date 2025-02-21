@@ -73,7 +73,7 @@
       <p class="fw-bold text-danger">Nicht möglich: Die Gegenzeichnung wurde verweigert.</p>
     <% else %>
       <% if @writing.generated_pdf.attached? %>
-        <a href="<%= url_for(@writing.generated_pdf) %>" class="btn btn-primary">Schreiben herunterladen</a>
+        <a href="<%= url_for(@writing.generated_pdf) %>" class="btn btn-sm btn-light">Schreiben herunterladen</a>
       <% end %>
     <% end %>
   </div>
